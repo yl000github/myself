@@ -1,0 +1,12 @@
+mybatis\generator\extend\MyJavaTypeResolver.class
+mybatis\generator\MainClass.class
+service\interfaces\IAffairService.class
+mybatis\generator\extend\MySerializablePlugin.class
+mybatis\generator\extend\MyJavaTypeResolver$JdbcTypeInformation.class
+dao\AffairAnnotation.class
+domain\Affair.class
+web\controller\AffairController.class
+service\impl\AffairService.class
+mybatis\generator\extend\OracleDialectPlugin.class
+listener\Listener.class
+interceptor\Interceptor.class

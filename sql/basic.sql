@@ -1,0 +1,1 @@
+insert into affair values(NULL,'第二个测试',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
