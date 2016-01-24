@@ -1,0 +1,12 @@
+/basic/
+/dao/
+/domain/
+/exception/
+/filter/
+/interceptor/
+/listener/
+/mybatis/
+/service/
+/spring/
+/utils/
+/web/
