@@ -52,15 +52,33 @@ public class Mybatis {
         }
 	}
 	@Test
-	public void annotation(){
+	public void all(){
 		SqlSession sqlSession=null;
 		try {
-		 sqlSession=sqlSessionFactory.openSession();
+			sqlSession=sqlSessionFactory.openSession();
 			AffairMapper mapper=sqlSession.getMapper(AffairMapper.class);
 			List<Affair> list=mapper.selectAll();
 			for (Affair affair : list) {
 				System.out.println(affair.getWhat());
 			}
+		}catch(Exception e){
+			e.printStackTrace();
+		} finally {
+			if(sqlSession!=null)
+				sqlSession.close();
+		}
+	}
+	@Test
+	public void update(){
+		SqlSession sqlSession=null;
+		try {
+		 sqlSession=sqlSessionFactory.openSession();
+			AffairMapper mapper=sqlSession.getMapper(AffairMapper.class);
+			Affair record=new Affair();
+			record.setId(1);
+			record.setWhat("不可能");
+			int i=mapper.updateByPrimaryKeySelective(record);
+			System.out.println(i);
 		}catch(Exception e){
         	e.printStackTrace();
         } finally {

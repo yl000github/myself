@@ -21,7 +21,7 @@
 		</environment>
 	</environments>
 	<mappers>
-		<mapper resource="domain/mapper/AffairMapper.xml"/>
+		<mapper resource="dao/AffairMapper.xml"/>
 <!-- 		<mapper class="dao.AffairMapper"/> -->
 <!-- 		<mapper class="dao.AffairAnnotation"/> -->
 	</mappers>
