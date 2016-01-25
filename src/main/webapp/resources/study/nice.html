@@ -40,12 +40,12 @@
    </div>
 </nav>
 	<div class="container" style="margin-top:65px;">
-	    <!-- 警告框-->
-	    <div class="alert alert-warning" ng-show="dialogShow">
-           <a href="#" class="close" data-dismiss="alert">
+	    <!-- 警告框--> 
+	    <div ng-class="dialog.type" ng-show="dialog.show">
+           <a href="#" class="close" ng-click="dialog.hide()">
               &times;
            </a>
-           <strong>警告！</strong>{{dialogContent}}
+           <strong>{{dialog.title}}</strong>{{dialog.content}}
         </div>
 	    <!--数据列表-->
 		<div class="panel-group" id="accordion" ng-repeat="affair in affairs">
@@ -65,9 +65,9 @@
         <p> status：{{affair.status}}</p>
         <p> comment：{{affair.comment}}</p>
         <p> type：{{affair.type}}</p>
-        <p> 创建时间：{{affair.create_time}}</p>
-        <p> 开始时间：{{affair.start_time}}</p>
-        <p> 结束时间：{{affair.complete_time}}</p>
+        <p> 创建时间：{{affair.createTime}}</p>
+        <p> 开始时间：{{affair.startTime}}</p>
+        <p> 结束时间：{{affair.doneTime}}</p>
           <div class="btn-group">
 		  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#start-modal">开始</button>
 		  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#complete-modal">完成</button>
@@ -176,7 +176,7 @@
             <button type="button" class="btn btn-default" 
                data-dismiss="modal">关闭
             </button>
-            <button type="button" class="btn btn-primary">
+            <button type="button" class="btn btn-primary" ng-click="startFn()">
           		    提交
             </button>
          </div>
@@ -215,7 +215,7 @@
             <button type="button" class="btn btn-default" 
                data-dismiss="modal">关闭
             </button>
-            <button type="button" class="btn btn-primary">
+            <button type="button" class="btn btn-primary" ng-click="completeFn()">
           		    提交
             </button>
          </div>
@@ -254,7 +254,7 @@
             <button type="button" class="btn btn-default" 
                data-dismiss="modal">关闭
             </button>
-            <button type="button" class="btn btn-primary">
+            <button type="button" class="btn btn-primary" ng-click="terminateFn()">
           		    提交
             </button>
          </div>

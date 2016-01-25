@@ -1,113 +1,157 @@
-angular.module('myApp',[]).controller('userCtrl',function($scope,$http){
+angular.module('myApp',[],function($httpProvider){
+	//angular的一些定制
+	//改变$http的行为模式，使其与jq一致
+	 // Use x-www-form-urlencoded Content-Type
+	  $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+	 
+	  /**
+	   * The workhorse; converts an object to x-www-form-urlencoded serialization.
+	   * @param {Object} obj
+	   * @return {String}
+	   */ 
+	  var param = function(obj) {
+	    var query = '', name, value, fullSubName, subName, subValue, innerObj, i;
+	      
+	    for(name in obj) {
+	      value = obj[name];
+	        
+	      if(value instanceof Array) {
+	        for(i=0; i<value.length; ++i) {
+	          subValue = value[i];
+	          fullSubName = name + '[' + i + ']';
+	          innerObj = {};
+	          innerObj[fullSubName] = subValue;
+	          query += param(innerObj) + '&';
+	        }
+	      }
+	      else if(value instanceof Object) {
+	        for(subName in value) {
+	          subValue = value[subName];
+	          fullSubName = name + '[' + subName + ']';
+	          innerObj = {};
+	          innerObj[fullSubName] = subValue;
+	          query += param(innerObj) + '&';
+	        }
+	      }
+	      else if(value !== undefined && value !== null)
+	        query += encodeURIComponent(name) + '=' + encodeURIComponent(value) + '&';
+	    }
+	      
+	    return query.length ? query.substr(0, query.length - 1) : query;
+	  };
+	 
+	  // Override $http service's default transformRequest
+	  $httpProvider.defaults.transformRequest = [function(data) {
+	    return angular.isObject(data) && String(data) !== '[object File]' ? param(data) : data;
+	  }];
+	
+}).controller('userCtrl',function($scope,$http){
+	//dialog
+	$scope.dialog={
+			show:false,
+			title:'警告',
+			content:'',
+			type:'alert alert-warning',
+			success:function(title,content){
+				this.show=true;
+				this.type='alert alert-success';
+				this.title=title;
+				this.content=content;
+			},
+			warning:function(title,content){
+				this.show=true;
+				this.type='alert alert-warning';
+				this.title=title;
+				this.content=content;
+			},
+			hide:function(){
+				this.show=false;
+			}
+	};
+	//业务逻辑比较相似，我做一个封装
+	$scope.business=function(url,data,success,error,ext){
+		//ext为了方便以后拓展使用
+		$http.post(url,data).success(function(res){
+			console.log(res);
+			if(res.code){
+				$scope.dialog.success("成功!","一切ok");
+				if(success) success(res.data);
+				$scope.init();
+			}else{
+				$scope.dialog.warning("错误!",res.msg);
+				if(error) error();
+			}
+		}).error(function(){$scope.dialog.warning("错误!",'http出错了'); });
+	}
 	//页面初始化
-	$http.get("/myself/affair/getAll")
-	.success(function(res){
-		console.log(res);
-		$scope.rawData=res;
-		if(!$scope.rawData.code){
-			$scope.rawAffairs=$scope.rawData.data;
-			$scope.affairs=[];
-			$scope.dialogShow=true;
-			$scope.dialogContent='没有事务';
-		}
-		$scope.affairs=$scope.rawData.data;
-//		console.log($scope.affairs);
-		$scope.dialogShow=false;
-		$scope.dialogContent='一切ok';
-		
-	});
-	$http.get('/myself/affair/getTypes')
-	.success(function(res){
-		console.log(res);
-		if(res.code){
-			$scope.rawTypes=res.data;
-			$scope.dialogShow=false;
-			$scope.dialogContent='一切ok';
-		}else{
-			$scope.dialogShow=true;
-			$scope.dialogContent=res.msg;
-		}
-	});
+	$scope.init=function(){
+		$http.get("/myself/affair/getAll")
+		.success(function(res){
+			console.log(res);
+			$scope.rawData=res;
+			if(!$scope.rawData.code){
+				$scope.rawAffairs=$scope.rawData.data;
+				$scope.affairs=[];
+				$scope.dialog.warning("错误",$scope.rawData.msg);
+			}
+			$scope.affairs=$scope.rawData.data;
+			$scope.dialog.success("成功","一切ok");
+			console.log($scope.dialog);
+		});
+		$http.get('/myself/affair/getTypes')
+		.success(function(res){
+			console.log(res);
+			if(res.code){
+				$scope.rawTypes=res.data;
+			}else{
+				$scope.dialog.warning("错误",res.msg);
+			}
+		});
+	}
+	$scope.init();
+	$scope.setCurId=function(id){
+		console.log(id);
+		$scope.curId=id;
+	}
 //	$scope.res='{"code":1,"msg":null,"data":[{"id":1,"what":"bootstrap学习","why":"为了不断的进步","how":"coding","comment":null,"status":"0","createTime":null,"startTime":null,"doneTime":null,"duration":null},{"id":2,"what":"angularjs 学习","why":"全新的数据到view的映射","how":"coding","comment":null,"status":"0","createTime":null,"startTime":null,"doneTime":null,"duration":null}]}';
 //	$scope.rawData=JSON.parse($scope.res);
 	
-	//新增
 	$scope.createFn=function(){
-		console.log($scope.newAffair);
-		$http.post('/myself/affair/createOne',{
+		return $scope.business('/myself/affair/createOne',
+				{
 			what:$scope.newAffair.what,
 			why:$scope.newAffair.why,
 			how:$scope.newAffair.how,
 			comment:$scope.newAffair.comment
-		}).success(function(res){
-			if(res.code){
-				$("#create-modal").modal('hide');
-				$scope.dialogShow=true;
-				$scope.dialogContent="成功";
-			}else{
-				$("#create-modal").modal('hide');
-				$scope.dialogShow=true;
-				$scope.dialogContent=res.msg;
-			}
-		});
+		},function(){$("#create-modal").modal('hide');},
+		function(){$("#create-modal").modal('hide');});
 	}
 	//开始
-	$scope.setCurId=function(id){
-//		$log.info(id);
-		console.log(id);
-		$scope.curId=id;
-	}
 	$scope.startFn=function(){
-		console.log($scope.newAffair);
-		$http.post('/myself/affair/startOne',{
+		return $scope.business('/myself/affair/startOne',
+				{
 			id:$scope.curId,
-			how:$scope.startAffair.how,
-		}).success(function(res){
-			if(res.code){
-				$("#start-modal").modal('hide');
-				$scope.dialogShow=true;
-				$scope.dialogContent="成功";
-			}else{
-				$("#start-modal").modal('hide');
-				$scope.dialogShow=true;
-				$scope.dialogContent=res.msg;
-			}
-		});
+			how:$scope.startAffair.how
+		},function(){$("#start-modal").modal('hide');},
+		function(){$("#start-modal").modal('hide');});
 	}
-	
 	//完成
 	$scope.completeFn=function(){
-		$http.post('/myself/affair/completeOne',{
+		return $scope.business('/myself/affair/completeOne',
+				{
 			id:$scope.curId,
-			comment:$scope.completeAffair.comment,
-		}).success(function(res){
-			if(res.code){
-				$("#complete-modal").modal('hide');
-				$scope.dialogShow=true;
-				$scope.dialogContent="成功";
-			}else{
-				$("#complete-modal").modal('hide');
-				$scope.dialogShow=true;
-				$scope.dialogContent=res.msg;
-			}
-		});
+			comment:$scope.completeAffair.comment
+		},function(){$("#complete-modal").modal('hide');},
+		function(){$("#complete-modal").modal('hide');});
 	}
 	//终止
 	$scope.terminateFn=function(){
-		$http.post('/myself/affair/terminateOne',{
+		return $scope.business('/myself/affair/terminateOne',
+				{
 			id:$scope.curId,
-			reason:$scope.terminateAffair.reason,
-		}).success(function(res){
-			if(res.code){
-				$("#terminate-modal").modal('hide');
-				$scope.dialogShow=true;
-				$scope.dialogContent="成功";
-			}else{
-				$("#terminate-modal").modal('hide');
-				$scope.dialogShow=true;
-				$scope.dialogContent=res.msg;
-			}
-		});
+			reason:$scope.terminateAffair.reason
+		},function(){$("#terminate-modal").modal('hide');},
+		function(){$("#terminate-modal").modal('hide');});
 	}
 	//根据状态筛选
 	$scope.changeStatus=function(code){

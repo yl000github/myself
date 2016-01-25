@@ -13,6 +13,7 @@ import org.junit.Test;
  
 import dao.AffairMapper;
 import domain.Affair;
+import utils.JsonUtil;
 
 public class Mybatis {
 	 private  static SqlSessionFactory sqlSessionFactory=null;
@@ -59,7 +60,7 @@ public class Mybatis {
 			AffairMapper mapper=sqlSession.getMapper(AffairMapper.class);
 			List<Affair> list=mapper.selectAll();
 			for (Affair affair : list) {
-				System.out.println(affair.getWhat());
+				System.out.println(JsonUtil.ob2json(affair));
 			}
 		}catch(Exception e){
 			e.printStackTrace();

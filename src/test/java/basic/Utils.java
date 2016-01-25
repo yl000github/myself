@@ -1,6 +1,7 @@
 package basic;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,5 +59,9 @@ public class Utils {
 		Map<String, Object> m=new HashMap<>(); 
 		m.put("enum", d);
 		System.out.println(JsonUtil.ob2json(m)); 
+	}
+	@Test
+	public void gson(){
+		System.out.println(JsonUtil.ob2json(new Date()));
 	}
 }
