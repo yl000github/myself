@@ -11,9 +11,11 @@ public class Affair {
 
     private String how;
 
-    private String comment;
-
     private String status;
+
+    private String type;
+
+    private String comment;
 
     private Date createTime;
 
@@ -55,20 +57,28 @@ public class Affair {
         this.how = how == null ? null : how.trim();
     }
 
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment == null ? null : comment.trim();
-    }
-
     public String getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type == null ? null : type.trim();
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment == null ? null : comment.trim();
     }
 
     public Date getCreateTime() {

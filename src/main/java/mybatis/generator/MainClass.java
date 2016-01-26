@@ -18,7 +18,7 @@ public class MainClass {
 	public static void main(String[] args)
 	{    
 		List<String> warnings = new ArrayList<String>();
-		boolean overwrite = true;
+		boolean overwrite = true; 
 		String genCfg = "/generator.xml"; 
 		File configFile = new File(MainClass.class.getResource(genCfg).getFile());
 		ConfigurationParser cp = new ConfigurationParser(warnings);

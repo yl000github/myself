@@ -6,15 +6,16 @@
     <result column="what" property="what" jdbcType="VARCHAR" />
     <result column="why" property="why" jdbcType="VARCHAR" />
     <result column="how" property="how" jdbcType="VARCHAR" />
-    <result column="comment" property="comment" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
     <result column="done_time" property="doneTime" jdbcType="TIMESTAMP" />
     <result column="duration" property="duration" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, what, why, how, comment, status, create_time, start_time, done_time, duration
+    id, what, why, how, status, type, comment, create_time, start_time, done_time, duration
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -28,13 +29,13 @@
   </delete>
   <insert id="insert" parameterType="domain.Affair" >
     insert into affair (id, what, why, 
-      how, comment, status, 
-      create_time, start_time, done_time, 
-      duration)
+      how, status, type, 
+      comment, create_time, start_time, 
+      done_time, duration)
     values (#{id,jdbcType=INTEGER}, #{what,jdbcType=VARCHAR}, #{why,jdbcType=VARCHAR}, 
-      #{how,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{startTime,jdbcType=TIMESTAMP}, #{doneTime,jdbcType=TIMESTAMP}, 
-      #{duration,jdbcType=VARCHAR})
+      #{how,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{comment,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{startTime,jdbcType=TIMESTAMP}, 
+      #{doneTime,jdbcType=TIMESTAMP}, #{duration,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="domain.Affair" >
     insert into affair
@@ -51,11 +52,14 @@
       <if test="how != null" >
         how,
       </if>
-      <if test="comment != null" >
-        comment,
-      </if>
       <if test="status != null" >
         status,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="comment != null" >
+        comment,
       </if>
       <if test="createTime != null" >
         create_time,
@@ -83,11 +87,14 @@
       <if test="how != null" >
         #{how,jdbcType=VARCHAR},
       </if>
-      <if test="comment != null" >
-        #{comment,jdbcType=VARCHAR},
-      </if>
       <if test="status != null" >
         #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null" >
+        #{comment,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
@@ -115,11 +122,14 @@
       <if test="how != null" >
         how = #{how,jdbcType=VARCHAR},
       </if>
-      <if test="comment != null" >
-        comment = #{comment,jdbcType=VARCHAR},
-      </if>
       <if test="status != null" >
         status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null" >
+        comment = #{comment,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -141,8 +151,9 @@
     set what = #{what,jdbcType=VARCHAR},
       why = #{why,jdbcType=VARCHAR},
       how = #{how,jdbcType=VARCHAR},
-      comment = #{comment,jdbcType=VARCHAR},
       status = #{status,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      comment = #{comment,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       start_time = #{startTime,jdbcType=TIMESTAMP},
       done_time = #{doneTime,jdbcType=TIMESTAMP},

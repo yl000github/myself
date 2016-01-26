@@ -83,7 +83,7 @@ angular.module('myApp',[],function($httpProvider){
 			}
 		}).error(function(){$scope.dialog.warning("错误!",'http出错了'); });
 	}
-	//页面初始化
+	//页面初始化 FIXME
 	$scope.init=function(){
 		$http.get("/myself/affair/getAll")
 		.success(function(res){
@@ -93,8 +93,31 @@ angular.module('myApp',[],function($httpProvider){
 				$scope.rawAffairs=$scope.rawData.data;
 				$scope.affairs=[];
 				$scope.dialog.warning("错误",$scope.rawData.msg);
+				return;
 			}
-			$scope.affairs=$scope.rawData.data;
+			//code => value
+			$scope.rawAffairs=$scope.rawData.data;
+//			console.log($scope.rawAffairs)
+			for(var i=0;i<$scope.rawAffairs.length;i++){
+				switch($scope.rawAffairs[i].status){
+					case '0':
+						$scope.rawAffairs[i].statusValue='创建态 ';
+						break;
+					case '1':
+						$scope.rawAffairs[i].statusValue='进行中 ';
+						break;
+					case '2':
+						$scope.rawAffairs[i].statusValue='已完成 ';
+						break;
+					case '3':
+						$scope.rawAffairs[i].statusValue='终止态';
+						break;
+					default:
+						$scope.rawAffairs[i].statusValue='异常';
+						break;
+				}
+			}
+			$scope.affairs=$scope.rawAffairs;
 			$scope.dialog.success("成功","一切ok");
 			console.log($scope.dialog);
 		});
@@ -122,6 +145,7 @@ angular.module('myApp',[],function($httpProvider){
 			what:$scope.newAffair.what,
 			why:$scope.newAffair.why,
 			how:$scope.newAffair.how,
+			type:$scope.newAffair.type,
 			comment:$scope.newAffair.comment
 		},function(){$("#create-modal").modal('hide');},
 		function(){$("#create-modal").modal('hide');});
@@ -153,10 +177,11 @@ angular.module('myApp',[],function($httpProvider){
 		},function(){$("#terminate-modal").modal('hide');},
 		function(){$("#terminate-modal").modal('hide');});
 	}
-	//根据状态筛选
+	// 根据状态筛选   FIXME
 	$scope.changeStatus=function(code){
 		if(code==-1){
 			$scope.affairs=$scope.rawAffairs;
+			return;
 		}
 		var arr=new Array();
 		for(var i=0;i<$scope.rawAffairs.length;i++){

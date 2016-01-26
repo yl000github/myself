@@ -12,11 +12,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import domain.Affair;
+import exception.BasicException;
 import service.interfaces.IAffairService;
 import web.message.ResponseMsg;
 
 @Controller
 public class AffairController {
+	//一个小的框架
+	interface Method{
+		public boolean run () throws BasicException;
+	}
+	public String framework(Method method,String err){
+		try {
+			if(method.run()){
+				return new ResponseMsg(1,"","").toString();
+			}else{
+				return new ResponseMsg(0,err,"").toString();
+			}
+		} catch (BasicException e) {
+			log.error(e.getMessage());
+			return new ResponseMsg(0,e.hint(),"").toString();
+		}
+	}
 	private transient static Log log=LogFactory.getLog(Affair.class);
 	@Resource
 	private IAffairService affairService;
@@ -66,30 +83,20 @@ public class AffairController {
 	public String getPart(String n){
 		return "not implented";
 	}
-	/**
-	 * 开始一个任务,返回成功与否
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value="/affair/startOne",produces = {"text/plain;charset=utf-8"})
-	public String startOne(String id,String how){
-		if(affairService.startOne(Integer.parseInt(id), how)){
-			return new ResponseMsg(1,"","").toString();
-		}else{
-			return new ResponseMsg(0,"开始任务失败","").toString();
-		}
-	}
+
 	/**
 	 * 创建一个任务，返回成功与否
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value="/affair/createOne",produces = {"text/plain;charset=utf-8"})
-	public String createOne(String what,String why,String how,String comment){
+	public String createOne(String what,String why,String how,String type,String comment){
 		Affair af=new Affair();
 		af.setWhat(what);
 		af.setWhy(why);
 		af.setHow(how);
+		if(type==null) type="其他";
+		af.setType(type);
 		af.setComment(comment);
 		if(affairService.createOne(af)){
 			return new ResponseMsg(1,"","").toString();
@@ -98,17 +105,32 @@ public class AffairController {
 		}
 	}
 	/**
+	 * 开始一个任务,返回成功与否
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/affair/startOne",produces = {"text/plain;charset=utf-8"})
+	public String startOne(final String id,final String how){
+		return framework(new Method(){
+			@Override
+			public boolean run() throws BasicException {
+				return affairService.startOne(Integer.parseInt(id), how);
+			}
+		}, "开始任务失败");
+	}
+	/**
 	 * 完成一个任务，返回成功与否
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value="/affair/completeOne",produces = {"text/plain;charset=utf-8"})
-	public String completeOne(String id,String comment){
-		if(affairService.completeOne(Integer.parseInt(id), comment)){
-			return new ResponseMsg(1,"","").toString();
-		}else{
-			return new ResponseMsg(0,"完成任务失败","").toString();
-		}
+	public String completeOne(final String id,final String comment){
+		return framework(new Method(){
+			@Override
+			public boolean run() throws BasicException {
+				return affairService.completeOne(Integer.parseInt(id), comment);
+			}
+		}, "完成任务失败");
 	}
 	/**
 	 * 终止一个任务，返回成功与否
@@ -116,12 +138,13 @@ public class AffairController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/affair/terminateOne",produces = {"text/plain;charset=utf-8"})
-	public String terminateOne(String id,String reason){
-		if(affairService.terminateOne(Integer.parseInt(id), reason)){
-			return new ResponseMsg(1,"","").toString();
-		}else{
-			return new ResponseMsg(0,"终止任务失败","").toString();
-		}
+	public String terminateOne(final String id,final String reason){
+		return framework(new Method(){
+			@Override
+			public boolean run() throws BasicException {
+				return affairService.terminateOne(Integer.parseInt(id), reason);
+			}
+		}, "终止任务失败");
 	}
 	/**
 	 * 查看所有的类型，返回数组

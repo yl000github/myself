@@ -15,7 +15,7 @@
         <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="${mysql.jdbc.url}"
                         userId="${mysql.jdbc.username}" password="${mysql.jdbc.password}">
         </jdbcConnection>
- 
+  
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
@@ -27,7 +27,7 @@
  
         </javaModelGenerator>
         <!-- 生成的映射文件包名和位置 -->
-        <sqlMapGenerator targetPackage="domain.mapper" targetProject="src/main/java">
+        <sqlMapGenerator targetPackage="dao" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
  

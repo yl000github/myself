@@ -87,5 +87,21 @@ public class Mybatis {
 			sqlSession.close();
 		}
 	}
-
+	@Test
+	public void selectOne(){
+		SqlSession sqlSession=null;
+		try {
+		 sqlSession=sqlSessionFactory.openSession();
+			AffairMapper mapper=sqlSession.getMapper(AffairMapper.class);
+			Affair a=mapper.selectByPrimaryKey(1);
+			System.err.println(JsonUtil.ob2json(a));
+			System.err.println(a.getCreateTime());
+			
+		}catch(Exception e){
+        	e.printStackTrace();
+        } finally {
+        	if(sqlSession!=null)
+			sqlSession.close();
+		}
+	}
 }

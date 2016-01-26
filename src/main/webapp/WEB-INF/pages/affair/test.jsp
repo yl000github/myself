@@ -12,7 +12,7 @@
 </body> 
 <!-- <script type="text/javascript" src="/resources/js/jquery.js"></script> -->
 <script type="text/javascript" src="<c:url value="/resources/js/jquery.js" />"></script>
-<script>
+<script> 
 	var context="${pageContext.request.contextPath}";
 	function test(){
 // 		alert(context);

@@ -8,7 +8,7 @@ public class JsonUtil {
 	private static Gson gson;
 	private static Gson getGson(){
 		if(gson==null){
-			gson= new GsonBuilder().serializeNulls().create();
+			gson= new GsonBuilder().serializeNulls().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 		}
 		return gson;
 	}
