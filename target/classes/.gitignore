@@ -1,12 +1,2 @@
-/basic/
-/dao/
-/domain/
-/exception/
-/filter/
-/interceptor/
-/listener/
-/mybatis/
-/service/
-/spring/
+/webmagic/
 /utils/
-/web/

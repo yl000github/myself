@@ -1,10 +1,20 @@
 package utils;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DateUtil {
 	public static Date getNow(){
 		return new Date();
+	}
+	public static String getNowFormat(String pattern){
+		SimpleDateFormat format=new SimpleDateFormat(pattern);
+		return format.format(new Date());
+	}
+	public static String getNowFormatD(){
+		String pattern="yyyy-MM-dd HH-mm-ss";
+		SimpleDateFormat format=new SimpleDateFormat(pattern);
+		return format.format(new Date());
 	}
 	//unit milliseconds 
 	public static long diff(Date start,Date end){
