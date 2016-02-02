@@ -32,8 +32,8 @@ public class ImagePipeline extends FilePipeline{
 		Map<String, Object> map=resultItems.getAll();
 		String imgUrl=(String) map.get("imgUrl");
 		try {
-			String res=HttpUtil.get(imgUrl);
-			byte[] bytes=res.getBytes();
+//			String res=HttpUtil.get(imgUrl);
+			byte[] bytes=HttpUtil.getBytes(imgUrl);
 			String fullName=DateUtil.getNowFormat("yyy-MM-dd-HH-mm-ss")+"-"+Math.random()*1000+".png";
 			FileOutputStream fos=new FileOutputStream(getFile(fullName));
 			fos.write(bytes);

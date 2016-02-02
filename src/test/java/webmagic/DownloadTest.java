@@ -17,16 +17,7 @@ public class DownloadTest {
 	public void pic(){
 		String url="http://www.allinpay.com/uploads/uploadPic/l/20151127,09,45,313.jpg";
 		try {
-//			String res=HttpUtil.get(url); 
-			InputStream is=HttpUtil.getInputStream(url);
-			ByteArrayOutputStream  bos=new ByteArrayOutputStream ();
-			byte[] buffer=new byte[1024];
-			int len=0;
-			while((len=is.read(buffer))!=-1){
-				bos.write(buffer, 0, len);
-			}
-			is.close();
-			byte[] bytes=bos.toByteArray();
+			byte[] bytes=HttpUtil.getBytes(url);
 //			byte[] bytes=res.getBytes();
 			String fullName=DateUtil.getNowFormat("yyy-MM-dd-HH-mm-ss")+"-"+Math.random()*1000+".png";
 			FileOutputStream fos=new FileOutputStream(""+fullName);

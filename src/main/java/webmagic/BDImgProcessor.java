@@ -1,7 +1,5 @@
 package webmagic;
 
-import javax.print.attribute.Size2DSyntax;
-
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.processor.PageProcessor;
@@ -11,7 +9,7 @@ public class BDImgProcessor implements PageProcessor{
 	
 	@Override
 	public void process(Page page) {
-		
+		 
 		
 	}
 
