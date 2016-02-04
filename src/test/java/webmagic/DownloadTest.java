@@ -15,7 +15,7 @@ import utils.HttpUtil;
 public class DownloadTest {
 	@Test
 	public void pic(){
-		String url="http://www.allinpay.com/uploads/uploadPic/l/20151127,09,45,313.jpg";
+		String url="http://img1.imgtn.bdimg.com/it/u=676278492,3212497429&fm=21&gp=0.jpg";
 		try {
 			byte[] bytes=HttpUtil.getBytes(url);
 //			byte[] bytes=res.getBytes();
