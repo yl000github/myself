@@ -26,6 +26,7 @@ public class HttpUtil {
 		HttpGet get=new HttpGet(url);
 		RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(2000).setConnectTimeout(2000).build();//设置请求和传输超时时间
 		get.setConfig(requestConfig);
+//		get.addHeader("Referer","https://www.baidu.com");
 		try {
 			HttpResponse response=httpClient.execute(get);
 			int code=response.getStatusLine().getStatusCode();

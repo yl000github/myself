@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>pc=>mobile(二维码识别速度较慢)</title>
+</head>
+<body>
+<div>
+转换方式：
+<input type="text" id="before" value="localhost">=><input type="text" id="after" value="10.48.1.80">
+</div>
+<p>
+	input the url
+</p>
+转换前	<input type="text" id="in">
+<div id="before-output"></div>
+转换后<p id="after-text"></p>
+<div id="after-output"></div>
+<script src="../../../js/jquery.min.js"></script>
+<script type="text/javascript" src="jquery.qrcode.min.js"></script>
+<script>
+jQuery(function(){
+	$("#in").change(function(){
+		var value=$(this).val();
+		$("#before-output").html("");
+		$("#before-output").qrcode(value);
+		var before=$("#before").val();
+		var after=$("#after").val();
+		value=value.replace(before,after);
+		$("#after-text").html(value);
+		$("#after-output").html("");
+		$("#after-output").qrcode(value);
+	})
+// 	jQuery('#output').qrcode("1234");
+})
+</script>
+
+</body>
+</html>

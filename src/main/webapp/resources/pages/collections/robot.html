@@ -1,0 +1,39 @@
+<html>
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+<!-- 使用的是图灵机器人的接口 -->
+<p>请求的问题：<input type="text" id="question" value="你是谁"></p>
+<input type="button" id="submit" value="提交">
+<h1 id="answer"></h1>
+
+</body>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script>
+	$(function(){
+		$("#submit").on("click",function(){
+			console.log('in');
+			var question=$("#question").val();
+			var userid="12345678";//自己可以随便定义
+			$.ajax({
+				url:"http://www.tuling123.com/openapi/api",
+				data:{
+					key:"fbd9c608dcdb5b58bce6a3b3566da3ec",
+					info:question,
+					userid:userid
+				},
+				type:"post",
+				success:function(res){
+					console.log(res);
+					var text=JSON.stringify(res);
+					$("#answer").html(text);
+				},
+				error:function(){
+					alert("出错了");
+				}
+			})
+		}); 
+	})
+</script>
+</html>

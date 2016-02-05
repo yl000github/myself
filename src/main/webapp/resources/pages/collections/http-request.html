@@ -1,0 +1,32 @@
+<html>
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+	<p>url地址：<input type="text" id="url" value="http://localhost/service/post.php"></p>
+	<p>u请求类型:
+	<select id="type">
+		<option value="GET">get</option>
+		<option value="POST">post</option>
+	</select></p>
+	
+	<form id="f">
+		值1：<input type="text" name="first"><br/>
+		值2：<input type="text" name="second"><br/>
+		<input type="submit" value="提交">
+	</form>
+</body>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script>
+	$(function(){
+		$("#f").attr("action",$("#url").val());
+		$("#f").attr("method",$("#type").val());
+		$("#url").on("change",function(){
+			$("#f").attr("action",$("#url").val());
+		});
+		$("#type").on("change",function(){
+			$("#f").attr("method",$("#type").val());
+		});
+	})
+</script>
+</html>
