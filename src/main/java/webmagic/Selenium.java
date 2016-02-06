@@ -11,6 +11,8 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
 import us.codecraft.webmagic.ResultItems;
 
@@ -18,7 +20,8 @@ public class Selenium {
 	//actions 可以模仿鼠标和键盘的操作
 	@Before
 	public void before(){
-		 System.getProperties().setProperty("webdriver.chrome.driver", "D:/download/chromedriver_win32/chromedriver.exe");
+		System.getProperties().setProperty("webdriver.chrome.driver", "D:/download/chromedriver_win32/chromedriver.exe");
+		 System.getProperties().setProperty("phantomjs.binary.path", "D:/download/phantomjs-2.1.1-windows/bin/phantomjs.exe");
 	}
 	@Test
 	public void sp(){
@@ -27,6 +30,27 @@ public class Selenium {
         WebElement webElement = webDriver.findElement(By.xpath("/html"));
         System.out.println(webElement.getAttribute("outerHTML"));
         webDriver.close();
+	}
+	@Test
+	public void english2Chinese() {
+//		WebDriver webDriver = new ChromeDriver();
+		try {
+//			WebDriver webDriver=new PhantomJSDriver(); 
+			WebDriver webDriver=new HtmlUnitDriver();
+			webDriver.get("http://dict.youdao.com/");
+			WebElement input = webDriver.findElement(By.xpath("//input[@id='query']"));
+			input.sendKeys("English");
+			WebElement button=webDriver.findElement(By.xpath("//input[@type='submit']"));
+			button.click();
+//			Thread.sleep(2000);
+			WebElement ano=webDriver.findElement(By.xpath("//div[@class='trans-container']"));
+			System.out.println(ano.getText()); 
+			webDriver.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}catch (Throwable t){
+			t.printStackTrace();
+		}
 	}
 	@Test
 	public void idNumber() throws InterruptedException{

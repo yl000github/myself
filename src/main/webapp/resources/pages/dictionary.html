@@ -1,0 +1,30 @@
+<html>
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+<p>输入：<input type="text" id="i"></p>
+<button id="query">查询</button>
+<h1 id="o"></h1>
+</body>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script>
+	$(function(){
+		$("#query").on("click",function(){
+			var value=$("#i").val();
+			$.get("/myself/dictionary/youdao",{
+				value:value
+			},
+			function(res){
+				var json=JSON.parse(res);
+				if(json.code){
+					$("#o").html(json.data);
+				}else{
+					alert(json.msg);
+				}
+			}
+			)
+		});
+	})
+</script>
+</html>
