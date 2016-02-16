@@ -33,4 +33,14 @@ public class ExceptionTest {
 		
 //		log.debug("123");
 	}
+	@Test
+	public void ill(){
+		throw new IllegalStateException("参数错误");
+//		try {
+//			throw new IllegalStateException("参数错误");
+//		} catch (Exception e) {
+//			System.out.println("异常捕捉");
+//			e.printStackTrace();
+//		}
+	}
 }
