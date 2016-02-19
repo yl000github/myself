@@ -1,5 +1,8 @@
 package basic;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,7 +14,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import utils.FileUtil;
 import utils.JsonUtil;
+import utils.LogUtil;
 
 public class Utils {
 	@Test
@@ -63,5 +68,36 @@ public class Utils {
 	@Test
 	public void gson(){
 		System.out.println(JsonUtil.ob2json(new Date()));
+	}
+	@Test
+	public void nm(){
+		char ch = '杨';
+		int i = ch;
+//		Integer ii = new Integer(i);
+		System.out.println( i );
+		String st = Integer.toHexString(i);
+		System.out.println(ch + " unicode is: \\u" + st);
+		//System.out.println("\u5220\u9664");
+	}
+	@Test
+	public void code() throws UnsupportedEncodingException{
+		String s="杨";
+		 String ns=new String(s.getBytes("unicode"),"GBK");
+		 System.out.println(ns);
+	}
+	@Test()
+	public void fw(){
+		FileUtil.writeAdd("f:/fw.txt", "hello\r\n");
+		FileUtil.writeAdd("f:/fw.txt", "hello\r\n");
+	}
+	@Test()
+	public void log() throws IOException{
+//		FileUtil.createFile("f:/t/");
+//		FileUtil.createFile("f:/t1/1.txt");
+		LogUtil.logDaily("h");
+		LogUtil.logDaily("h");
+		LogUtil.logDaily("h");
+//		File f=new File("f:/t");
+//		f.mkdirs();
 	}
 }

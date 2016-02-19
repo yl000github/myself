@@ -26,8 +26,8 @@ public class ExceptionTest {
 			throw new BasicException("hello");
 		} catch (BasicException e) {
 			// TODO: handle exception
-//			e.printStackTrace( 
-			log.error(e.getMessage());
+//			e.printStackTrace(  
+			log.info(e.getMessage());
 			System.err.println(e.hint());
 		}
 		
