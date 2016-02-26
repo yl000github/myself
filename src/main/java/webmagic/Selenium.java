@@ -28,7 +28,7 @@ public class Selenium {
 	public void before() {
 		System.out.println("before");
 		System.getProperties().setProperty("webdriver.chrome.driver",
-				"D:/download/chromedriver_win32/chromedriver.exe");
+				"D:/download/chromedriver_win32 (2)/chromedriver.exe");
 //		System.getProperties().setProperty("webdriver.chrome.driver",
 //				"C:/Program Files (x86)/Google/Chrome/Application/chromedriver.exe");
 //		System.getProperties().setProperty("phantomjs.binary.path",

@@ -21,7 +21,7 @@ public class DictionaryController {
 	public String youdao(String value){
 		try {
 			System.getProperties().setProperty("webdriver.chrome.driver", "D:/download/chromedriver_win32/chromedriver.exe");
-			 System.getProperties().setProperty("phantomjs.binary.path", "D:/download/phantomjs-2.1.1-windows/bin/phantomjs.exe");
+			System.getProperties().setProperty("phantomjs.binary.path", "D:/download/phantomjs-2.1.1-windows/bin/phantomjs.exe");
 			webDriver=new HtmlUnitDriver();
 			if(!StringUtil.checkValid(value))  return new ResponseMsg(0, "value为空", "").toJson();
 			webDriver.get("http://dict.youdao.com/");
