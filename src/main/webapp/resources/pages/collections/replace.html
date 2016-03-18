@@ -1,0 +1,39 @@
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+	*{
+		font-size:25px;
+	}
+
+</style>
+</head>
+<body>
+<p>原字符串</p>
+<input style="width:800px;" type="text" id="i">
+<p>要替换的字串</p>
+<input type="text" id="replace-pre" value="/">
+<p>替换后的字串</p>
+<input type="text" id="replace-after" value="\">
+<p>结果</p>
+<h3 id="o"></h3>
+<!-- <input type="text" id="o"> -->
+</body>
+<script src="../../js/jquery.min.js"></script>
+<script>
+	$(function(){
+		$("#i").on("change",commit);
+		$("#replace-pre").on("change",commit);
+		$("#replace-after").on("change",commit);
+	});
+	function commit(){
+		var i=$("#i").val();
+		var re_pre=$("#replace-pre").val();
+		var re_aft=$("#replace-after").val();
+		$("#o").html(i.replace(new RegExp(re_pre,"g"),re_aft));
+	}
+
+</script>
+
+
+</html>
