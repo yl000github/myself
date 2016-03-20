@@ -47,8 +47,9 @@ public class MyRobot extends Robot {
 	
 	public static void main(String[] args) throws AWTException {
 		MyRobot robot=new MyRobot();
-		robot.mouseMove(200, (int)robot.height);
+		robot.mouseMove(0, (int)robot.height);
 		robot.DianJi();
-//		robot.
+		System.out.println("hello");
+//		robot. 
 	}
 }
