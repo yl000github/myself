@@ -1,6 +1,9 @@
 package robot;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -40,6 +43,27 @@ public class Chengyu {
 			throw new BasicException("没有找到结果");
 		}
 //		return "没有找到";
+	}
+	public static Set<String> getFirstList(String head) throws BasicException{
+		try {
+			webDriver.get("http://chengyu.t086.com/chaxun.php?q1=&q2=&q3=&q4=");
+			WebElement input = webDriver.findElement(By.xpath("//input[@name='q1']"));
+			input.sendKeys(head);
+			WebElement button = webDriver.findElement(By.xpath("//input[@type='submit']"));
+			button.click();
+			List<WebElement> ano = webDriver.findElements(By.xpath("//td[@class='td1']"));
+			Set<String> ans=new HashSet<>();
+			for (WebElement w : ano) {
+				String ts=w.getText();
+				if(ts.length()==4){
+					ans.add(ts);
+				}
+			}
+			return ans;
+		}  catch (Throwable t) {
+			t.printStackTrace();
+			throw new BasicException("没有找到结果");
+		}
 	}
 	public static void main(String[] args) throws BasicException {
 		Chengyu c=new Chengyu();

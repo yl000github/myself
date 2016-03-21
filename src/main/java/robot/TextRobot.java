@@ -125,8 +125,14 @@ public class TextRobot extends Robot{
 	public void copy(){
 		keyPress(KeyEvent.VK_CONTROL);
 		keyPress(KeyEvent.VK_C);
-		keyRelease(KeyEvent.VK_CONTROL);
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		keyRelease(KeyEvent.VK_C);
+		keyRelease(KeyEvent.VK_CONTROL);
 	}
 	public void paste(){
 		keyPress(KeyEvent.VK_CONTROL);
@@ -162,6 +168,7 @@ public class TextRobot extends Robot{
 		int i=Integer.parseInt(number);
 		return String.valueOf(++i);
 	}
+	//成功率好有限啊
 	public String getMessage(int sX,int sY,int eX,int eY) throws Exception{
 		mouseMove(sX,sY);
 		this.mousePress(MouseEvent.BUTTON1_MASK);

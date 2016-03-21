@@ -40,13 +40,13 @@ public class QQXiaoyun {
 	public void sangongRan()throws Exception{
 		TextRobot robot=new TextRobot();
 		robot.qiehuan(); 
-		int min=50,max=500;
+		int min=50,max=50;
 		String pre="三公 ";
 		for (int i = 0; i < 100; i++) { 
 			int n=(int) (min+Math.random()*(max-min));
 			robot.inputText(pre+n);
 			robot.qqSend(); 
-			Thread.sleep(1000);
+			Thread.sleep(2000);
 		}
 		
 	}
@@ -107,7 +107,7 @@ public class QQXiaoyun {
 //		r.mouseFromTo(0, 0, 1366, 768);
 		r.qiehuan();
 		Thread.sleep(1000);
-		String c=r.getMessage(399, 193, 774, 484);
+		String c=r.getMessage(414, 343, 600, 401);
 		System.out.println(c);
 //		r.mouseMove(774, 484);
 	}
