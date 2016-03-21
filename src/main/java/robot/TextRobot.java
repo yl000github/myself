@@ -18,7 +18,7 @@ public class TextRobot extends Robot{
 	private Dimension dim;
     public double width;
     public double height;
-	public TextRobot() throws AWTException {
+	public TextRobot() throws Exception {
 		super();
 		dim=Toolkit.getDefaultToolkit().getScreenSize();
         width=dim.getWidth();
@@ -41,13 +41,28 @@ public class TextRobot extends Robot{
 			}
 		}
 	}
-	public void mouseClick(){
+	private void pause(){
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void mouseLeftClick(){
 		this.mousePress(MouseEvent.BUTTON1_MASK);
 		this.mouseRelease(MouseEvent.BUTTON1_MASK);
+		pause();
+	}
+	public void mouseRightClick(){
+		this.mousePress(MouseEvent.BUTTON2_MASK);
+		this.mouseRelease(MouseEvent.BUTTON2_MASK);
+		pause();
 	}
 	public void keyClick(int c){
 		this.keyPress(c);
 		this.keyRelease(c);
+//		pause();
 	}
 	public void enter(){
 		this.keyPress(KeyEvent.VK_ENTER);
@@ -181,7 +196,11 @@ public class TextRobot extends Robot{
 			}
 		}
 	}
-	public static void main(String[] args) throws AWTException, InterruptedException {
+	public void moveAndClick(int x,int y){
+		mouseMove(x, y);
+		mouseLeftClick();
+	}
+	public static void main(String[] args) throws Exception {
 		TextRobot robot=new TextRobot();
 		robot.qiehuan();
 //		for (int i = 0; i <500; i++) {
