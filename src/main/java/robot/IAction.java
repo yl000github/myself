@@ -6,7 +6,7 @@ package robot;
  *
  */
 public interface IAction {
-	public void watch();
-	public void think();
-	public void action();
+	public void watch() throws Exception;
+	public void think() throws Exception;
+	public void action() throws Exception;
 }

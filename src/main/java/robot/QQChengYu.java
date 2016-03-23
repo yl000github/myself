@@ -28,56 +28,46 @@ public class QQChengYu extends RecogniseRobot implements IAction{
 
 
 	@Override
-	public void watch() {
+	public void watch()  throws Exception{
 //		content=getMessage(sX, sY, eX, eY)
 		//获取屏幕信息
-		try {
-			content=getContent(10, 480, 1128, 591);
-			content=content.trim();
-			System.out.println(content);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		content=getContent(10, 480, 1128, 591);
+		content=content.trim();
+		System.out.println(content);
 	}
 
 	@Override
-	public void think() {
+	public void think()  throws Exception{
 		// TODO Auto-generated method stub
 		//有这么几种情况：
 		//1.当前成语2.成语重复3.成语不存在
 		//对应的行为为：查，查不重复的，换一个
-		try{
-			if(content.contains("成语接龙游戏开始")){
-				keyWord=content.substring(content.length()-1, content.length());
-				System.out.println(keyWord);
-				process();
-			}else if(content.contains("成语接龙游戏超时自动结束")){
-				throw new RuntimeException("游戏结束");
-			}else if(content.contains("请重新输入")||content.contains("无法继续进行游戏！请更换成语")){
-				Iterator<String> it=res.iterator();
-				if(it.hasNext()){
-					action=it.next();
-					res.remove(action);
-				}else{
-					throw new RuntimeException("成语set中没有值了");
-				}
-			}else if(content.contains("接龙成功")){
-				keyWord=content.substring(content.length()-1, content.length());
-				System.out.println(keyWord);
-				process();
-			}else {
-				throw new RuntimeException("不正常状态");
+		
+		if(content.contains("成语接龙游戏开始")){
+			keyWord=content.substring(content.length()-1, content.length());
+			System.out.println(keyWord);
+			process();
+		}else if(content.contains("成语接龙游戏超时自动结束")){
+			throw new BasicException("游戏结束");
+		}else if(content.contains("请重新输入")||content.contains("无法继续进行游戏！请更换成语")){
+			Iterator<String> it=res.iterator();
+			if(it.hasNext()){
+				action=it.next();
+				res.remove(action);
+			}else{
+				throw new BasicException("成语set中没有值了");
 			}
-			
-		}catch(Exception e){
-			e.printStackTrace();
-			throw new RuntimeException(e.getMessage());
+		}else if(content.contains("接龙成功")){
+			keyWord=content.substring(content.length()-1, content.length());
+			System.out.println(keyWord);
+			process();
+		}else {
+			throw new BasicException("不正常状态");
 		}
 	}
 
 	@Override
-	public void action() {
+	public void action()  throws Exception{
 		// TODO Auto-generated method stub
 		//输出
 		if(action!=null){
@@ -89,29 +79,32 @@ public class QQChengYu extends RecogniseRobot implements IAction{
 				e.printStackTrace();
 			}
 		}else{
-			throw new RuntimeException("action不应为空");
+			throw new BasicException("action不应为空");
 		}
 	}
-	private void process(){
+	private void process() throws Exception{
 		if(keyWord!=null&&keyWord.length()==1){
-			try {
-				res=Chengyu.getFirstList(keyWord);
-			} catch (BasicException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			res=Chengyu.getFirstList(keyWord);
 			Iterator<String> it=res.iterator();
 			if(it.hasNext()){
 				action=it.next();
 				res.remove(action);
 			}else{
-				throw new RuntimeException("成语set中没有值了");
+				throw new BasicException("成语set中没有值了");
 			}
 		}else{
-			throw new RuntimeException("keyWord格式不正确");
+			throw new BasicException("keyWord格式不正确");
 		}
 	}
-	public void work(){
+	public void waitAndTryAgain(){
+		try {
+			Thread.sleep(300000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void work() throws Exception{
 		watch();
 		think();
 		action();
@@ -122,8 +115,13 @@ public class QQChengYu extends RecogniseRobot implements IAction{
 //		cy.action();
 //		Thread.sleep(6000);
 		while(true){
-			cy.work();
-			Thread.sleep(6000);
+			try {
+				cy.work();
+				Thread.sleep(6000);
+			} catch (Exception e) {
+				e.printStackTrace();
+				cy.waitAndTryAgain();
+			}
 		}
 	}
 }
