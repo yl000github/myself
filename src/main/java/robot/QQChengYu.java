@@ -99,6 +99,9 @@ public class QQChengYu extends RecogniseRobot implements IAction{
 	public void waitAndTryAgain(){
 		try {
 			Thread.sleep(300000);
+			inputText("成语接龙");
+			qqSend();
+			Thread.sleep(6000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
