@@ -12,7 +12,7 @@ import exception.BasicException;
  * @author Administrator
  *
  */
-public class QQChengYu extends TextRobot implements IAction{
+public class QQChengYu extends RecogniseRobot implements IAction{
 
 	private String content;
 	private String action;//所谓的行为就是发送一段文字
@@ -31,7 +31,7 @@ public class QQChengYu extends TextRobot implements IAction{
 //		content=getMessage(sX, sY, eX, eY)
 		//获取屏幕信息
 		try {
-			content=getMessage(404, 427, 743, 494);
+			content=getContent(404, 427, 743, 494);
 			content=content.trim();
 			System.out.println(content);
 		} catch (Exception e) {
