@@ -22,6 +22,7 @@ public class QQChengYu extends RecogniseRobot implements IAction{
 	public QQChengYu() throws Exception {
 		super();
 		qiehuan();
+		ClipboardOperate.setClipboardText("");
 //		watchKeyWord();
 	}
 
@@ -31,7 +32,7 @@ public class QQChengYu extends RecogniseRobot implements IAction{
 //		content=getMessage(sX, sY, eX, eY)
 		//获取屏幕信息
 		try {
-			content=getContent(404, 427, 743, 494);
+			content=getContent(10, 480, 1128, 591);
 			content=content.trim();
 			System.out.println(content);
 		} catch (Exception e) {
@@ -53,7 +54,7 @@ public class QQChengYu extends RecogniseRobot implements IAction{
 				process();
 			}else if(content.contains("成语接龙游戏超时自动结束")){
 				throw new RuntimeException("游戏结束");
-			}else if(content.contains("请重新输入")){
+			}else if(content.contains("请重新输入")||content.contains("无法继续进行游戏！请更换成语")){
 				Iterator<String> it=res.iterator();
 				if(it.hasNext()){
 					action=it.next();
@@ -62,7 +63,8 @@ public class QQChengYu extends RecogniseRobot implements IAction{
 					throw new RuntimeException("成语set中没有值了");
 				}
 			}else if(content.contains("接龙成功")){
-				keyWord=content.substring(content.length()-2, content.length());
+				keyWord=content.substring(content.length()-1, content.length());
+				System.out.println(keyWord);
 				process();
 			}else {
 				throw new RuntimeException("不正常状态");

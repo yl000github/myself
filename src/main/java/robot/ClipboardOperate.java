@@ -33,7 +33,7 @@ public class ClipboardOperate {
      * 系统剪切板使用  Clipboard sysc = Toolkit.getDefaultToolkit().getSystemClipboard();
      * 剪切板的内容   getContents(null); 返回Transferable
      */
-    protected static String getClipboardText() throws Exception{
+    public static String getClipboardText() throws Exception{
         Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();//获取系统剪贴板
         // 获取剪切板中的内容
         Transferable clipT = clip.getContents(null);
@@ -44,7 +44,11 @@ public class ClipboardOperate {
         }
         return null;
     }
- 
+    public static void setClipboardText(String str)throws Exception{
+        Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();//获取系统剪贴板
+        StringSelection ss=new StringSelection(str);
+        clip.setContents(ss, null);
+    }
      //往剪切板写文本数据
      protected static void setClipboardText(Clipboard clip, String writeMe) {
          Transferable tText = new StringSelection(writeMe);
