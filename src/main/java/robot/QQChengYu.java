@@ -96,14 +96,25 @@ public class QQChengYu extends RecogniseRobot implements IAction{
 			throw new BasicException("keyWord格式不正确");
 		}
 	}
+	/**
+	 * 应该采用轮询的机制，隔一段时间就查看下是否已经重新开始
+	 */
 	public void waitAndTryAgain(){
+		int space=30000;//30s
 		try {
-			Thread.sleep(300000);
+			boolean flag=true;
+			while(flag){
+				Thread.sleep(space);
+				watch();
+				if(content.contains("成语接龙游戏开始")){
+					flag=false;
+					ClipboardOperate.setClipboardText("");
+				}
+			}
 			inputText("成语接龙");
 			qqSend();
 			Thread.sleep(6000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

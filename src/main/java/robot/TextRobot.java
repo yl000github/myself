@@ -71,8 +71,18 @@ public class TextRobot extends Robot{
 	public boolean isIn(int goal,int min,int max){
 		return goal>=min&&goal<=max;
 	}
+	int []symbol=new int[]{
+			KeyEvent.VK_SPACE,KeyEvent.VK_COMMA,KeyEvent.VK_PERIOD,
+			KeyEvent.VK_MINUS,KeyEvent.VK_EQUALS
+	};
+	private boolean isInSymbol(int code){
+		for (int i = 0; i < symbol.length; i++) {
+			if(code==symbol[i]) return true;
+		}
+		return false;
+	}
 	/**
-	 * 有效范围为：0-9,a-z,A-Z
+	 * 有效范围为：0-9,a-z,A-Z,少数标点,其他的可以扩充
 	 * @param c
 	 */
 	public void inputChar(char c){
@@ -87,8 +97,9 @@ public class TextRobot extends Robot{
 			this.keyRelease(c);
 		}else if(isIn(c,97,122)){
 			keyClick(c-32);
-		}else if(c==32){
-			keyClick(KeyEvent.VK_SPACE);
+		}else if(isInSymbol(c)){
+//			keyClick(KeyEvent.VK_SPACE);
+			keyClick(c);
 		}else if(isIn(c,0x4E00,0x9FA5)){
 			//基本汉字,获取unicode，必须配合unicode输入法使用
 			String s=Integer.toHexString(c);
@@ -214,11 +225,11 @@ public class TextRobot extends Robot{
 //			robot.paste();
 //			robot.qqSend();
 //		}
-		for (int i = 1030; i <1070; i++) {
-			String s=String.valueOf(i);
-			robot.inputNumber(s);
-			robot.qqSend();
-		}
+//		for (int i = 1030; i <1070; i++) {
+//			String s=String.valueOf(i);
+//			robot.inputNumber(s);
+//		}
+		robot.inputText(" ,.-=");
 		System.out.println("ok");
 	}
 }

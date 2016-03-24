@@ -29,8 +29,8 @@ public class RecogniseRobot extends TextRobot{
 				return msg;
 			}
 		}
-		//然后尝试扩大范围
-		for (int i = 0; i < tryCount; i++) {
+		//然后尝试扩大范围，适当缩小扩大的范围值，以免点到其他地方，产生未知错误
+		for (int i = 0; i < tryCount/2; i++) {
 			String msg=getMessage(sX-deltW*i, sY-deltH*i, eX+deltW*i, eY+deltH*i);
 			if(!msg.equals(stored)){
 				return msg;
