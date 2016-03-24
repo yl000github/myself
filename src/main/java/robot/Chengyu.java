@@ -32,7 +32,7 @@ public class Chengyu {
 				if(ts.length()==4){
 					ans=ts;
 					break;
-				}
+				} 
 			}
 //			String ans=ano.getText();
 //			System.out.println(ano.getText());
@@ -67,7 +67,10 @@ public class Chengyu {
 	}
 	public static void main(String[] args) throws BasicException {
 		Chengyu c=new Chengyu();
-		String ans=c.getFirst("命");
+		Set<String> ans=c.getFirstList("邦");
+		for (String string : ans) {
+			System.out.println(string);
+		}
 		System.out.println(ans);
 	}
 }

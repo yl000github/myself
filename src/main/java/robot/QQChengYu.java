@@ -23,6 +23,9 @@ public class QQChengYu extends RecogniseRobot implements IAction{
 		super();
 		qiehuan();
 		ClipboardOperate.setClipboardText("");
+		inputText("成语接龙");
+		qqSend();
+		Thread.sleep(6000);
 //		watchKeyWord();
 	}
 
@@ -61,7 +64,12 @@ public class QQChengYu extends RecogniseRobot implements IAction{
 			keyWord=content.substring(content.length()-1, content.length());
 			System.out.println(keyWord);
 			process();
-		}else {
+		}else  if(content.contains("玩游戏就要专心玩")){
+			int dqcy=content.indexOf("当前成语");
+			keyWord=content.substring(dqcy+8, dqcy+9);
+			System.out.println(keyWord);
+			process();
+		}else{
 			throw new BasicException("不正常状态");
 		}
 	}
@@ -106,10 +114,10 @@ public class QQChengYu extends RecogniseRobot implements IAction{
 			while(flag){
 				Thread.sleep(space);
 				watch();
-				if(content.contains("成语接龙游戏开始")){
+				if(content.contains("成语接龙游戏超时自动结束")){
 					flag=false;
 					ClipboardOperate.setClipboardText("");
-				}
+				} 
 			}
 			inputText("成语接龙");
 			qqSend();
