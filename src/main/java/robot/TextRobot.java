@@ -218,6 +218,9 @@ public class TextRobot extends Robot{
 		mouseMove(x, y);
 		mouseLeftClick();
 	}
+	public void clearClipboard() throws Exception{
+		ClipboardOperate.setClipboardText("");
+	}
 	public static void main(String[] args) throws Exception {
 		TextRobot robot=new TextRobot();
 		robot.qiehuan();
