@@ -108,23 +108,34 @@ public class QQChengYu extends RecogniseRobot implements IAction{
 	 * 应该采用轮询的机制，隔一段时间就查看下是否已经重新开始
 	 */
 	public void waitAndTryAgain(){
-		int space=30000;//30s
 		try {
-			boolean flag=true;
-			while(flag){
-				Thread.sleep(space);
-				watch();
-				if(content.contains("成语接龙游戏超时自动结束")){
-					flag=false;
-					ClipboardOperate.setClipboardText("");
-				} 
-			}
+			inputText("结束成语接龙");
+			qqSend();
+			Thread.sleep(6000);
 			inputText("成语接龙");
 			qqSend();
 			Thread.sleep(6000);
-		} catch (Exception e) {
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+//		int space=30000;//30s
+//		try {
+//			boolean flag=true;
+//			while(flag){
+//				Thread.sleep(space);
+//				watch();
+//				if(content.contains("成语接龙游戏超时自动结束")){
+//					flag=false;
+//					ClipboardOperate.setClipboardText("");
+//				} 
+//			}
+//			inputText("成语接龙");
+//			qqSend();
+//			Thread.sleep(6000);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 	}
 	public void work() throws Exception{
 		watch();
