@@ -1,51 +1,23 @@
-package robot;
+package robot1;
 
-import java.awt.AWTException;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import exception.BasicException;
+import robot.Chengyu;
 
-/**
- * 唯一完全正面增值的游戏
- * @author Administrator
- *
- */
-public class QQChengYu extends RecogniseRobot implements IAction{
-
-	private String content;
+public class QQChengYu extends QQMan{
 	private String action;//所谓的行为就是发送一段文字
 	private String keyWord;
 	private Set<String> res;
 	
 	public QQChengYu() throws Exception {
 		super();
-		qiehuan();
-		ClipboardOperate.setClipboardText("");
-		inputText("成语接龙");
-		qqSend();
-		Thread.sleep(6000);
-//		watchKeyWord();
 	}
-
-
 	@Override
-	public void watch()  throws Exception{
-//		content=getMessage(sX, sY, eX, eY)
-		//获取屏幕信息
-		content=getContent(10, 480, 1128, 591);
-		content=content.trim();
-		System.out.println(content);
-	}
-
-	@Override
-	public void think()  throws Exception{
-		// TODO Auto-generated method stub
-		//有这么几种情况：
-		//1.当前成语2.成语重复3.成语不存在
-		//对应的行为为：查，查不重复的，换一个
-		
+	public void think() throws Exception {
+		System.out.println("hi");
+		if(content==null) throw new Exception("未能获得content");
 		if(content.contains("成语接龙游戏开始")){
 			keyWord=content.substring(content.length()-1, content.length());
 			System.out.println(keyWord);
@@ -64,30 +36,29 @@ public class QQChengYu extends RecogniseRobot implements IAction{
 			keyWord=content.substring(content.length()-1, content.length());
 			System.out.println(keyWord);
 			process();
-		}else  if(content.contains("玩游戏就要专心玩")){
+		}else if(content.contains("玩游戏就要专心玩")){
 			int dqcy=content.indexOf("当前成语");
 			keyWord=content.substring(dqcy+8, dqcy+9);
 			System.out.println(keyWord);
 			process();
+		}else if(content.contains("需要休息120分钟")){
+			System.out.println("无法游戏了");
+			System.exit(1);
 		}else{
-			throw new BasicException("不正常状态");
+			//尚未开始游戏
+			action="成语接龙";
+//			throw new BasicException("不正常状态");
 		}
 	}
 
 	@Override
-	public void action()  throws Exception{
-		// TODO Auto-generated method stub
+	public void action() throws Exception {
 		//输出
 		if(action!=null){
 			inputText(action);
-			try {
-				qqSend();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			qqSend();
 		}else{
-			throw new BasicException("action不应为空");
+			throw new Exception("action不应为空");
 		}
 	}
 	private void process() throws Exception{
@@ -104,9 +75,6 @@ public class QQChengYu extends RecogniseRobot implements IAction{
 			throw new BasicException("keyWord格式不正确");
 		}
 	}
-	/**
-	 * 应该采用轮询的机制，隔一段时间就查看下是否已经重新开始
-	 */
 	public void waitAndTryAgain(){
 		try {
 			inputText("结束成语接龙");
@@ -116,24 +84,14 @@ public class QQChengYu extends RecogniseRobot implements IAction{
 			qqSend();
 			Thread.sleep(6000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	public void work() throws Exception{
-		watch();
-		think();
-		action();
-	}
 	public static void main(String[] args) throws Exception {
 		QQChengYu cy=new QQChengYu();
-//		cy.think();
-//		cy.action();
-//		Thread.sleep(6000);
 		while(true){
 			try {
 				cy.work();
-				Thread.sleep(6000);
 			} catch (Exception e) {
 				e.printStackTrace();
 				cy.waitAndTryAgain();

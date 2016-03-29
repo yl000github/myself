@@ -108,7 +108,8 @@ public class HttpServer implements Runnable{
             	for (int i = 0; i < rs.length; i++) {
             		String t=rs[i];
             		String []rst=t.split("=");
-            		map.put(rst[0], rst[1]);
+            		if(rst.length>=2) 
+            			map.put(rst[0], rst[1]);
             	}
 			} catch (Exception e) {
 				e.printStackTrace();

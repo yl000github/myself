@@ -166,6 +166,10 @@ public class TextRobot extends Robot{
 		keyRelease(key1);
 		keyRelease(key2);
 	}
+	public void ctrlA() throws InterruptedException{
+		twoKey(KeyEvent.VK_CONTROL,KeyEvent.VK_A);
+		Thread.sleep(100);
+	}
 	public void qqSend() throws InterruptedException{
 		twoKey(KeyEvent.VK_ALT,KeyEvent.VK_S);
 	}
