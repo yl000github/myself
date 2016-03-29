@@ -12,7 +12,7 @@ public abstract class AMan extends Action implements IBehavior{
 		relax();
 	}
 	protected void relax() throws InterruptedException{
-		Thread.sleep(5000);
+		Thread.sleep(3000);
 	}
 	protected void read(int sX, int sY, int eX, int eY) throws Exception{
 		content=getMessage(sX, sY, eX, eY);

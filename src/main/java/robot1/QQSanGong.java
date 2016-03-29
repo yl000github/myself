@@ -24,24 +24,38 @@ public abstract class QQSanGong extends QQMan{
 	int tryNumber=1;
 	public QQSanGong() throws Exception {
 		super();
+		excelInit();
 	}
 	@Override
 	public void think() throws Exception {
+		if(content.contains(users[0])){
+			//自己输入的信息，其实最好也要做一个判断的工作
+			if(content.contains("====")){
+				action="积分系统";
+			}else{
+				action="自己的未知信息";
+			}
+			return;
+//			throw new Exception("非机器人的回答");
+		}
 		if(content.contains("玩家赢")){
 			isWin=true;currentMoney+=everyInvestMoney;
 			writeToExcel();
 			win();
+			action="三公 "+everyInvestMoney;
 		}else if(content.contains("玩家输")){
 			isWin=false;currentMoney-=everyInvestMoney;
 			writeToExcel();
 			lose();
+			action="三公 "+everyInvestMoney;
 		}else if(content.contains("当前等级")){
 			totalMoney=Integer.parseInt(content.substring(content.indexOf("积分：")+3,content.indexOf("当前等级")-1));
 			currentMoney=totalMoney;
 			ready();
+			action="三公 "+everyInvestMoney;
 		}else {
 			//do nothing
-//			action=""
+//			action="积分系统";
 		}
 		if(everyInvestMoney<50){
 			System.out.println("穷困潦倒啊，50都没有");
@@ -54,7 +68,7 @@ public abstract class QQSanGong extends QQMan{
 
 	@Override
 	public void action() throws Exception {
-		inputText("三公 "+everyInvestMoney);
+		inputText(action);
 		qqSend();
 	}
 	public void excelInit(){

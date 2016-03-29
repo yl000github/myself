@@ -8,7 +8,13 @@ public class QQSanGongSimple extends QQSanGong{
 
 	public QQSanGongSimple() throws Exception {
 		super();
-	}
+		inputText("==============");
+		try {
+			qqSend();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	} 
 
 	@Override
 	public void win() {
@@ -18,13 +24,11 @@ public class QQSanGongSimple extends QQSanGong{
 	@Override
 	public void lose() {
 		everyInvestMoney=50;
-	}
+	} 
 
 	@Override
-	public void ready() {
-		
-	}
-	int count=2;
+	public void ready() {}
+	int count=100;
 	@Override
 	public void play() {
 		while(count-->0){
@@ -34,9 +38,20 @@ public class QQSanGongSimple extends QQSanGong{
 				e.printStackTrace();
 			}
 		}
+		try {
+			watch();
+			think();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-	public static void main(String[] args) throws Exception {
-		QQSanGongSimple sg=new QQSanGongSimple();
-		sg.play();
+	public static void main(String[] args) {
+		QQSanGongSimple sg;
+		try {
+			sg = new QQSanGongSimple();
+			sg.play();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

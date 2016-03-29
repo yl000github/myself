@@ -39,7 +39,7 @@ public class Action extends Robot{
 	public void inputText(String src){
 		for (int i = 0; i < src.length(); i++) {
 			char c=src.charAt(i);
-			if(c>='0'&&c<='9'||c>='a'&&c<='z'||c>='A'&&c<='Z'){
+			if(c>='0'&&c<='9'||c>='a'&&c<='z'||c>='A'&&c<='Z'||c=='#'||isInSymbol(c)){
 				keyClick(KeyEvent.VK_CAPS_LOCK);
 				inputChar(c);
 				keyClick(KeyEvent.VK_CAPS_LOCK);
@@ -115,6 +115,9 @@ public class Action extends Robot{
 				inputChar(sc);
 			}
 //			keyClick(KeyEvent.VK_SPACE);
+		}else if(c=='#'){
+			//有问题
+			keyClick(KeyEvent.VK_NUMBER_SIGN);
 		}else{
 			//not support
 			
@@ -228,7 +231,10 @@ public class Action extends Robot{
 		return ClipboardOperate.getClipboardText();
 	}
 	public static void main(String[] args) throws Exception {
-		
+		Action a=new Action();
+		a.qiehuan();
+//		a.inputText("#");
+		a.keyClick(KeyEvent.VK_1);
 	}
 
 }

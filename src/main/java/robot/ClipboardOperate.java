@@ -42,7 +42,7 @@ public class ClipboardOperate {
         if (clipT.isDataFlavorSupported(DataFlavor.stringFlavor))
         return (String)clipT.getTransferData(DataFlavor.stringFlavor); 
         }
-        return null;
+        throw new Exception("无法获得系统剪切板的信息");
     }
     public static void setClipboardText(String str)throws Exception{
         Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();//获取系统剪贴板

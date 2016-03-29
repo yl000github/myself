@@ -46,8 +46,8 @@ public abstract class QQMan extends AMan{
 		int mX=(sX+eX)/2;
 		int mY=(sY+eY)/2;
 		moveAndClick(mX, mY);
-		ctrlA();
-		copy();
+		ctrlA();Thread.sleep(100);
+		copy();Thread.sleep(100);
 		String msg=getClipboard();
 		//分析的思路，根据角色名做区分，找出最后一条消息
 		int max=-1;
@@ -55,6 +55,7 @@ public abstract class QQMan extends AMan{
 			int t=msg.lastIndexOf(users[i]);
 			if(t>max) max=t;
 		}
+		if(max==-1) throw new Exception("找不到对白信息");
 		String result=msg.substring(max, msg.length());
 		return result;
 	}
