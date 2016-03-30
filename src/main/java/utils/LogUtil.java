@@ -5,7 +5,7 @@ package utils;
  *
  */
 public class LogUtil {
-	public static final String DIR="F:/logs/";
+	public static final String DIR="D:/logs/";
 	public static void logDaily(String msg){
 		String now=DateUtil.getNowFormat("yy-MM-dd");
 		String filename="log-"+now+".log";

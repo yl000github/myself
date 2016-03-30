@@ -3,59 +3,67 @@ package utils;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class FileUtil {
-	public static void createFile(String filepath) throws IOException{
-		File f=new File(filepath);
-		if(!f.exists()) {
-			String parent=f.getParent();
-			File p=new File(parent);
-			if(!p.exists()) p.mkdirs();
+	public static void createFile(String filepath) throws IOException {
+		File f = new File(filepath);
+		if (!f.exists()) {
+			String parent = f.getParent();
+			File p = new File(parent);
+			if (!p.exists())
+				p.mkdirs();
 			f.createNewFile();
 		}
-//		if(f.isDirectory()) {
-//			f.mkdir();
-//			return;
-//		}
-//		if(f.isFile()){
-//			String parent=f.getParent();
-//			File p=new File(parent);
-//			if(!p.exists()) p.mkdirs();
-//			f.createNewFile();
-//		}
+		// if(f.isDirectory()) {
+		// f.mkdir();
+		// return;
+		// }
+		// if(f.isFile()){
+		// String parent=f.getParent();
+		// File p=new File(parent);
+		// if(!p.exists()) p.mkdirs();
+		// f.createNewFile();
+		// }
 	}
-	public static void write(String filepath,String content){
+
+	public static void write(String filepath, String content) {
 		try {
-			BufferedWriter bw=new BufferedWriter(new FileWriter(filepath));
+			BufferedWriter bw = new BufferedWriter(new FileWriter(filepath));
 			bw.write(content);
 			bw.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	public static void writeAdd(String filepath,String content){
+
+	public static void writeAdd(String filepath, String content) {
 		try {
 			createFile(filepath);
-			FileWriter fw=new FileWriter(filepath,true);
+			FileWriter fw = new FileWriter(filepath, true);
 			fw.write(content);
 			fw.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	public static String read(String filepath){
+
+	public static String read(String filepath) {
 		try {
-			BufferedReader br=new BufferedReader(new FileReader(filepath));
-			StringBuffer sb=new StringBuffer();	
-			String line=null;
-			while((line=br.readLine())!=null){
+			BufferedReader br = new BufferedReader(new FileReader(filepath));
+			StringBuffer sb = new StringBuffer();
+			String line = null;
+			while ((line = br.readLine()) != null) {
 				sb.append(line);
 				sb.append("\r\n");
 			}
-//			System.out.println(sb.toString());
+			// System.out.println(sb.toString());
 			br.close();
 			return sb.toString();
 		} catch (Exception e) {
@@ -63,10 +71,44 @@ public class FileUtil {
 		}
 		return "";
 	}
-	public static void main(String[] args){
-		String c="hello yang";
-		String filepath="E:/y.txt";
-		write(filepath, c);
-		System.out.println(read(filepath));
+	/**
+	 * 返回一个文件夹下所有对应类型文件的总行数
+	 * @param filePath
+	 * @return
+	 * @throws IOException 
+	 */
+	public static int getFilesLines(String filePath,String type) throws IOException {
+		File root = new File(filePath);
+		if(!root.isDirectory()) return -1;
+		File[] files = root.listFiles();
+		if(files.length==0) return 0;
+		int s=0;
+		for (File file : files) {
+			if (file.isDirectory()) {
+				s+=getFilesLines(file.getAbsolutePath(),type);
+//				System.out.println("显示" + filePath + "下所有子目录及其文件" + file.getAbsolutePath());
+			} else {
+//				System.out.println("显示" + filePath + "下所有子目录" + file.getAbsolutePath());
+				if(file.getName().endsWith("."+type))
+					s+=readLines(file);
+			}
+		}
+		return s;
+	}
+	public static int readLines(File f) throws IOException{
+		InputStream input = new FileInputStream(f);BufferedReader b = new BufferedReader(new InputStreamReader(input));
+		int count=0;
+		while(b.readLine()!=null) count++;
+		b.close();
+		input.close();
+		return count;
+	}
+	public static void main(String[] args) throws IOException {
+		String c = "hello yang";
+		String filepath = "D:\\git\\myself\\src\\main\\java";
+		System.out.println(getFilesLines(filepath,"java"));
+		;
+		// write(filepath, c);
+		// System.out.println(read(filepath));
 	}
 }

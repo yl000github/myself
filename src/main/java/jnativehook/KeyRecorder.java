@@ -120,6 +120,8 @@ public class KeyRecorder extends JFrame implements NativeKeyListener{
             }); 
             ClassLoader cl = this.getClass().getClassLoader(); 
             URL url = cl.getResource("pic/tray.png"); 
+            System.out.println(url.getPath());
+            System.out.println(url.toString());
             ImageIcon icon = new ImageIcon(url);  
             //创建托盘图标   
             trayIcon = new TrayIcon(icon.getImage(), "键盘监听", popupMenu); 
