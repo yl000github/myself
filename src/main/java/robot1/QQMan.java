@@ -74,15 +74,15 @@ public abstract class QQMan extends AMan{
 			System.out.println("观察到的内容为："+content);
 			//首次不用等
 			if(!f){
-				f=false;
 				pause();
 			}
+			f=false;
 		}
 	}
 	@Override
 	protected void pause() {
 		try {
-			Thread.sleep(6000);
+			Thread.sleep(3000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

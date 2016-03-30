@@ -25,7 +25,10 @@ public class QQSanGongSimple extends QQSanGong{
 	public void lose() {
 		everyInvestMoney=50;
 	} 
-
+	@Override
+	protected void relax() throws InterruptedException {
+		Thread.sleep(2000);
+	}
 	@Override
 	public void ready() {}
 	int count=100;
