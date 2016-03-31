@@ -7,9 +7,16 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.gargoylesoftware.htmlunit.util.UrlUtils;
+
+import swing.resolve.IResolve;
+import swing.resolve.RequestMsg;
+import swing.resolve.RequestMsgHandler;
+import utils.JsonUtil;
 import web.message.ResponseMsg;
 
 public class HttpServer implements Runnable{
@@ -52,19 +59,25 @@ public class HttpServer implements Runnable{
                 PrintWriter printWriter = new PrintWriter(  
                         socket.getOutputStream(), true);//这里第二个参数表示自动刷新缓存  
                 handler(content);
-                
                 doEcho(printWriter, response);//将日志输出到浏览器  
                 System.out.println("********************");
                 System.out.println(content);
                 printWriter.flush();
-                printWriter.close();
+                int c=3;
+//                while(c-->0){
+//                	doEcho(printWriter,response);
+//                	printWriter.flush();
+//                	Thread.sleep(500);
+//                }
+                printWriter.close();//close的时候才发送消息
                 bufferedReader.close();  
                 socket.close();  
-            } catch (IOException e) {  
+            } catch (Exception e) {  
                 e.printStackTrace();  
             }  
         }  
 	}
+	IResolve resolve=new RequestMsgHandler();
 	/**
 	 * 返回格式 code,msg,content
 	 * 1--成功 2--失败 
@@ -76,19 +89,26 @@ public class HttpServer implements Runnable{
 	 * 03--qq交互  04--其他
 	 * @param content
 	 */
+	@SuppressWarnings("deprecation")
 	private void handler(String content) {
 		//根据信息做解析
 		if(request!=null){
 			try {
 				Map<String,String> params=request.getParams();
-				String code=params.get("code");
-				if(code==null) {
-					response=new ResponseMsg(0,"code 不能为空",null).toJson();
-					return;
-				}
-				if(code.equals("01")){
-					runCmd();
-				}
+				String data=params.get("data");
+				System.out.println("解码前"+data);
+				data=URLDecoder.decode(data);
+				System.out.println("解码后"+data);
+				RequestMsg reqMsg=(RequestMsg) JsonUtil.json2ob(data, RequestMsg.class);
+				response=resolve.resolve(reqMsg);
+//				String code=params.get("code");
+//				if(code==null) {
+//					response=new ResponseMsg(0,"code 不能为空",null).toJson();
+//					return;
+//				}
+//				if(code.equals("01")){
+//					runCmd();
+//				}
 			} catch (Exception e) {
 				e.printStackTrace();
 				response=new ResponseMsg(0,"解析出现异常",null).toJson();
@@ -96,8 +116,8 @@ public class HttpServer implements Runnable{
 			}
 		}else{
 			System.out.println("request为空");
-			response=new ResponseMsg(0,"解析出现异常",null).toJson();
-			response="request为空";
+			response=new ResponseMsg(0,"request为空",null).toJson();
+//			response="request为空";
 		}
 	}
     private void doEcho(PrintWriter printWriter, String record) {  

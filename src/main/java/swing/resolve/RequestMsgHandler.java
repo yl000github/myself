@@ -17,12 +17,25 @@ public class RequestMsgHandler implements IResolve{
 		if(request.getSrc().equals("app")){
 			RequestMsgContent rmc=request.getContent();
 			//TODO
-			
-			
-			
+			String type=rmc.getType();
+			String instruct=rmc.getInstruct();
+			if(type.equals("00")){
+				//test case
+				return new ResponseMsg(1,null,instruct).toJson();
+			}else if(type.equals("01")){
+				//front cmd
+			}else if(type.equals("02")){
+				//cmd
+			}else if(type.equals("03")){
+				//qq
+			}else if(type.equals("04")){
+				//others
+			}else {
+				return fail("type值不对");
+			}
 		}
 		
-		return null;
+		return fail("不正常状态");
 	}
 	private boolean auth(String domain, String ticket) {
 		if(domain.equals("admin")&&ticket.equals("123456")) return true;

@@ -16,6 +16,11 @@ public class JsonUtil {
 		Gson gson=getGson();
 		return gson.toJson(ob);
 	}
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public static Object json2ob(String json,Class c){
+		Gson gson=getGson();
+		return gson.fromJson(json, c);
+	}
 	public static JsonElement json2je(String json){
 		Gson gson=getGson();
 		JsonElement j=gson.fromJson(json, JsonElement.class);

@@ -329,29 +329,46 @@ var chatInit=function($, doc){
 				ui.boxMsgText.blur();
 			}
 		})
+		/*自定义的一些东西*/
+		var record = [{
+			sender: 'zs',
+			type: 'text',
+			content: 'Hi，我是 OS 小管家！'
+		}];
+		function sendMsg(info){
+		//		var url='http://192.168.1.183:17777';
+			var url='http://192.168.1.106:17777';
+			var d={
+				ticket:'123456',
+				domain:'admin',
+				src:'app',
+				content:{
+					type:'00',
+					instruct:info
+				}
+			};
+			$.getJSON(url,{
+				data:JSON.stringify(d)
+			},function(res){
+				console.log(JSON.stringify(res))
+				var normal=true;
+				var msg="";
+				if(res.code){
+					normal=true;
+					msg=res.data;
+				}else{
+					normal=false;
+					msg=res.msg;
+				}
+				record.push({
+					sender: 'zs',
+					type: 'text',
+					content: msg
+				});
+				bindMsgList();
+			});
+		}
 		
 	});
-	/*自定义的一些东西*/
-	var record = [{
-		sender: 'zs',
-		type: 'text',
-		content: 'Hi，我是 OS 小管家！'
-	}];
-	function sendMsg(info){
-		var url='http://192.168.1.183:17777';
-		$.getJSON(url,{
-			ticket:'7795',
-			domain:'winder',
-			content:info
-		},function(res){
-			alert(res)
-			record.push({
-				sender: 'zs',
-				type: 'text',
-				content: res.text
-			});
-			bindMsgList();
-		});
-	}
 		
 }
