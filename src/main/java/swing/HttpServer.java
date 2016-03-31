@@ -10,6 +10,8 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
 
+import web.message.ResponseMsg;
+
 public class HttpServer implements Runnable{
 	private ServerSocket serverSocket;
 	private boolean isRunning=true;
@@ -63,21 +65,38 @@ public class HttpServer implements Runnable{
             }  
         }  
 	}
+	/**
+	 * 返回格式 code,msg,content
+	 * 1--成功 2--失败 
+	 * 客户-->服务器格式
+	 * src(app) domain ticket content
+	 * content 包含 type instruct
+	 * type:
+	 * 01--执行front的cmd 02--执行自定义cmd
+	 * 03--qq交互  04--其他
+	 * @param content
+	 */
 	private void handler(String content) {
 		//根据信息做解析
 		if(request!=null){
 			try {
 				Map<String,String> params=request.getParams();
 				String code=params.get("code");
+				if(code==null) {
+					response=new ResponseMsg(0,"code 不能为空",null).toJson();
+					return;
+				}
 				if(code.equals("01")){
 					runCmd();
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				response="解析出现问题";
+				response=new ResponseMsg(0,"解析出现异常",null).toJson();
+//				response="解析出现问题";
 			}
 		}else{
 			System.out.println("request为空");
+			response=new ResponseMsg(0,"解析出现异常",null).toJson();
 			response="request为空";
 		}
 	}

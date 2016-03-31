@@ -4,9 +4,15 @@
 <title>pc=>mobile(二维码识别速度较慢)</title>
 </head>
 <body>
+
 <div>
 转换方式：
-<input type="text" id="before" value="localhost">=><input type="text" id="after" value="10.48.1.80">
+<select id="before">
+	<option value="localhost">localhost</option>
+	<option value="127.0.0.1">127.0.0.1</option>
+</select>
+<!-- <input type="text" id="before" value="localhost"> -->
+=><input type="text" id="after" value="192.168.1.183">
 </div>
 <p>
 	input the url
@@ -19,8 +25,8 @@
 <script type="text/javascript" src="jquery.qrcode.min.js"></script>
 <script>
 jQuery(function(){
-	$("#in").change(function(){
-		var value=$(this).val();
+	function generate(){
+		var value=$("#in").val();
 		$("#before-output").html("");
 		$("#before-output").qrcode(value);
 		var before=$("#before").val();
@@ -29,7 +35,10 @@ jQuery(function(){
 		$("#after-text").html(value);
 		$("#after-output").html("");
 		$("#after-output").qrcode(value);
-	})
+	}
+	$("#in").change(generate);
+	$("#before").change(generate);
+// 	$("#before").change();
 // 	jQuery('#output').qrcode("1234");
 })
 </script>
