@@ -19,6 +19,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import exception.InfoException;
+import robot1.QQChengYu;
+import robot1.QQSanGongSimple;
+import swing.resolve.ISwitch;
+import swing.resolve.MsgQueue;
 
 /**
  * ui
@@ -39,14 +43,25 @@ public class OSHelper extends JFrame {
 //			+ "{\"title\":\"键盘监听\",\"type\":\"menu\",\"sort\":\"1\",\"data\":\"{\"title\":\"打开\",\"type\":\"item\",\"sort\":\"0\",\"data\":\"trayOpen\"}\",}"
 //			+ "]";
 	HttpServer httpServer;
+	HttpServer msgServer;
 	KeypadRecorder keypadRecorder;
+	//相关对象
+	ISwitch sangong;
+	ISwitch chengyu;
 	public OSHelper(){
 		init();
 		prepare();
 	}
 	private void init() {
-		httpServer=new HttpServer();
+		httpServer=new HttpServer(17777);
+		msgServer=new HttpServer(17778);
 		keypadRecorder=new KeypadRecorder();
+		try {
+			sangong=new QQSanGongSimple();
+			chengyu=new QQChengYu();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	private void prepare() {
 		setSize(width,height);
@@ -55,6 +70,7 @@ public class OSHelper extends JFrame {
 	}
 	boolean isKeyPadStart=false;
 	boolean isHttpServerStart=false;
+	boolean isMsgServerStart=false;
 	private void systemTray() {
 //		Map<String,Menu> m=new HashMap<>();
 		if(SystemTray.isSupported()){
@@ -99,7 +115,7 @@ public class OSHelper extends JFrame {
 			item.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					 httpServerStart();
+					httpServerStart();msgServerStart();
 				}
 			});
 			menu.add(item);
@@ -107,7 +123,42 @@ public class OSHelper extends JFrame {
 			item.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					httpServerStop();
+					httpServerStop();msgServerStop();
+				}
+			});
+			menu.add(item);
+			popupMenu.add(menu);
+			//qq小云
+			menu=new Menu("QQ小云");
+			item=new MenuItem("三公开");
+			item.addActionListener(new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					sanGongStart();
+				}
+			});
+			menu.add(item);
+			item=new MenuItem("三公关");
+			item.addActionListener(new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					sanGongStop();
+				}
+			});
+			menu.add(item);
+			item=new MenuItem("成语开");
+			item.addActionListener(new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					chengyuStart();
+				}
+			});
+			menu.add(item);
+			item=new MenuItem("成语关");
+			item.addActionListener(new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					chengyuStop();
 				}
 			});
 			menu.add(item);
@@ -141,6 +192,7 @@ public class OSHelper extends JFrame {
 		}
 	}
 	private void info(String s){
+		MsgQueue.addMsg(s);
 		System.out.println(s);
 	}
 	private void backGround() {
@@ -167,7 +219,7 @@ public class OSHelper extends JFrame {
 		isKeyPadStart=true;
 		try {
 			keypadRecorder.start();
-			info("端口监听开启");
+//			info("端口监听开启");
 		} catch (InfoException e1) {
 			info(e1.getMessage());
 		}
@@ -194,10 +246,53 @@ public class OSHelper extends JFrame {
 		httpServer.stop();
 		info("端口监听关闭"); 
 	}
+	public void msgServerStart(){
+		if(isMsgServerStart) return;
+		isMsgServerStart=true;
+		msgServer.start();
+		info("消息服务端口监听开启");
+	}
+	public void msgServerStop(){
+		if(!isMsgServerStart) return;
+		isMsgServerStart=false;
+		msgServer.stop();
+		info("消息服务端口监听关闭"); 
+	}
+	boolean isSanGongStart=false;
+	boolean isChengYuStart=false;
+	public void sanGongStart(){
+		if(isSanGongStart) return;
+		isSanGongStart=true;
+		sangong.start();
+		info("三公游戏开始");
+	}
+	public void sanGongStop(){
+		if(!isSanGongStart) return;
+		isSanGongStart=false;
+		sangong.stop();
+		info("三公游戏结束"); 
+	}
+	public void chengyuStart(){
+		if(isChengYuStart) return;
+		isChengYuStart=true;
+		chengyu.start();
+		info("成语游戏开始");
+	}
+	public void chengyuStop(){
+		if(!isChengYuStart) return;
+		isChengYuStart=false;
+		chengyu.stop();
+		info("成语游戏结束"); 
+	}
+	public void start(){
+		setVisible(true);
+		httpServerStart();
+		keypadStart();
+		msgServerStart();
+		MsgQueue.addMsg("消息服务器工作正常");
+	}
 	public static void main(String[] args) {
-		OSHelper h=new OSHelper();
-		h.setVisible(true);
-		h.httpServerStart();
-		h.keypadStart();
+//		OSHelper h=new OSHelper();
+//		h.start();
 	}
 }

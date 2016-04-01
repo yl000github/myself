@@ -39,9 +39,19 @@ public class Action extends Robot{
 	public void inputText(String src){
 		for (int i = 0; i < src.length(); i++) {
 			char c=src.charAt(i);
-			if(c>='0'&&c<='9'||c>='a'&&c<='z'||c>='A'&&c<='Z'||c=='#'||isInSymbol(c)){
+			if(c>='0'&&c<='9'||c=='#'||isInSymbol(c)){
 				keyClick(KeyEvent.VK_CAPS_LOCK);
 				inputChar(c);
+				keyClick(KeyEvent.VK_CAPS_LOCK);
+			}else if(c>='a'&&c<='z'){
+				keyClick(KeyEvent.VK_CAPS_LOCK);
+//				inputChar(c);
+				inputChar((char)(c-32));
+				keyClick(KeyEvent.VK_CAPS_LOCK);
+			}else if(c>='A'&&c<='Z'){
+				keyClick(KeyEvent.VK_CAPS_LOCK);
+//				inputChar(c);
+				inputChar((char)(c+32));
 				keyClick(KeyEvent.VK_CAPS_LOCK);
 			}else{
 				inputChar(c);
@@ -231,10 +241,15 @@ public class Action extends Robot{
 		return ClipboardOperate.getClipboardText();
 	}
 	public static void main(String[] args) throws Exception {
+		System.out.println((char)('a'-32));
 		Action a=new Action();
 		a.qiehuan();
-//		a.inputText("#");
-		a.keyClick(KeyEvent.VK_1);
+		a.inputText("startSTART");
+//		char c='a';
+//		a.keyClick(KeyEvent.VK_CAPS_LOCK);
+////		a.inputChar(c);
+//		a.inputChar((char)(c-32));
+//		a.keyClick(KeyEvent.VK_CAPS_LOCK);
 	}
 
 }

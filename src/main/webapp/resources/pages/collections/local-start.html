@@ -4,11 +4,21 @@
 </head>
 <body>
 <form method="get" id="f" action="http://localhost:17777">
-	<input type="text" name="code" value="01">
+	<input type="text" name="data" id="data">
 </form>
 </body>
 <script>
 	window.onload=function(){
+		var d={
+				ticket:'123456',
+				domain:'admin',
+				src:'app',
+				content:{
+					type:'01'
+				}
+			};
+		var str=JSON.stringify(d);
+		document.getElementById("data").value=str;
 		document.getElementById("f").submit();
 // var location='file://////D://git//myself//src//main//webapp//resources//pages//collections//local-start.html';
 // open(location, '_self').close();

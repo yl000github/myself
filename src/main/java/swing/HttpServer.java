@@ -31,6 +31,13 @@ public class HttpServer implements Runnable{
 			e.printStackTrace();
 		}
 	}
+	public HttpServer(int port) {
+		try {
+			serverSocket=new ServerSocket(port);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	public void start(){
 		isRunning=true;
 		new Thread(this).start();
@@ -61,7 +68,8 @@ public class HttpServer implements Runnable{
                 handler(content);
                 doEcho(printWriter, response);//将日志输出到浏览器  
                 System.out.println("********************");
-                System.out.println(content);
+                System.out.println("请求："+content);
+                System.out.println("返回："+response);
                 printWriter.flush();
                 int c=3;
 //                while(c-->0){
@@ -96,9 +104,9 @@ public class HttpServer implements Runnable{
 			try {
 				Map<String,String> params=request.getParams();
 				String data=params.get("data");
-				System.out.println("解码前"+data);
+//				System.out.println("解码前"+data);
 				data=URLDecoder.decode(data);
-				System.out.println("解码后"+data);
+//				System.out.println("解码后"+data);
 				RequestMsg reqMsg=(RequestMsg) JsonUtil.json2ob(data, RequestMsg.class);
 				response=resolve.resolve(reqMsg);
 //				String code=params.get("code");
@@ -154,57 +162,57 @@ public class HttpServer implements Runnable{
 				e.printStackTrace();
 				System.out.println("解析get参数失败");
 			}
-        	System.out.println("get参数---->"+map);
+//        	System.out.println("get参数---->"+map);
         	request.setParams(map);
             String protocol = s.substring(index);  
-            System.out.println("protocol---->" + protocol);  
+//            System.out.println("protocol---->" + protocol);  
             request.setProtocol(protocol);  
         } else if (s.startsWith("POST")) {  
             String method = "POST";  
             request.setMethod(method);  
       
             int index = s.indexOf("HTTP");  
-            System.out.println("index--->" + index);  
+//            System.out.println("index--->" + index);  
             String uri = s.substring(3 + 1, index - 1);// 用index-1可以去掉连接中的空格  
-            System.out.println("uri--->" + uri);  
+//            System.out.println("uri--->" + uri);  
             request.setRequestURI(uri);  
       
             String protocol = s.substring(index);  
-            System.out.println("protocol---->" + protocol);  
+//            System.out.println("protocol---->" + protocol);  
             request.setProtocol(protocol);  
       
         } else if (s.startsWith("Accept:")) {  
                 String accept = s.substring("Accept:".length() + 1);  
-            System.out.println("accept--->" + accept);  
+//            System.out.println("accept--->" + accept);  
             request.setAccept(accept);  
       
         } else if (s.startsWith("User-Agent:")) {  
             String agent = s.substring("User-Agent:".length() + 1);  
-            System.out.println("agent--->" + agent);  
+//            System.out.println("agent--->" + agent);  
             request.setAgent(agent);  
       
         } else if (s.startsWith("Host:")) {  
             String host = s.substring("Host:".length() + 1);  
-            System.out.println("host--->" + host);  
+//            System.out.println("host--->" + host);  
             request.setHost(host);  
       
         } else if (s.startsWith("Accept-Language:")) {  
             String language = s.substring("Accept-Language:".length() + 1);  
-            System.out.println("language--->" + language);  
+//            System.out.println("language--->" + language);  
             request.setLanguage(language);  
       
         } else if (s.startsWith("Accept-Charset:")) {  
             String charset = s.substring("Accept-Charset:".length() + 1);  
-            System.out.println("charset--->" + charset);  
+//            System.out.println("charset--->" + charset);  
             request.setCharset(charset);  
         } else if (s.startsWith("Accept-Encoding:")) {  
             String encoding = s.substring("Accept-Encoding:".length() + 1);  
-            System.out.println("encoding--->" + encoding);  
+//            System.out.println("encoding--->" + encoding);  
             request.setEncoding(encoding);  
       
         } else if (s.startsWith("Connection:")) {  
             String connection = s.substring("Connection:".length() + 1);  
-            System.out.println("connection--->" + connection);  
+//            System.out.println("connection--->" + connection);  
             request.setConnection(connection);  
         }  
         return request;

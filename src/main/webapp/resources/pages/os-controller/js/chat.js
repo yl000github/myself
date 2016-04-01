@@ -14,14 +14,14 @@ var chatInit=function($, doc){
 	template.config('escape', false);
 	//$.plusReady=function(fn){fn();};
 	$.plusReady(function() {
-		plus.webview.currentWebview().setStyle({
+				plus.webview.currentWebview().setStyle({
 			softinputMode: "adjustResize"
-		});
-		var showKeyboard = function() {
-			if ($.os.ios) {
-				var webView = plus.webview.currentWebview().nativeInstanceObject();
-				webView.plusCallMethod({
-					"setKeyboardDisplayRequiresUserAction": false
+			});
+			var showKeyboard = function() {
+				if ($.os.ios) {
+					var webView = plus.webview.currentWebview().nativeInstanceObject();
+					webView.plusCallMethod({
+						"setKeyboardDisplayRequiresUserAction": false
 				});
 			} else {
 				var Context = plus.android.importClass("android.content.Context");
@@ -32,10 +32,10 @@ var chatInit=function($, doc){
 				//var view = ((ViewGroup)main.findViewById(android.R.id.content)).getChildAt(0);
 				imm.showSoftInput(main.getWindow().getDecorView(), InputMethodManager.SHOW_IMPLICIT);
 				//alert("ll");
-			}
-		};
-		var ui = {
-			body: doc.querySelector('body'),
+				}
+			};
+			var ui = {
+				body: doc.querySelector('body'),
 			footer: doc.querySelector('footer'),
 			footerRight: doc.querySelector('.footer-right'),
 			footerLeft: doc.querySelector('.footer-left'),
@@ -47,12 +47,12 @@ var chatInit=function($, doc){
 			boxSoundAlert: doc.querySelector('#sound-alert'),
 			h: doc.querySelector('#h'),
 			content: doc.querySelector('.mui-content')
-		};
-		ui.h.style.width = ui.boxMsgText.offsetWidth + 'px';
-		//alert(ui.boxMsgText.offsetWidth );
-		var footerPadding = ui.footer.offsetHeight - ui.boxMsgText.offsetHeight;
-		var msgItemTap = function(msgItem, event) {
-			var msgType = msgItem.getAttribute('msg-type');
+			};
+			ui.h.style.width = ui.boxMsgText.offsetWidth + 'px';
+			//alert(ui.boxMsgText.offsetWidth );
+			var footerPadding = ui.footer.offsetHeight - ui.boxMsgText.offsetHeight;
+			var msgItemTap = function(msgItem, event) {
+				var msgType = msgItem.getAttribute('msg-type');
 			var msgContent = msgItem.getAttribute('msg-content')
 			if (msgType == 'sound') {
 				player = plus.audio.createPlayer(msgContent);
@@ -62,14 +62,14 @@ var chatInit=function($, doc){
 					playState.innerText = '点击播放';
 				}, function(e) {
 					playState.innerText = '点击播放';
-				});
-			}
-		};
-		var imageViewer = new $.ImageViewer('.msg-content-image', {
-			dbl: false
-		});
-		var bindMsgList = function() {
-			//绑定数据:
+					});
+				}
+			};
+			var imageViewer = new $.ImageViewer('.msg-content-image', {
+				dbl: false
+			});
+			bindMsgList = function() {
+				//绑定数据:
 			/*tp.bind({
 				template: 'msg-template',
 				element: 'msg-list',
@@ -81,71 +81,46 @@ var chatInit=function($, doc){
 			var msgItems = ui.areaMsgList.querySelectorAll('.msg-item');
 			[].forEach.call(msgItems, function(item, index) {
 				item.addEventListener('tap', function(event) {
-					msgItemTap(item, event);
-				}, false);
-			});
-			imageViewer.findAllImage();
-			ui.areaMsgList.scrollTop = ui.areaMsgList.scrollHeight + ui.areaMsgList.offsetHeight;
-		};
-		bindMsgList();
-		window.addEventListener('resize', function() {
-			ui.areaMsgList.scrollTop = ui.areaMsgList.scrollHeight + ui.areaMsgList.offsetHeight;
-		}, false);
-		var send = function(msg) {
-			record.push(msg);
+						msgItemTap(item, event);
+					}, false);
+				});
+				imageViewer.findAllImage();
+				ui.areaMsgList.scrollTop = ui.areaMsgList.scrollHeight + ui.areaMsgList.offsetHeight;
+			};
 			bindMsgList();
-			toRobot(msg.content);
-		};
-		var toRobot = function(info) {
-			sendMsg(info);
-	//						var apiUrl = 'http://www.tuling123.com/openapi/api';
-	//						$.getJSON(apiUrl, {
-	//							"key": 'acfbca724ea1b5db96d2eef88ce677dc',
-	//							"info": info,
-	//							"userid": plus.device.uuid
-	//						}, function(data) {
-	//							//alert(JSON.stringify(data));
-	//							record.push({
-	//								sender: 'zs',
-	//								type: 'text',
-	//								content: data.text
-	//							});
-	//							bindMsgList();
-	//						});
-		};
-		function msgTextFocus() {
-				ui.boxMsgText.focus();
-				setTimeout(function() {
+			window.addEventListener('resize', function() {
+				ui.areaMsgList.scrollTop = ui.areaMsgList.scrollHeight + ui.areaMsgList.offsetHeight;
+			}, false);
+			send = function(msg) {
+				record.push(msg);
+				bindMsgList();
+				toRobot(msg.content);
+			};
+			toRobot = function(info) {
+				sendMsg(info);
+
+			};
+			function msgTextFocus() {
 					ui.boxMsgText.focus();
-				}, 150);
-			}
+					setTimeout(function() {
+						ui.boxMsgText.focus();
+					}, 150);
+				}
+				//解决长按“发送”按钮，导致键盘关闭的问题；
+			ui.footerRight.addEventListener('touchstart', function(event) {
+			if (ui.btnMsgType.classList.contains('mui-icon-paperplane')) {
+					msgTextFocus();
+					event.preventDefault();
+				}
+			});
 			//解决长按“发送”按钮，导致键盘关闭的问题；
-		ui.footerRight.addEventListener('touchstart', function(event) {
+			ui.footerRight.addEventListener('touchmove', function(event) {
 			if (ui.btnMsgType.classList.contains('mui-icon-paperplane')) {
-				msgTextFocus();
-				event.preventDefault();
-			}
-		});
-		//解决长按“发送”按钮，导致键盘关闭的问题；
-		ui.footerRight.addEventListener('touchmove', function(event) {
-			if (ui.btnMsgType.classList.contains('mui-icon-paperplane')) {
-				msgTextFocus();
-				event.preventDefault();
-			}
-		});
-		//					ui.footerRight.addEventListener('touchcancel', function(event) {
-		//						if (ui.btnMsgType.classList.contains('mui-icon-paperplane')) {
-		//							msgTextFocus();
-		//							event.preventDefault();
-		//						}
-		//					});
-		//					ui.footerRight.addEventListener('touchend', function(event) {
-		//						if (ui.btnMsgType.classList.contains('mui-icon-paperplane')) {
-		//							msgTextFocus();
-		//							event.preventDefault();
-		//						}
-		//					});
-		ui.footerRight.addEventListener('release', function(event) {
+					msgTextFocus();
+					event.preventDefault();
+				}
+			});
+			ui.footerRight.addEventListener('release', function(event) {
 			if (ui.btnMsgType.classList.contains('mui-icon-paperplane')) {
 				//showKeyboard();
 				ui.boxMsgText.focus();
@@ -174,13 +149,13 @@ var chatInit=function($, doc){
 				ui.boxMsgText.style.display = 'block';
 				//--
 				//showKeyboard();
-				ui.boxMsgText.focus();
-				setTimeout(function() {
 					ui.boxMsgText.focus();
-				}, 150);
-			}
-		}, false);
-		ui.footerLeft.addEventListener('tap', function(event) {
+					setTimeout(function() {
+						ui.boxMsgText.focus();
+					}, 150);
+				}
+			}, false);
+			ui.footerLeft.addEventListener('tap', function(event) {
 			var btnArray = [{
 				title: "拍照"
 			}, {
@@ -210,32 +185,32 @@ var chatInit=function($, doc){
 							send({
 								sender: 'self',
 								type: 'image',
-								content: path
-							});
-						}, function(err) {}, null);
-						break;
-				}
-			});
-		}, false); 
-		var setSoundAlertVisable=function(show){
-			if(show){
-				ui.boxSoundAlert.style.display = 'block';
+									content: path
+								});
+							}, function(err) {}, null);
+							break;
+					}
+				});
+			}, false); 
+			var setSoundAlertVisable=function(show){
+				if(show){
+					ui.boxSoundAlert.style.display = 'block';
 				ui.boxSoundAlert.style.opacity = 1;
 			}else{
 				ui.boxSoundAlert.style.opacity = 0;
 				//fadeOut 完成再真正隐藏
 				setTimeout(function(){
 					ui.boxSoundAlert.style.display = 'none';
-				},200);
-			}
-		};
-		var recordCancel = false;
-		var recorder = null;
-		var audio_tips = document.getElementById("audio_tips");
-		var startTimestamp = null;
-		var stopTimestamp = null;
-		var stopTimer = null;
-		ui.boxMsgSound.addEventListener('hold', function(event) {
+					},200);
+				}
+			};
+			var recordCancel = false;
+			var recorder = null;
+			var audio_tips = document.getElementById("audio_tips");
+			var startTimestamp = null;
+			var stopTimestamp = null;
+			var stopTimer = null;
+			ui.boxMsgSound.addEventListener('hold', function(event) {
 			recordCancel = false;
 			if(stopTimer)clearTimeout(stopTimer);
 			audio_tips.innerHTML = "手指上划，取消发送";
@@ -258,9 +233,9 @@ var chatInit=function($, doc){
 				});
 			}, function(e) {
 				plus.nativeUI.toast("录音时出现异常: " + e.message);
-			});
-		}, false);
-		ui.body.addEventListener('drag', function(event) {
+				});
+			}, false);
+			ui.body.addEventListener('drag', function(event) {
 			//console.log('drag');
 			if (Math.abs(event.detail.deltaY) > 50) {
 				if (!recordCancel) {
@@ -277,10 +252,10 @@ var chatInit=function($, doc){
 						audio_tips.classList.remove("cancel");
 					}
 					audio_tips.innerHTML = "手指上划，取消发送";
+					}
 				}
-			}
-		}, false);
-		ui.boxMsgSound.addEventListener('release', function(event) {
+			}, false);
+			ui.boxMsgSound.addEventListener('release', function(event) {
 			//console.log('release');
 			if (audio_tips.classList.contains("cancel")) {
 				audio_tips.classList.remove("cancel");
@@ -291,84 +266,142 @@ var chatInit=function($, doc){
 			if (stopTimestamp - startTimestamp < MIN_SOUND_TIME) {
 				audio_tips.innerHTML = "录音时间太短";
 				ui.boxSoundAlert.classList.add('rprogress-sigh');
-				recordCancel = true;
-				stopTimer=setTimeout(function(){
+					recordCancel = true;
+					stopTimer=setTimeout(function(){
+						setSoundAlertVisable(false);
+					},800);
+				}else{
 					setSoundAlertVisable(false);
-				},800);
-			}else{
-				setSoundAlertVisable(false);
-			}
-			recorder.stop();
-		}, false);
-		ui.boxMsgSound.addEventListener("touchstart", function(e) {
+				}
+				recorder.stop();
+			}, false);
+			ui.boxMsgSound.addEventListener("touchstart", function(e) {
 			//console.log("start....");
-			e.preventDefault();
-		});
-		ui.boxMsgText.addEventListener('input', function(event) {
+				e.preventDefault();
+			});
+			ui.boxMsgText.addEventListener('input', function(event) {
 			ui.btnMsgType.classList[ui.boxMsgText.value == '' ? 'remove' : 'add']('mui-icon-paperplane');
 			ui.btnMsgType.setAttribute("for", ui.boxMsgText.value == '' ? '' : 'msg-text');
 			ui.h.innerText = ui.boxMsgText.value.replace(new RegExp('\n', 'gm'), '\n-') || '-';
 			ui.footer.style.height = (ui.h.offsetHeight + footerPadding) + 'px';
-			ui.content.style.paddingBottom = ui.footer.style.height;
-		});
-		var focus = false;
-		ui.boxMsgText.addEventListener('tap', function(event) {
-			ui.boxMsgText.focus();
-			setTimeout(function() {
-				ui.boxMsgText.focus();
-			}, 0);
-			focus = true;
-			setTimeout(function () {
-				focus = false;
-			},1000);
-			event.detail.gesture.preventDefault();
-		}, false);
-		//点击消息列表，关闭键盘
-		ui.areaMsgList.addEventListener('click',function (event) {
-			if(!focus){
-				ui.boxMsgText.blur();
-			}
-		})
-		/*自定义的一些东西*/
-		var record = [{
-			sender: 'zs',
-			type: 'text',
-			content: 'Hi，我是 OS 小管家！'
-		}];
-		function sendMsg(info){
-		//		var url='http://192.168.1.183:17777';
-			var url='http://192.168.1.106:17777';
-			var d={
-				ticket:'123456',
-				domain:'admin',
-				src:'app',
-				content:{
-					type:'00',
-					instruct:info
-				}
-			};
-			$.getJSON(url,{
-				data:JSON.stringify(d)
-			},function(res){
-				console.log(JSON.stringify(res))
-				var normal=true;
-				var msg="";
-				if(res.code){
-					normal=true;
-					msg=res.data;
-				}else{
-					normal=false;
-					msg=res.msg;
-				}
-				record.push({
-					sender: 'zs',
-					type: 'text',
-					content: msg
-				});
-				bindMsgList();
+				ui.content.style.paddingBottom = ui.footer.style.height;
 			});
-		}
-		
+			var focus = false;
+			ui.boxMsgText.addEventListener('tap', function(event) {
+				ui.boxMsgText.focus();
+				setTimeout(function() {
+					ui.boxMsgText.focus();
+				}, 0);
+				focus = true;
+				setTimeout(function () {
+					focus = false;
+				},1000);
+				event.detail.gesture.preventDefault();
+			}, false);
+			//点击消息列表，关闭键盘
+			ui.areaMsgList.addEventListener('click',function (event) {
+				if(!focus){
+					ui.boxMsgText.blur();
+				}
+			})
+			setInterval('queryMsg()',5000);
 	});
 		
 }
+$=mui;
+
+/*自定义的一些东西*/
+$.ask=function(url,data,success){
+	var d={
+		ticket:'123456',
+		domain:'admin',
+		src:'app',
+		content:data
+	};
+	$.getJSON(url,{
+		data:JSON.stringify(d)
+		}
+		,function(res){
+		console.log(JSON.stringify(res));
+		var normal=true;
+		var msg="";
+		if(res.code){
+			normal=true;
+			msg=res.data;
+			if(success){
+				success(res);
+			}
+		}else{
+			normal=false;
+			msg=res.msg;
+			display(msg,false);
+		}
+	});
+}
+function display(msg,f){
+	record.push({
+		sender: 'zs',
+		type: 'text',
+		content: msg
+	});
+	bindMsgList();
+}
+//TODO
+var record = [{
+	sender: 'zs',
+	type: 'text',
+	content: 'Hi，我是 OS 小管家！'
+}];
+var url='http://192.168.1.96';
+var serverUrl=url+':17777';
+var msgUrl=url+':17778';
+function sendMsg(info){
+//		var url='http://192.168.1.183:17777';
+//			var url='http://192.168.1.96:17777';
+	var d={
+		ticket:'123456',
+		domain:'admin',
+		src:'app',
+		content:{
+			type:'03',
+			instruct:info
+		}
+	};
+	$.getJSON(serverUrl,{
+		data:JSON.stringify(d)
+	},function(res){
+		console.log(JSON.stringify(res))
+		var normal=true;
+		var msg="";
+		if(res.code){
+			normal=true;
+			msg=res.data;
+		}else{
+			normal=false;
+			msg=res.msg;
+		}
+		record.push({
+			sender: 'zs',
+			type: 'text',
+			content: msg
+		});
+		bindMsgList();
+	});
+}
+//轮询消息
+function queryMsg(){
+//	console.log('queryMsg')
+	$.ask(msgUrl,{ 
+		type:'05',
+		instruct:'nothing'
+	},function(res){
+		var c=res.data;
+		if(c=='queue为空') return;
+		$.each(c, function(index,element) {
+			var m=element;
+			display(m,true);
+		});
+	});
+}
+
+	

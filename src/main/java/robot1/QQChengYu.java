@@ -5,8 +5,9 @@ import java.util.Set;
 
 import exception.BasicException;
 import robot.Chengyu;
+import swing.resolve.ISwitch;
 
-public class QQChengYu extends QQMan{
+public class QQChengYu extends QQMan {
 	private String action;//所谓的行为就是发送一段文字
 	private String keyWord;
 	private Set<String> res;
@@ -20,7 +21,7 @@ public class QQChengYu extends QQMan{
 		if(content==null) throw new Exception("未能获得content");
 		if(content.contains("成语接龙游戏开始")){
 			keyWord=content.substring(content.length()-1, content.length());
-			System.out.println(keyWord);
+			info("关键词："+keyWord);
 			process();
 		}else if(content.contains("成语接龙游戏超时自动结束")){
 			throw new BasicException("游戏结束");
@@ -34,15 +35,15 @@ public class QQChengYu extends QQMan{
 			}
 		}else if(content.contains("接龙成功")){
 			keyWord=content.substring(content.length()-1, content.length());
-			System.out.println(keyWord);
+			info("关键词："+keyWord);
 			process();
 		}else if(content.contains("玩游戏就要专心玩")){
 			int dqcy=content.indexOf("当前成语");
 			keyWord=content.substring(dqcy+8, dqcy+9);
-			System.out.println(keyWord);
+			info("关键词："+keyWord);
 			process();
 		}else if(content.contains("需要休息120分钟")){
-			System.out.println("无法游戏了");
+			info("无法游戏了");
 			System.exit(1);
 		}else{
 			//尚未开始游戏
@@ -98,4 +99,14 @@ public class QQChengYu extends QQMan{
 			}
 		}
 	}
+	@Override
+	public void threadRunning() {
+		try {
+			work();
+		} catch (Exception e) {
+			e.printStackTrace();
+			waitAndTryAgain();
+		}
+	}
+	
 }

@@ -23,7 +23,7 @@ public class KeypadRecorder implements NativeKeyListener{
 	@Override
 	public void nativeKeyPressed(NativeKeyEvent e) {
 		String key=NativeKeyEvent.getKeyText(e.getKeyCode());
-		LogUtil.logDaily(key+" ");
+		LogUtil.logDailyKeyPad(key+" ");
 	}
 
 	@Override

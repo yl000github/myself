@@ -8,12 +8,6 @@ public class QQSanGongSimple extends QQSanGong{
 
 	public QQSanGongSimple() throws Exception {
 		super();
-		inputText("==============");
-		try {
-			qqSend();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 	} 
 
 	@Override
@@ -29,32 +23,29 @@ public class QQSanGongSimple extends QQSanGong{
 	protected void relax() throws InterruptedException {
 		Thread.sleep(2000);
 	}
-	@Override
-	public void ready() {}
 	int count=100;
 	@Override
 	public void play() {
-		while(count-->0){
-			try {
-				work();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
 		try {
-			watch();
-			think();
+			work();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		QQSanGongSimple sg;
-		try {
-			sg = new QQSanGongSimple();
-			sg.play();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		sg = new QQSanGongSimple();
+		sg.start();
+	}
+
+	@Override
+	public void threadRunning() {
+		play();
+	}
+
+	@Override
+	public void ready() {
+		// TODO Auto-generated method stub
+		
 	}
 }

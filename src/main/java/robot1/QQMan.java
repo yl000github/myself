@@ -1,13 +1,25 @@
 package robot1;
 
+import swing.resolve.MsgQueue;
 import utils.DateUtil;
 public abstract class QQMan extends AMan{
 
 	public QQMan() throws Exception {
 		super();
-		qiehuan();
-		clearClipboard();
-		String date=DateUtil.getNowFormat("yyyy/M/dd");
+	}
+	@Override
+	public void prepare() {
+//		qiehuan();
+		//人工操作给5s的时间
+		try {
+			Thread.sleep(10000);
+			clearClipboard();
+			inputText("======start=====");
+			qqSend();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String date=DateUtil.getNowFormat("yyyy/M/d");
 		System.out.println(date);
 		for (int i = 0; i < users.length; i++) {
 			users[i]+=" "+date;
@@ -61,6 +73,7 @@ public abstract class QQMan extends AMan{
 	}
 	@Override
 	public void watch() throws Exception {
+		MsgQueue.addMsg("三公 watch");
 		String pre=content;
 		boolean f=true;
 		//退出循环的条件是，包含机器人、和之前的内容不同 !content.contains(users[1])||
@@ -71,7 +84,7 @@ public abstract class QQMan extends AMan{
 			if(content.contains("stop")){
 				System.exit(1);
 			}
-			System.out.println("观察到的内容为："+content);
+			info("观察到的内容为："+content);
 			//首次不用等
 			if(!f){
 				pause();
@@ -86,5 +99,10 @@ public abstract class QQMan extends AMan{
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+	@Override
+	public void start() {
+		// TODO Auto-generated method stub
+		super.start();
 	}
 }

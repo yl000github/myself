@@ -1,9 +1,15 @@
 package swing.resolve;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+
+import exception.EmptyException;
+import swing.ControlSystem;
+import utils.LogUtil;
 import web.message.ResponseMsg;
 
 public class RequestMsgHandler implements IResolve{
-
 	@Override
 	public String resolve(RequestMsg request) {
 		if(request==null) return fail("request为空");
@@ -24,13 +30,50 @@ public class RequestMsgHandler implements IResolve{
 				return new ResponseMsg(1,null,instruct).toJson();
 			}else if(type.equals("01")){
 				//front cmd
+				CmdResolver.runFrontCmd();
+				return success("成功");
 			}else if(type.equals("02")){
 				//cmd
+				CmdResolver.runCmd(instruct);
+				return success("成功");
 			}else if(type.equals("03")){
-				//qq
+				//common instruct
+				if(instruct.equals("qq sg start")){
+					LogUtil.logDaily("sangong start");
+					ControlSystem.getHelper().sanGongStart();
+					return success("操作成功");
+				}else if(instruct.equals("qq sg stop")){
+					LogUtil.logDaily("sangong stop");
+					ControlSystem.getHelper().sanGongStop();
+					return success("操作成功");
+				}else if(instruct.equals("qq cy start")){
+					ControlSystem.getHelper().chengyuStart();
+					return success("操作成功");
+				}else if(instruct.equals("qq cy stop")){
+					ControlSystem.getHelper().chengyuStop();
+					return success("操作成功");
+				}else {
+					return fail("暂不支持的指令");
+				}
 			}else if(type.equals("04")){
-				//others
-			}else {
+				//lunxun get one
+				try {
+					String msg=MsgQueue.getMsg();
+					return success(msg);
+				} catch (EmptyException e) {
+					e.printStackTrace();
+					return fail(e.getMessage());
+				}
+			}else if(type.equals("05")){
+				//lunxun get all
+				try {
+					List<String> msg=MsgQueue.getAllMsg();
+					return new ResponseMsg(1,null,msg).toJson();
+				} catch (EmptyException e) {
+//					e.printStackTrace();
+					return success(e.getMessage());
+				}
+			}else{
 				return fail("type值不对");
 			}
 		}
@@ -44,5 +87,9 @@ public class RequestMsgHandler implements IResolve{
 	public String fail(String msg){
 		return new ResponseMsg(0,msg,null).toJson();
 	}
+	public String success(String msg){
+		return new ResponseMsg(1,null,msg).toJson();
+	}
+	
 
 }

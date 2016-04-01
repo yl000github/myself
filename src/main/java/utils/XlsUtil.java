@@ -64,6 +64,11 @@ public class XlsUtil {
 		}
 	}
 	public static void write(String filepath,List<String> titles,List<List<String>>strs){
+		try {
+			FileUtil.createFile(filepath);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 		String fileType = filepath.substring(filepath.lastIndexOf(".") + 1, filepath.length());
 		Workbook wb = null;
 		if (fileType.equals("xls")) {
