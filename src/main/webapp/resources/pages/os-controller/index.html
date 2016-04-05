@@ -21,7 +21,8 @@
 			<% for(var i in record){ var item=record[i]; %>
 				<div class="msg-item <%= (item.sender=='self'?' msg-item-self':'') %>" msg-type='<%=(item.type)%>' msg-content='<%=(item.content)%>'>
 					<% if(item.sender=='self' ) { %>
-						<i class="msg-user mui-icon mui-icon-person"></i>
+						<!--<i class="msg-user mui-icon mui-icon-person"></i>-->
+						<img class="msg-user" src="images/me.jpg" alt="" />
 					<% } else { %>
 						<img class="msg-user-img" src="images/logo-os.png" alt="" />
 					<% } %>

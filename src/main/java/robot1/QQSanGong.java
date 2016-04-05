@@ -53,7 +53,7 @@ public abstract class QQSanGong extends QQMan{
 			lose();
 			action="三公 "+everyInvestMoney;
 		}else if(content.contains("当前等级")){
-			totalMoney=Integer.parseInt(content.substring(content.indexOf("积分：")+3,content.indexOf("当前等级")-1));
+			totalMoney=Integer.parseInt(content.substring(content.indexOf("积分：")+3,content.indexOf("存款")-1));
 			currentMoney=totalMoney;
 			ready();
 			action="三公 "+everyInvestMoney;

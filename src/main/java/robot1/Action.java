@@ -1,6 +1,5 @@
 package robot1;
 
-import java.awt.AWTException;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.Robot;
@@ -12,9 +11,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-
-import robot.ClipboardOperate;
-import robot.TextRobot;
+//import robot1.TextRobot;
 
 /**
  * 行为动作--鼠标键盘

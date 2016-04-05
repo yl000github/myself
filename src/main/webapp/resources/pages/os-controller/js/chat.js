@@ -322,9 +322,9 @@ $.ask=function(url,data,success){
 		data:JSON.stringify(d)
 		}
 		,function(res){
-		console.log(JSON.stringify(res));
+//		console.log(JSON.stringify(res));
 		var normal=true;
-		var msg="";
+		var msg=""; 
 		if(res.code){
 			normal=true;
 			msg=res.data;
@@ -347,17 +347,37 @@ function display(msg,f){
 	bindMsgList();
 }
 //TODO
+var url='http://192.168.1.96';
 var record = [{
 	sender: 'zs',
 	type: 'text',
-	content: 'Hi，我是 OS 小管家！'
-}];
-var url='http://192.168.1.96';
+	content: 'Hi，我是 OS 小管家！当前服务器ip为：'+url
+}]; 
 var serverUrl=url+':17777';
 var msgUrl=url+':17778';
+function refreshUrl(nUrl){
+	url=nUrl;
+	serverUrl=url+':17777';
+	msgUrl=url+':17778';
+}
 function sendMsg(info){
 //		var url='http://192.168.1.183:17777';
 //			var url='http://192.168.1.96:17777';
+  	console.log(info); 
+	if(info.indexOf("设置")!=-1){
+		if(info.indexOf("ip")!=-1){
+			var pp=info.substring(info.indexOf("ip")+3,info.length).trim();
+			if(pp.indexOf("http")==-1){
+				pp="http://"+pp;
+			}
+			console.log(pp);
+			refreshUrl(pp);
+			display("设置ip成功，当前服务器ip为："+url,true);
+			return;
+		}
+		display("设置参数错误",false);
+		return;
+	}
 	var d={
 		ticket:'123456',
 		domain:'admin',
@@ -367,6 +387,7 @@ function sendMsg(info){
 			instruct:info
 		}
 	};
+	console.log(serverUrl)
 	$.getJSON(serverUrl,{
 		data:JSON.stringify(d)
 	},function(res){
@@ -380,12 +401,13 @@ function sendMsg(info){
 			normal=false;
 			msg=res.msg;
 		}
-		record.push({
-			sender: 'zs',
-			type: 'text',
-			content: msg
-		});
-		bindMsgList();
+		display(msg,normal);
+//		record.push({
+//			sender: 'zs',
+//			type: 'text',
+//			content: msg
+//		});
+//		bindMsgList();
 	});
 }
 //轮询消息
@@ -403,5 +425,4 @@ function queryMsg(){
 		});
 	});
 }
-
 	

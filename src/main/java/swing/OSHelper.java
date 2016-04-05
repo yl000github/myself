@@ -77,11 +77,11 @@ public class OSHelper extends JFrame {
 			PopupMenu popupMenu=new PopupMenu();
 			Menu menu;MenuItem item;
 			//设置
-			menu=new Menu("设置");
-			menu.add(new MenuItem("开"));
+			menu=new Menu("setting");
+			menu.add(new MenuItem("open"));
 			popupMenu.add(menu);
 			//打开主界面
-			item=new MenuItem("打开主界面");
+			item=new MenuItem("open..");
 			item.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -91,8 +91,8 @@ public class OSHelper extends JFrame {
 			popupMenu.add(item);
 			
 			//键盘监听
-			menu=new Menu("键盘监听");
-			item=new MenuItem("开");
+			menu=new Menu("keyrecorder");
+			item=new MenuItem("open");
 			item.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -100,7 +100,7 @@ public class OSHelper extends JFrame {
 				}
 			});
 			menu.add(item);
-			item=new MenuItem("关");
+			item=new MenuItem("close");
 			item.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -110,8 +110,8 @@ public class OSHelper extends JFrame {
 			menu.add(item);
 			popupMenu.add(menu);
 			//监听端口
-			menu=new Menu("端口监听");
-			item=new MenuItem("开");
+			menu=new Menu("port listening");
+			item=new MenuItem("open");
 			item.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -119,7 +119,7 @@ public class OSHelper extends JFrame {
 				}
 			});
 			menu.add(item);
-			item=new MenuItem("关");
+			item=new MenuItem("close");
 			item.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -129,8 +129,8 @@ public class OSHelper extends JFrame {
 			menu.add(item);
 			popupMenu.add(menu);
 			//qq小云
-			menu=new Menu("QQ小云");
-			item=new MenuItem("三公开");
+			menu=new Menu("QQxiaoyun");
+			item=new MenuItem("sg open");
 			item.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -138,7 +138,7 @@ public class OSHelper extends JFrame {
 				}
 			});
 			menu.add(item);
-			item=new MenuItem("三公关");
+			item=new MenuItem("sg close");
 			item.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -146,7 +146,7 @@ public class OSHelper extends JFrame {
 				}
 			});
 			menu.add(item);
-			item=new MenuItem("成语开");
+			item=new MenuItem("cy open");
 			item.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -154,7 +154,7 @@ public class OSHelper extends JFrame {
 				}
 			});
 			menu.add(item);
-			item=new MenuItem("成语关");
+			item=new MenuItem("cy close");
 			item.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -165,7 +165,7 @@ public class OSHelper extends JFrame {
 			popupMenu.add(menu);
 			
 			//退出
-			item=new MenuItem("退出");
+			item=new MenuItem("exit");
 			item.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -178,7 +178,7 @@ public class OSHelper extends JFrame {
 			ClassLoader cl = this.getClass().getClassLoader(); 
             URL url = cl.getResource("pic/face.png"); 
             ImageIcon icon = new ImageIcon(url);  
-            trayIcon = new TrayIcon(icon.getImage(), "键盘监听", popupMenu); 
+            trayIcon = new TrayIcon(icon.getImage(), "os manager", popupMenu); 
             //获取托盘菜单 ,这句话是最关键的
             tray = SystemTray.getSystemTray(); 
             try {
