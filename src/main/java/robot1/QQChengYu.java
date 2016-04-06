@@ -4,11 +4,11 @@ import java.util.Iterator;
 import java.util.Set;
 
 import exception.BasicException;
+import exception.InfoException;
 import robot.Chengyu;
 import swing.resolve.ISwitch;
 
 public class QQChengYu extends QQMan {
-	private String action;//所谓的行为就是发送一段文字
 	private String keyWord;
 	private Set<String> res;
 	
@@ -17,8 +17,17 @@ public class QQChengYu extends QQMan {
 	}
 	@Override
 	public void think() throws Exception {
-		System.out.println("hi");
+		System.out.println("think");
 		if(content==null) throw new Exception("未能获得content");
+		if(content.contains(users[0])){
+			//自己输入的信息，其实最好也要做一个判断的工作
+			if(content.contains("start")){
+				action="成语接龙";
+				return;
+			}else{
+				throw new InfoException("自己的未知信息");
+			}
+		}
 		if(content.contains("成语接龙游戏开始")){
 			keyWord=content.substring(content.length()-1, content.length());
 			info("关键词："+keyWord);
@@ -47,21 +56,11 @@ public class QQChengYu extends QQMan {
 			System.exit(1);
 		}else{
 			//尚未开始游戏
-			action="成语接龙";
-//			throw new BasicException("不正常状态");
+//			action="成语接龙";
+			throw new InfoException("成语接龙不正常状态");
 		}
 	}
 
-	@Override
-	public void action() throws Exception {
-		//输出
-		if(action!=null){
-			inputText(action);
-			qqSend();
-		}else{
-			throw new Exception("action不应为空");
-		}
-	}
 	private void process() throws Exception{
 		if(keyWord!=null&&keyWord.length()==1){
 			res=Chengyu.getFirstList(keyWord);
@@ -90,19 +89,12 @@ public class QQChengYu extends QQMan {
 	}
 	public static void main(String[] args) throws Exception {
 		QQChengYu cy=new QQChengYu();
-		while(true){
-			try {
-				cy.work();
-			} catch (Exception e) {
-				e.printStackTrace();
-				cy.waitAndTryAgain();
-			}
-		}
+		cy.start();
 	}
 	@Override
 	public void threadRunning() {
 		try {
-			work();
+			work(); 
 		} catch (Exception e) {
 			e.printStackTrace();
 			waitAndTryAgain();

@@ -44,6 +44,7 @@ public abstract class AMan extends Action implements IBehavior,ISwitch,Runnable{
 	}
 	public abstract void threadRunning();
 	public void info(String msg){
+		System.out.println(msg);
 		MsgQueue.addMsg(msg);
 	}
 }

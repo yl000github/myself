@@ -3,9 +3,15 @@ package robot1;
 import swing.resolve.MsgQueue;
 import utils.DateUtil;
 public abstract class QQMan extends AMan{
-
+	String action="";
 	public QQMan() throws Exception {
 		super();
+	}
+	@Override
+	public void action() throws Exception {
+		System.out.println("action:"+action);
+		inputText(action);
+		qqSend();
 	}
 	@Override
 	public void prepare() {
@@ -59,8 +65,9 @@ public abstract class QQMan extends AMan{
 		int mY=(sY+eY)/2;
 		moveAndClick(mX, mY);
 		ctrlA();Thread.sleep(100);
-		copy();Thread.sleep(100);
+		copy();Thread.sleep(2000);
 		String msg=getClipboard();
+//		Thread.sleep(2000);
 		//分析的思路，根据角色名做区分，找出最后一条消息
 		int max=-1;
 		for (int i = 0; i < users.length; i++) {
@@ -73,6 +80,7 @@ public abstract class QQMan extends AMan{
 	}
 	@Override
 	public void watch() throws Exception {
+		System.out.println("watch");
 		MsgQueue.addMsg("三公 watch");
 		String pre=content;
 		boolean f=true;

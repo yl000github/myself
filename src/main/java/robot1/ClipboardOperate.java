@@ -27,6 +27,7 @@ public class ClipboardOperate {
 //            e.printStackTrace();
 //        }
     }
+    public static  Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();//获取系统剪贴板
     /**
      * 从指定的剪切板中获取文本内容
      * 本地剪切板使用 Clipborad cp = new Clipboard("clip1"); 来构造
@@ -34,7 +35,6 @@ public class ClipboardOperate {
      * 剪切板的内容   getContents(null); 返回Transferable
      */
     public static String getClipboardText() throws Exception{
-        Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();//获取系统剪贴板
         // 获取剪切板中的内容
         Transferable clipT = clip.getContents(null);
         if (clipT != null) {
