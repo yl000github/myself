@@ -105,9 +105,11 @@ public class FileUtil {
 	}
 	public static void main(String[] args) throws IOException {
 		String c = "hello yang";
+//		String filepath = "D:\\git\\myself\\src\\main\\java";
+//		System.out.println(getFilesLines(filepath,"java"));
 		String filepath = "D:\\git\\myself\\src\\main\\java";
-		System.out.println(getFilesLines(filepath,"java"));
-		;
+		System.out.println(getFilesLines("D:\\HbuilderWorkspace\\omp\\server","js"));
+		System.out.println(getFilesLines("D:\\HbuilderWorkspace\\omp\\client\\app","js"));
 		// write(filepath, c);
 		// System.out.println(read(filepath));
 	}

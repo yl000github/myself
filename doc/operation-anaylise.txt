@@ -1,0 +1,9 @@
+NATIVE_MOUSE_MOVED,(271,60),button=0,clickCount=0
+NATIVE_MOUSE_PRESSED,(646,744),button=1,modifiers=Meta+Button1,clickCount=1
+NATIVE_MOUSE_RELEASED,(646,744),button=1,modifiers=Meta,clickCount=1
+NATIVE_MOUSE_CLICKED,(646,744),button=1,modifiers=Meta,clickCount=1
+NATIVE_MOUSE_WHEEL,(667,347),button=0,clickCount=1,scrollType=WHEEL_UNIT_SCROLL,scrollAmount=3,wheelRotation=1
+
+NATIVE_KEY_PRESSED,keyCode=33,keyText=F,keyChar=未定义,keyLocation=KEY_LOCATION_STANDARD,rawCode=70
+NATIVE_KEY_TYPED,keyCode=0,keyText=未定义,keyChar='f',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=70
+NATIVE_KEY_RELEASED,keyCode=32,keyText=D,keyChar=未定义,keyLocation=KEY_LOCATION_STANDARD,rawCode=68

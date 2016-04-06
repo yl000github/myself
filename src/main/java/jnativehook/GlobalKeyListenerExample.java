@@ -41,7 +41,7 @@ public class GlobalKeyListenerExample implements NativeKeyListener {
 
             System.exit(1);
         }
-
         GlobalScreen.addNativeKeyListener(new GlobalKeyListenerExample());
+        System.out.println("last line");
     }
 }

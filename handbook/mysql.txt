@@ -1,0 +1,22 @@
+create database test character set 'utf8';
+use test;
+drop table if exists user;
+create table user(
+id int unsigned auto_increment primary key,
+name varchar(20),
+age int
+);
+insert into user values(NULL,'张三',20);
+insert into user values(NULL,'李四',21);
+insert into user values(NULL,'王五',22);
+
+create user yunying identified by 'Yy123';
+grant select on ipay.* to 'yunying'@'%';
+
+show variables like '%char%'; 
+show full columns from user; 
+
+drop database test;
+
+SET PASSWORD FOR 'root'@'localhost' = PASSWORD('123');
+YMTyl2016

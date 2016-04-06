@@ -1,0 +1,16 @@
+git原理：文件---缓存--快照----远程仓库
+常用指令汇集
+git status -s 查看当前项目情况，文件与缓存的差别
+git diff 将当前文件与缓存做对比，显示细致区别
+git add . 将所有的增添进缓存
+git commit 提交，存一份快照
+git remote -v 查看远程仓库的情况
+git fetch origin master 从远程仓库取回数据
+git merge origin/master 将远程仓库的数据和本地数据合并
+git stash 将当前的数据存入栈中
+git stash pop 用栈顶的数据恢复
+
+git branch 查看分支
+git branch (name) 创建分支
+git branch -d (name) 删除分支
+git checkout (name) 切换分支
