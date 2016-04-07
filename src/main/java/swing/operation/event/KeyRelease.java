@@ -1,11 +1,15 @@
 package swing.operation.event;
 
-public class KeyRelease  extends AEvent{
+public class KeyRelease  extends AKey{
+	public KeyRelease(){
+		flag="NATIVE_KEY_RELEASED";
+	}
 
 	@Override
 	public boolean consume(String msg) throws Exception {
-		// TODO Auto-generated method stub
-		return false;
+		super.consume(msg);
+		robot.keyRelease(keymapping());
+		pause(200);
+		return true;
 	}
-
 }

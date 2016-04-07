@@ -1,16 +1,16 @@
 package swing.operation.event;
 
+public class KeyClick extends AKey{
 
-public class KeyPress extends AKey{
-	public KeyPress(){
-		flag="NATIVE_KEY_PRESSED";
+	public KeyClick(){
+		flag="NATIVE_KEY_TYPED";
 	}
 
 	@Override
 	public boolean consume(String msg) throws Exception {
 		super.consume(msg);
-		robot.keyPress(keymapping());
-		pause(200);
+//		robot.keyPress(rawCode);
+//		robot.keyRelease(rawCode);
 		return true;
 	}
 

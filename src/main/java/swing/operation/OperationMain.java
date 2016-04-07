@@ -9,10 +9,10 @@ import org.jnativehook.mouse.NativeMouseWheelEvent;
 import utils.FileUtil;
 
 public class OperationMain extends ABasic{
-	Reappear reappear;
+	Reappear reappear=new Reappear();
 	StringBuffer sb=new StringBuffer();
-	private void store(String msg){
-//		sb.append(msg+"\n");
+	private void store(String msg){ 
+//		sb.append(msg+"\n"); 
 		FileUtil.writeAdd(path, msg+"\n");
 	}
 	@Override
@@ -29,12 +29,10 @@ public class OperationMain extends ABasic{
 	public void nativeKeyTyped(NativeKeyEvent e) {
 		store(e.paramString());		
 	}
-
-	@Override
+	@Override	
 	public void nativeMouseClicked(NativeMouseEvent e) {
 		store(e.paramString());		
 	}
-
 	@Override
 	public void nativeMousePressed(NativeMouseEvent e) {
 		store(e.paramString());		
@@ -109,8 +107,9 @@ public class OperationMain extends ABasic{
 		OperationMain o=new OperationMain();
 		try {
 			o.recordStart();
-			Thread.sleep(10000);
+			Thread.sleep(50000);
 			o.recordStop();
+//			o.reappearStart();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
