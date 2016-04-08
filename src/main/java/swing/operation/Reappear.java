@@ -16,7 +16,7 @@ public class Reappear{
 		consumers=new IConsume[]{
 				new MousePress(),new MouseRelease(),	
 				new MouseMove(),new MouseWheel(),	
-				new MouseClick(),
+				new MouseClick(),new MouseDrag(),
 			new KeyPress(),new KeyRelease(),	
 			new KeyClick()
 		};
@@ -47,7 +47,7 @@ public class Reappear{
 		}
 		reader.close();
 	}
-	private boolean consumeLine(String msg) throws Exception{
+	public boolean consumeLine(String msg) throws Exception{
 		for (int i = 0; i < consumers.length; i++) {
 			try {
 				if(consumers[i].consume(msg)) return true;

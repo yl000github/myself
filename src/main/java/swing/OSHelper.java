@@ -21,6 +21,8 @@ import javax.swing.JLabel;
 import exception.InfoException;
 import robot1.QQChengYu;
 import robot1.QQSanGongSimple;
+import swing.operation.IHandle;
+import swing.operation.OperationMain;
 import swing.resolve.ISwitch;
 import swing.resolve.MsgQueue;
 
@@ -164,6 +166,58 @@ public class OSHelper extends JFrame {
 			menu.add(item);
 			popupMenu.add(menu);
 			
+			//操作重现
+			menu=new Menu("operation");
+			item=new MenuItem("record open");
+			item.addActionListener(new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					try {
+						operation.recordStart();
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+				}
+			});
+			menu.add(item);
+			item=new MenuItem("record close");
+			item.addActionListener(new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					try {
+						operation.recordStop();
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+				}
+			});
+			menu.add(item);
+			item=new MenuItem("reappear open");
+			item.addActionListener(new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					try {
+						operation.reappearStart();
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+				}
+			});
+			menu.add(item);
+			item=new MenuItem("reappear close");
+			item.addActionListener(new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					try {
+						operation.reappearStop();
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+				}
+			});
+			menu.add(item);
+			popupMenu.add(menu);
+			
 			//退出
 			item=new MenuItem("exit");
 			item.addActionListener(new ActionListener(){
@@ -283,6 +337,10 @@ public class OSHelper extends JFrame {
 		isChengYuStart=false;
 		chengyu.stop();
 		info("成语游戏结束"); 
+	}
+	IHandle operation=new OperationMain();
+	public IHandle getOperationHandle(){
+		return operation;
 	}
 	public void start(){
 		setVisible(true);

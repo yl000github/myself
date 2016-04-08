@@ -107,9 +107,9 @@ public class OperationMain extends ABasic{
 		OperationMain o=new OperationMain();
 		try {
 			o.recordStart();
-			Thread.sleep(50000);
+			Thread.sleep(20000);
 			o.recordStop();
-//			o.reappearStart();
+			o.reappearStart();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

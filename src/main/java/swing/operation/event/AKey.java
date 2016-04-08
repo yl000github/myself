@@ -23,7 +23,8 @@ public class AKey extends AEvent{
 			return KeyEvent.VK_ESCAPE;
 		}
 		if(keyText.equals("后引号")){
-			return KeyEvent.VK_BACK_QUOTE;
+//			return KeyEvent.VK_BACK_QUOTE;
+			return KeyEvent.VK_A;
 		}
 		if(keyText.equals("Tab")){
 			return KeyEvent.VK_TAB;
@@ -38,7 +39,7 @@ public class AKey extends AEvent{
 			return KeyEvent.VK_CONTROL;
 		}
 		if(keyText.equals("Left Meta")){
-			return KeyEvent.VK_META;
+			return KeyEvent.VK_WINDOWS;
 		}
 		if(keyText.equals("Left Alt")){
 			return KeyEvent.VK_ALT;
@@ -77,21 +78,31 @@ public class AKey extends AEvent{
 			return KeyEvent.VK_CLOSE_BRACKET;
 		}
 		////TODO
-		if(keyText.equals("Esc")){ 
-			return KeyEvent.VK_ESCAPE;
+		if(keyText.equals("反斜杠")){ 
+			return KeyEvent.VK_BACK_SLASH;
 		}
-		if(keyText.equals("Esc")){
-			return KeyEvent.VK_ESCAPE;
+		if(keyText.equals("Enter")){
+			return KeyEvent.VK_ENTER;
 		}
-		if(keyText.equals("Esc")){
-			return KeyEvent.VK_ESCAPE;
+		if(keyText.equals("Right Shift")){
+			return KeyEvent.VK_SHIFT;
 		}
-		if(keyText.equals("Esc")){
-			return KeyEvent.VK_ESCAPE;
+		if(keyText.equals("减号")){
+			return KeyEvent.VK_MINUS;
 		}
-		if(keyText.equals("Esc")){
-			return KeyEvent.VK_ESCAPE;
+		if(keyText.equals("等号")){
+			return KeyEvent.VK_EQUALS;
 		}
+		if(keyText.equals("Insert")){
+			return KeyEvent.VK_INSERT;
+		}
+		if(keyText.equals("Delete")){
+			return KeyEvent.VK_DELETE;
+		}
+		//fn还不知道怎么弄
+		//支持的默认有上下左右，page up down
+		//notepad的0-9  各种标点符号 numlock，backspace f1-f12,home,end
+		//全部测试了，只有fn没处理，左边的alt ctrl未做区分
 		return rawCode;
 	}
 }

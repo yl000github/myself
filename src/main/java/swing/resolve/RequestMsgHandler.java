@@ -52,9 +52,41 @@ public class RequestMsgHandler implements IResolve{
 				}else if(instruct.equals("qq cy stop")){
 					ControlSystem.getHelper().chengyuStop();
 					return success("操作成功");
-				}else {
-					return fail("暂不支持的指令");
 				}
+				if(instruct.equals("record start")){
+					try {
+						ControlSystem.getHelper().getOperationHandle().recordStart();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					return success("操作成功");
+				}
+				if(instruct.equals("record stop")){
+					try {
+						ControlSystem.getHelper().getOperationHandle().recordStop();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					return success("操作成功");
+				}
+				if(instruct.equals("reappear start")){
+					try {
+						ControlSystem.getHelper().getOperationHandle().reappearStart();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					return success("操作成功");
+				}
+				if(instruct.equals("reappear stop")){
+					try {
+						ControlSystem.getHelper().getOperationHandle().reappearStop();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					return success("操作成功");
+				}
+				return fail("暂不支持的指令");
+				
 			}else if(type.equals("04")){
 				//lunxun get one
 				try {
