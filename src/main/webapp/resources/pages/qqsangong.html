@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>ECharts</title>
+<!-- 引入 echarts.js -->
+<script src="../js/jquery.min.js"></script>
+<script src="../js/echarts.min.js" charset="utf-8"></script>
+</head>
+<body>
+<!-- 	<input type="butoon" text="refresh" id="r" /> -->
+	<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+	<div id="main" style="width: 600px; height: 400px;"></div>
+	<script type="text/javascript">
+		$(function() {
+			init();
+		})
+		function init() {
+			queryData();
+		}
+		function initEcharts(date, data) {
+			// 基于准备好的dom，初始化echarts实例
+			var myChart = echarts.init(document.getElementById('main'));
+
+			option = {
+				tooltip : {
+					trigger : 'axis'
+				},
+				title : {
+					left : 'center',
+					text : '大数据量折线图',
+				},
+				legend : {
+					top : 'bottom',
+					data : [ '意向' ]
+				},
+				toolbox : {
+					show : true,
+					feature : {
+						dataView : {
+							show : true,
+							readOnly : false
+						},
+						magicType : {
+							show : true,
+							type : [ 'line', 'bar', 'stack', 'tiled' ]
+						},
+						restore : {
+							show : true
+						},
+						saveAsImage : {
+							show : true
+						}
+					}
+				},
+				xAxis : {
+					type : 'category',
+					boundaryGap : false,
+					data : date
+				},
+				yAxis : {
+					type : 'value',
+					boundaryGap : [ 0, '100%' ]
+				},
+				dataZoom : [ {
+					type : 'inside',
+					start : 0,
+					end : 10
+				}, {
+					start : 0,
+					end : 10
+				} ],
+				series : [ {
+					name : '模拟数据',
+					type : 'line',
+					smooth : true,
+					symbol : 'none',
+					sampling : 'average',
+					itemStyle : {
+						normal : {
+							color : 'rgb(255, 70, 131)'
+						}
+					},
+					areaStyle : {
+						normal : {
+							color : new echarts.graphic.LinearGradient(0, 0, 0,
+									1, [ {
+										offset : 0,
+										color : 'rgb(255, 158, 68)'
+									}, {
+										offset : 1,
+										color : 'rgb(255, 70, 131)'
+									} ])
+						}
+					},
+					data : data
+				} ]
+			};
+			// 使用刚指定的配置项和数据显示图表。
+			myChart.setOption(option);
+		}
+		function queryData() {
+			$.ajax({
+				url : '/myself/qqsangong/all',
+				contentType : 'application/x-www-form-urlencoded',
+				success : function(res) {
+					res=JSON.parse(res);
+					console.dir(res);
+					if (res.code) {
+						var c = res.data;
+						var date = [];
+						var data = [];
+// 						$.each(c, function(index, element) {
+// 							date.push[element.create_time];
+// 							data.push[element.what];
+// 						});
+						for(var i=0;i<c.length;i++){
+							var e=c[i];
+							date.push(e.create_time);
+							data.push(e.what);
+						}
+						console.dir(date)
+						console.dir(data)
+						initEcharts(date, data);
+					} else {
+						alert(res.msg);
+					}
+				}
+			})
+		}
+	</script>
+
+</body>
+</html>

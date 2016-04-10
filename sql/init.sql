@@ -13,3 +13,9 @@ start_time DateTime,
 done_time DateTime,
 duration varchar(20)
 );
+drop table if exists qqsangong;
+create table qqsangong(
+id int unsigned auto_increment primary key ,
+what varchar(3),
+create_time DateTime
+);

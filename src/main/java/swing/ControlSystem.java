@@ -5,7 +5,7 @@ package swing;
  * @author Administrator
  *
  */
-public class ControlSystem {
+public class ControlSystem {  
 	OSHelper helper;
 	private static ControlSystem instance;
 	private ControlSystem(){

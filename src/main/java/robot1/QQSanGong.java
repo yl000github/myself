@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import exception.InfoException;
+import robot1.dao.QQSanGongDao;
 import swing.resolve.MsgQueue;
 import utils.DateUtil;
 import utils.XlsUtil;
@@ -46,12 +47,14 @@ public abstract class QQSanGong extends QQMan{
 			info("玩家赢");
 			isWin=true;currentMoney+=everyInvestMoney;
 			writeToExcel();
+			writeToDB();
 			win();
 			action="三公 "+everyInvestMoney;
 		}else if(content.contains("闲家输")){
 			info("玩家输");
 			isWin=false;currentMoney-=everyInvestMoney;
 			writeToExcel();
+			writeToDB();
 			lose();
 			action="三公 "+everyInvestMoney;
 		}else if(content.contains("当前等级")){
@@ -59,6 +62,8 @@ public abstract class QQSanGong extends QQMan{
 			currentMoney=totalMoney;
 			ready();
 			action="三公 "+everyInvestMoney;
+		}else if(content.contains("请明日再来")){
+			System.exit(1);
 		}else {
 			//do nothing
 			throw new InfoException("三公不正常情况");
@@ -67,6 +72,15 @@ public abstract class QQSanGong extends QQMan{
 		if(everyInvestMoney<50){
 			info("穷困潦倒啊，50都没有");
 			System.exit(1);
+		}
+	}
+	QQSanGongDao dao=new QQSanGongDao();
+	private void writeToDB() {
+		String rs=isWin?"1":"0";
+		try { 
+			dao.insert(rs);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	public abstract void win();

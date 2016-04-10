@@ -45,18 +45,28 @@ public abstract class QQMan extends AMan{
 		for (int i = 0; i < tryCount; i++) {
 			String msg=getMessage(sX+deltW*i, sY+deltH*i, eX-deltW*i, eY-deltH*i);
 			if(!msg.equals(stored)){
-				return msg;
+				return filter(msg);
 			}
 		}
 		//然后尝试扩大范围，适当缩小扩大的范围值，以免点到其他地方，产生未知错误
 		for (int i = 0; i < tryCount/2; i++) {
 			String msg=getMessage(sX-deltW*i, sY-deltH*i, eX+deltW*i, eY+deltH*i);
 			if(!msg.equals(stored)){
-				return msg;
+				return filter(msg);
 			}
 		}
 		throw new RuntimeException("无法获取剪切板的内容");
 	
+	}
+	private String filter(String msg) throws Exception{
+		int max=-1;
+		for (int i = 0; i < users.length; i++) {
+			int t=msg.lastIndexOf(users[i]);
+			if(t>max) max=t;
+		}
+		if(max==-1) throw new Exception("找不到对白信息");
+		String result=msg.substring(max, msg.length());
+		return result;
 	}
 	String []users={"杨林","vip机器人"};
 	public String getMessageCtrl(int sX,int sY,int eX,int eY) throws Exception{
@@ -86,7 +96,8 @@ public abstract class QQMan extends AMan{
 		boolean f=true;
 		//退出循环的条件是，包含机器人、和之前的内容不同 !content.contains(users[1])||
 		while(pre.equals(content)){
-			content=getMessageCtrl(0, 92, 1142, 592);
+//			content=getMessageCtrl(0, 92, 1142, 592);
+			content=getMessageMove(0, 92, 1142, 592);
 			content=content.trim();
 			//添加强控
 			if(content.contains("stop")){

@@ -95,7 +95,7 @@ public class OperationMain extends ABasic{
 
 	@Override
 	public void reappearStart() throws Exception {
-		reappear.openFile(path);
+		reappear.openFile(null);
 		reappear.action();
 	}
 
