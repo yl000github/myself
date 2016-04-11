@@ -68,8 +68,9 @@ public class Action extends Robot{
 		pause();
 	}
 	public void mouseRightClick(){
-		this.mousePress(MouseEvent.BUTTON2_MASK);
-		this.mouseRelease(MouseEvent.BUTTON2_MASK);
+		int t=MouseEvent.BUTTON3_MASK;
+		this.mousePress(t);
+		this.mouseRelease(t);
 		pause();
 	}
 	public void keyClick(int c){
@@ -240,8 +241,10 @@ public class Action extends Robot{
 	public static void main(String[] args) throws Exception {
 		System.out.println((char)('a'-32));
 		Action a=new Action();
-		a.qiehuan();
-		a.inputText("startSTART");
+		a.mouseMove((int)a.width/2, (int)a.height/2);
+		a.mouseRightClick();
+//		a.qiehuan();
+//		a.inputText("startSTART");
 //		char c='a';
 //		a.keyClick(KeyEvent.VK_CAPS_LOCK);
 ////		a.inputChar(c);

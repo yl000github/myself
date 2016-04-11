@@ -27,11 +27,11 @@ public class AMouse extends AEvent{
 			break;
 		case 2:
 			//right button
-			r=MouseEvent.BUTTON2_MASK;
+			r=MouseEvent.BUTTON3_MASK;
 			break;
 		case 3:
 			//middle button
-			r=MouseEvent.BUTTON3_MASK;
+			r=MouseEvent.BUTTON2_MASK;
 			break;
 		default:
 			throw new InfoException("buttonMapping 不正常的值");
