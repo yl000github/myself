@@ -7,11 +7,13 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.InputStream;
 import java.io.Reader;
+import java.util.Date;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
 import exception.ErrorException;
+import exception.InfoException;
 import swing.operation.event.*;
 
 public class Reappear{
@@ -24,6 +26,11 @@ public class Reappear{
 			new KeyPress(),new KeyRelease(),	
 			new KeyClick()
 		};
+	}
+	Date startTime;
+	protected long getCurTime() throws ErrorException{
+		if(startTime==null) throw new ErrorException("起始时间未初始化");
+		return new Date().getTime()-startTime.getTime();
 	}
 	String path;
 	private String openChooseFile(){
@@ -78,6 +85,7 @@ public class Reappear{
 	}
 	//耗时任务
 	public void action() throws Exception{
+		startTime=new Date(); 
 		Reader r=new FileReader(path);
 		BufferedReader reader=new BufferedReader(r);
 		String msg;
@@ -92,6 +100,14 @@ public class Reappear{
 		reader.close();
 	}
 	public boolean consumeLine(String msg) throws Exception{
+		String time=getValue(msg,"currentTime");
+		Long t=Long.parseLong(time);
+		long cur=getCurTime();
+		if(t>cur){
+			Thread.sleep(t-cur);
+		}else{ 
+			startTime=new Date(startTime.getTime()+cur-t);
+		}
 		for (int i = 0; i < consumers.length; i++) {
 			try {
 				if(consumers[i].consume(msg)) return true;
@@ -100,6 +116,20 @@ public class Reappear{
 			}
 		}
 		throw new ErrorException("该行未被处理："+msg);
+	}
+	public String getValue(String msg,String key) throws InfoException{
+		int keyIndex=msg.indexOf(key);
+		if(keyIndex==-1) throw new InfoException("找不到"+key);
+		int commaIndex=msg.substring(keyIndex).indexOf(",");
+		if(commaIndex!=-1){
+			//表明不是最后一组
+			String value=msg.substring(keyIndex+key.length()+1, keyIndex+commaIndex);
+			return value;
+		}else{
+			//表明是最后一组
+			String value=msg.substring(keyIndex+key.length()+1, msg.length());
+			return value;
+		}
 	}
 	public void stop() {
 		

@@ -10,7 +10,7 @@ public class MouseRelease  extends AMousePRC{
 	public boolean consume(String msg) throws Exception {
 		super.consume(msg);
 		robot.mouseRelease(buttonMapping(button));
-		pause(200);
+//		pause(200);
 		return true;
 	}
 

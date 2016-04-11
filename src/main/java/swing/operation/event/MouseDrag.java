@@ -7,6 +7,7 @@ public class MouseDrag extends AMouse{
 	@Override
 	public boolean consume(String msg) throws Exception {
 		super.consume(msg);
+		robot.mouseMove(x, y);
 		return true;
 	}
 }

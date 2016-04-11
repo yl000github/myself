@@ -53,6 +53,7 @@ public class OSHelper extends JFrame {
 	public OSHelper(){
 		init();
 		prepare();
+//		setVisible(false);
 	}
 	private void init() {
 		httpServer=new HttpServer(17777);
@@ -343,7 +344,7 @@ public class OSHelper extends JFrame {
 		return operation;
 	}
 	public void start(){
-		setVisible(true);
+//		setVisible(true);
 		httpServerStart();
 		keypadStart();
 		msgServerStart();

@@ -1,18 +1,28 @@
 package swing.operation;
 
 import java.awt.event.WindowEvent;
+import java.util.Date;
 
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.mouse.NativeMouseEvent;
 import org.jnativehook.mouse.NativeMouseWheelEvent;
 
+import exception.ErrorException;
 import utils.FileUtil;
 
 public class OperationMain extends ABasic{
 	Reappear reappear=new Reappear();
 	StringBuffer sb=new StringBuffer();
+	
 	private void store(String msg){ 
-//		sb.append(msg+"\n"); 
+//		sb.append(msg+"\n");
+		long t;
+		try { 
+			t=getCurTime();
+		} catch (ErrorException e) {
+			throw new RuntimeException(e.getMessage());
+		}
+		msg+=",currentTime="+t;
 		FileUtil.writeAdd(path, msg+"\n");
 	}
 	@Override

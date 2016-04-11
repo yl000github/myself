@@ -2,8 +2,8 @@ package swing;
 
 /**
  * 最高权限，程序的入口
- * @author Administrator
- *
+ * @author Administrator 
+ * 
  */
 public class ControlSystem {  
 	OSHelper helper;

@@ -14,7 +14,7 @@ public class MouseWheel extends AMouse{
 		scrollAmount=Integer.parseInt(getValue(msg, "scrollAmount"));
 		wheelRotation=Integer.parseInt(getValue(msg, "wheelRotation"));
 		robot.mouseWheel(wheelRotation);
-		pause();
+//		pause();
 		return true;
 	}
 

@@ -8,7 +8,7 @@ public class MouseMove  extends AMouse{
 	public boolean consume(String msg) throws Exception {
 		super.consume(msg);
 		robot.mouseMove(x, y);
-		pause(20);
+//		pause(20);
 		return true;
 	}
 }

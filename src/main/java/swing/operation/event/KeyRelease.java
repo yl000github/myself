@@ -9,7 +9,7 @@ public class KeyRelease  extends AKey{
 	public boolean consume(String msg) throws Exception {
 		super.consume(msg);
 		robot.keyRelease(keymapping());
-		pause(200);
+//		pause(200);
 		return true;
 	}
 }
