@@ -1,0 +1,22 @@
+URL：/exportManager/exportQuotationList
+参数：
+{
+	supplierID			//供应商ID
+	cityID				//城市ID
+	goodsID			//商品ID
+	quoteMode		//报价方式	报价方式	1 人工报价   2 自动报价，目前只查询1
+	lockStatus			//锁定状态	1未锁定 2已锁定
+	quotationStatus		//报价单状态	1未报价2已报价3报价失败
+	lockOwner			//锁定owner	 web_bas鉴权返回的staffId
+	carOwner			//车主
+	phoneNo			//联系电话
+	sortFieldName		//排序字段（createTime报价单创建时间）
+	sortDir			//排序（ASC升序  DESC降序）
+}
+返回：
+{
+	errorCode : 0,
+	data: {
+	reportUrl		//报表访问地址
+	}
+}
