@@ -3,7 +3,7 @@
 <generatorConfiguration>
 <properties resource="dbcpconfig.properties" />
     <!-- 数据库驱动包位置 -->
-    <classPathEntry location="C:/Users/Yang/.m2/repository/mysql/mysql-connector-java/5.0.8/mysql-connector-java-5.0.8.jar"/>
+    <classPathEntry location="C:/Users/Administrator/.m2/repository/mysql/mysql-connector-java/5.0.8/mysql-connector-java-5.0.8.jar"/>
  
     <context id="DB2Tables" targetRuntime="MyBatis3">
  
@@ -37,7 +37,7 @@
         </javaClientGenerator>
  
         <!-- 要生成那些表(更改tableName和domainObjectName就可以) -->
-        <table tableName="affair" domainObjectName="Affair" enableCountByExample="false" enableUpdateByExample="false"
+        <table tableName="quotation" domainObjectName="Quotation" enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
     </context>
 </generatorConfiguration>

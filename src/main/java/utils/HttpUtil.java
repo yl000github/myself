@@ -13,6 +13,7 @@ import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
@@ -64,6 +65,26 @@ public class HttpUtil {
 		get.setConfig(requestConfig);
 		try {
 			HttpResponse response=httpClient.execute(get);
+			int code=response.getStatusLine().getStatusCode();
+			if(code!=200){
+				throw new BasicException("get 返回码："+code);
+			}
+			String res=EntityUtils.toString(response.getEntity(),"utf-8");
+			return res;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new BasicException(e.getMessage());
+		} 
+	}
+	public static String post(String url,String params) throws BasicException{
+		CloseableHttpClient httpClient=HttpClients.createDefault();
+		HttpPost post=new HttpPost(url);
+		RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(2000).setConnectTimeout(2000).build();//设置请求和传输超时时间
+		post.setConfig(requestConfig);
+		try {
+//			Entity en=new StringEntity(params);?
+			post.setEntity(new StringEntity(params,"utf-8"));
+			HttpResponse response=httpClient.execute(post);
 			int code=response.getStatusLine().getStatusCode();
 			if(code!=200){
 				throw new BasicException("get 返回码："+code);
