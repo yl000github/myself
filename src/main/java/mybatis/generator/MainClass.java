@@ -23,7 +23,7 @@ public class MainClass {
 		File configFile = new File(MainClass.class.getResource(genCfg).getFile());
 		ConfigurationParser cp = new ConfigurationParser(warnings);
 		Configuration config = null;
-		try 
+		try  
 		{  
 			config = cp.parseConfiguration(configFile);
 		}

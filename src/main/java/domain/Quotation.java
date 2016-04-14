@@ -18,6 +18,8 @@ public class Quotation {
 
     private Integer carid;
 
+    private Integer userid;
+
     private String carlicenseno;
 
     private String carframeno;
@@ -58,7 +60,7 @@ public class Quotation {
 
     private Integer quotationstatus;
 
-    private String timeexpire;
+    private Date timeexpire;
 
     private String isvalid;
 
@@ -71,6 +73,8 @@ public class Quotation {
     private Date createtime;
 
     private Date lastupdate;
+
+    private Date jqxlastyearenddate;
 
     public Integer getId() {
         return id;
@@ -126,6 +130,14 @@ public class Quotation {
 
     public void setCarid(Integer carid) {
         this.carid = carid;
+    }
+
+    public Integer getUserid() {
+        return userid;
+    }
+
+    public void setUserid(Integer userid) {
+        this.userid = userid;
     }
 
     public String getCarlicenseno() {
@@ -288,12 +300,12 @@ public class Quotation {
         this.quotationstatus = quotationstatus;
     }
 
-    public String getTimeexpire() {
+    public Date getTimeexpire() {
         return timeexpire;
     }
 
-    public void setTimeexpire(String timeexpire) {
-        this.timeexpire = timeexpire == null ? null : timeexpire.trim();
+    public void setTimeexpire(Date timeexpire) {
+        this.timeexpire = timeexpire;
     }
 
     public String getIsvalid() {
@@ -342,5 +354,13 @@ public class Quotation {
 
     public void setLastupdate(Date lastupdate) {
         this.lastupdate = lastupdate;
+    }
+
+    public Date getJqxlastyearenddate() {
+        return jqxlastyearenddate;
+    }
+
+    public void setJqxlastyearenddate(Date jqxlastyearenddate) {
+        this.jqxlastyearenddate = jqxlastyearenddate;
     }
 }

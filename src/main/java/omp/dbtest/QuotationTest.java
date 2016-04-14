@@ -41,15 +41,17 @@ public class QuotationTest {
 	@Test
 	public void insert(){
 		QuotationMapper mapper=sqlSession.getMapper(QuotationMapper.class);
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; i < 40; i++) {
 			Quotation q=new Quotation();
 			q.setQuotationcustomernumber("B00200"+(i+1));
 			q.setGoodsid(r(8)+78);//79-87
 			q.setGoodstypeid(r(3)); 
 			q.setCityid(1); 
+			q.setUserid(r(15)+117);
 			q.setSupplierid(r(2));
-			q.setCarid(r(10));
+			q.setCarid(r(10)+110);
 			q.setCarowner("yang");
+			q.setCarownerphoneno("15997469576");
 			q.setAmount(new BigDecimal(r(2000)+2000));
 			if(Math.random()>0.5) q.setQuotemode("1");
 			else q.setQuotemode("2");

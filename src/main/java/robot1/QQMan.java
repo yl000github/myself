@@ -39,8 +39,8 @@ public abstract class QQMan extends AMan{
 		int tryCount=5;
 		int changeW=width/3;
 		int changeH=height/3;
-		int deltW=changeW/tryCount/2;
-		int deltH=changeH/tryCount/2;
+		int deltW=5;
+		int deltH=5;
 		//首先尝试缩小范围
 		for (int i = 0; i < tryCount; i++) {
 			String msg=getMessage(sX+deltW*i, sY+deltH*i, eX-deltW*i, eY-deltH*i);
@@ -49,7 +49,7 @@ public abstract class QQMan extends AMan{
 			}
 		}
 		//然后尝试扩大范围，适当缩小扩大的范围值，以免点到其他地方，产生未知错误
-		for (int i = 0; i < tryCount/2; i++) {
+		for (int i = 0; i < 1; i++) {
 			String msg=getMessage(sX-deltW*i, sY-deltH*i, eX+deltW*i, eY+deltH*i);
 			if(!msg.equals(stored)){
 				return filter(msg);
@@ -97,9 +97,9 @@ public abstract class QQMan extends AMan{
 		//退出循环的条件是，包含机器人、和之前的内容不同 !content.contains(users[1])||
 		while(pre.equals(content)){
 //			content=getMessageCtrl(0, 92, 1142, 592);
-			content=getMessageMove(0, 92, 1142, 592);
+			content=getMessageMove(38, 92, 568, 594);
 			content=content.trim();
-			//添加强控
+			//添加强控 
 			if(content.contains("stop")){
 				System.exit(1);
 			}
