@@ -77,7 +77,7 @@ public class Selenium {
 			WebDriver driver=new HtmlUnitDriver();
 			String url="http://www.lagou.com/zhaopin/Java/?labelWords=label";
 			driver.get(url); 
-			FileUtil.write("E:/lagou.txt", driver.findElement(By.tagName("html")).getText());
+			FileUtil.write("d:/lagou.txt", driver.findElement(By.tagName("html")).getText());
 			List<WebElement> positions=driver.findElements(By.xpath("//li[@class='con_list_item']|//li[@class='con_list_item first_row']"));
 			if(positions==null||positions.size()==0){
 				System.out.println("没有找寻到结果");

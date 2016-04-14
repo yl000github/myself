@@ -9,6 +9,7 @@
     <result column="cityID" property="cityid" jdbcType="INTEGER" />
     <result column="supplierID" property="supplierid" jdbcType="INTEGER" />
     <result column="carID" property="carid" jdbcType="INTEGER" />
+    <result column="userID" property="userid" jdbcType="INTEGER" />
     <result column="carLicenseNO" property="carlicenseno" jdbcType="VARCHAR" />
     <result column="carFrameNO" property="carframeno" jdbcType="VARCHAR" />
     <result column="carEngineNO" property="carengineno" jdbcType="VARCHAR" />
@@ -29,20 +30,22 @@
     <result column="amount" property="amount" jdbcType="DECIMAL" />
     <result column="quoteMode" property="quotemode" jdbcType="VARCHAR" />
     <result column="quotationStatus" property="quotationstatus" jdbcType="INTEGER" />
-    <result column="timeExpire" property="timeexpire" jdbcType="VARCHAR" />
+    <result column="timeExpire" property="timeexpire" jdbcType="DATE" />
     <result column="isValid" property="isvalid" jdbcType="VARCHAR" />
     <result column="lockStatus" property="lockstatus" jdbcType="INTEGER" />
     <result column="lockOwner" property="lockowner" jdbcType="VARCHAR" />
     <result column="failDescription" property="faildescription" jdbcType="VARCHAR" />
     <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
     <result column="lastUpdate" property="lastupdate" jdbcType="TIMESTAMP" />
+    <result column="jqxLastYearEndDate" property="jqxlastyearenddate" jdbcType="DATE" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, quotationCustomerNumber, goodsID, goodsTypeID, cityID, supplierID, carID, carLicenseNO, 
-    carFrameNO, carEngineNO, carOwner, carOwnerPhoneNO, ownerCardID, insuredName, insuredCardID, 
-    businessInsurance, trafficInsurance, protectionPlan, jqxStartDate, jqxEndDate, syxStartDate, 
-    syxEndDate, jqxProposalNO, syxProposalNO, amount, quoteMode, quotationStatus, timeExpire, 
-    isValid, lockStatus, lockOwner, failDescription, createTime, lastUpdate
+    id, quotationCustomerNumber, goodsID, goodsTypeID, cityID, supplierID, carID, userID, 
+    carLicenseNO, carFrameNO, carEngineNO, carOwner, carOwnerPhoneNO, ownerCardID, insuredName, 
+    insuredCardID, businessInsurance, trafficInsurance, protectionPlan, jqxStartDate, 
+    jqxEndDate, syxStartDate, syxEndDate, jqxProposalNO, syxProposalNO, amount, quoteMode, 
+    quotationStatus, timeExpire, isValid, lockStatus, lockOwner, failDescription, createTime, 
+    lastUpdate, jqxLastYearEndDate
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -57,28 +60,30 @@
   <insert id="insert" parameterType="domain.Quotation" >
     insert into quotation (id, quotationCustomerNumber, goodsID, 
       goodsTypeID, cityID, supplierID, 
-      carID, carLicenseNO, carFrameNO, 
-      carEngineNO, carOwner, carOwnerPhoneNO, 
-      ownerCardID, insuredName, insuredCardID, 
-      businessInsurance, trafficInsurance, protectionPlan, 
-      jqxStartDate, jqxEndDate, syxStartDate, 
-      syxEndDate, jqxProposalNO, syxProposalNO, 
-      amount, quoteMode, quotationStatus, 
-      timeExpire, isValid, lockStatus, 
-      lockOwner, failDescription, createTime, 
-      lastUpdate)
+      carID, userID, carLicenseNO, 
+      carFrameNO, carEngineNO, carOwner, 
+      carOwnerPhoneNO, ownerCardID, insuredName, 
+      insuredCardID, businessInsurance, trafficInsurance, 
+      protectionPlan, jqxStartDate, jqxEndDate, 
+      syxStartDate, syxEndDate, jqxProposalNO, 
+      syxProposalNO, amount, quoteMode, 
+      quotationStatus, timeExpire, isValid, 
+      lockStatus, lockOwner, failDescription, 
+      createTime, lastUpdate, jqxLastYearEndDate
+      )
     values (#{id,jdbcType=INTEGER}, #{quotationcustomernumber,jdbcType=VARCHAR}, #{goodsid,jdbcType=INTEGER}, 
       #{goodstypeid,jdbcType=INTEGER}, #{cityid,jdbcType=INTEGER}, #{supplierid,jdbcType=INTEGER}, 
-      #{carid,jdbcType=INTEGER}, #{carlicenseno,jdbcType=VARCHAR}, #{carframeno,jdbcType=VARCHAR}, 
-      #{carengineno,jdbcType=VARCHAR}, #{carowner,jdbcType=VARCHAR}, #{carownerphoneno,jdbcType=VARCHAR}, 
-      #{ownercardid,jdbcType=VARCHAR}, #{insuredname,jdbcType=VARCHAR}, #{insuredcardid,jdbcType=VARCHAR}, 
-      #{businessinsurance,jdbcType=VARCHAR}, #{trafficinsurance,jdbcType=VARCHAR}, #{protectionplan,jdbcType=VARCHAR}, 
-      #{jqxstartdate,jdbcType=DATE}, #{jqxenddate,jdbcType=DATE}, #{syxstartdate,jdbcType=DATE}, 
-      #{syxenddate,jdbcType=DATE}, #{jqxproposalno,jdbcType=VARCHAR}, #{syxproposalno,jdbcType=VARCHAR}, 
-      #{amount,jdbcType=DECIMAL}, #{quotemode,jdbcType=VARCHAR}, #{quotationstatus,jdbcType=INTEGER}, 
-      #{timeexpire,jdbcType=VARCHAR}, #{isvalid,jdbcType=VARCHAR}, #{lockstatus,jdbcType=INTEGER}, 
-      #{lockowner,jdbcType=VARCHAR}, #{faildescription,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
-      #{lastupdate,jdbcType=TIMESTAMP})
+      #{carid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{carlicenseno,jdbcType=VARCHAR}, 
+      #{carframeno,jdbcType=VARCHAR}, #{carengineno,jdbcType=VARCHAR}, #{carowner,jdbcType=VARCHAR}, 
+      #{carownerphoneno,jdbcType=VARCHAR}, #{ownercardid,jdbcType=VARCHAR}, #{insuredname,jdbcType=VARCHAR}, 
+      #{insuredcardid,jdbcType=VARCHAR}, #{businessinsurance,jdbcType=VARCHAR}, #{trafficinsurance,jdbcType=VARCHAR}, 
+      #{protectionplan,jdbcType=VARCHAR}, #{jqxstartdate,jdbcType=DATE}, #{jqxenddate,jdbcType=DATE}, 
+      #{syxstartdate,jdbcType=DATE}, #{syxenddate,jdbcType=DATE}, #{jqxproposalno,jdbcType=VARCHAR}, 
+      #{syxproposalno,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, #{quotemode,jdbcType=VARCHAR}, 
+      #{quotationstatus,jdbcType=INTEGER}, #{timeexpire,jdbcType=DATE}, #{isvalid,jdbcType=VARCHAR}, 
+      #{lockstatus,jdbcType=INTEGER}, #{lockowner,jdbcType=VARCHAR}, #{faildescription,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{lastupdate,jdbcType=TIMESTAMP}, #{jqxlastyearenddate,jdbcType=DATE}
+      )
   </insert>
   <insert id="insertSelective" parameterType="domain.Quotation" >
     insert into quotation
@@ -103,6 +108,9 @@
       </if>
       <if test="carid != null" >
         carID,
+      </if>
+      <if test="userid != null" >
+        userID,
       </if>
       <if test="carlicenseno != null" >
         carLicenseNO,
@@ -185,6 +193,9 @@
       <if test="lastupdate != null" >
         lastUpdate,
       </if>
+      <if test="jqxlastyearenddate != null" >
+        jqxLastYearEndDate,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -207,6 +218,9 @@
       </if>
       <if test="carid != null" >
         #{carid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
       </if>
       <if test="carlicenseno != null" >
         #{carlicenseno,jdbcType=VARCHAR},
@@ -269,7 +283,7 @@
         #{quotationstatus,jdbcType=INTEGER},
       </if>
       <if test="timeexpire != null" >
-        #{timeexpire,jdbcType=VARCHAR},
+        #{timeexpire,jdbcType=DATE},
       </if>
       <if test="isvalid != null" >
         #{isvalid,jdbcType=VARCHAR},
@@ -288,6 +302,9 @@
       </if>
       <if test="lastupdate != null" >
         #{lastupdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jqxlastyearenddate != null" >
+        #{jqxlastyearenddate,jdbcType=DATE},
       </if>
     </trim>
   </insert>
@@ -311,6 +328,9 @@
       </if>
       <if test="carid != null" >
         carID = #{carid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        userID = #{userid,jdbcType=INTEGER},
       </if>
       <if test="carlicenseno != null" >
         carLicenseNO = #{carlicenseno,jdbcType=VARCHAR},
@@ -373,7 +393,7 @@
         quotationStatus = #{quotationstatus,jdbcType=INTEGER},
       </if>
       <if test="timeexpire != null" >
-        timeExpire = #{timeexpire,jdbcType=VARCHAR},
+        timeExpire = #{timeexpire,jdbcType=DATE},
       </if>
       <if test="isvalid != null" >
         isValid = #{isvalid,jdbcType=VARCHAR},
@@ -393,6 +413,9 @@
       <if test="lastupdate != null" >
         lastUpdate = #{lastupdate,jdbcType=TIMESTAMP},
       </if>
+      <if test="jqxlastyearenddate != null" >
+        jqxLastYearEndDate = #{jqxlastyearenddate,jdbcType=DATE},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -404,6 +427,7 @@
       cityID = #{cityid,jdbcType=INTEGER},
       supplierID = #{supplierid,jdbcType=INTEGER},
       carID = #{carid,jdbcType=INTEGER},
+      userID = #{userid,jdbcType=INTEGER},
       carLicenseNO = #{carlicenseno,jdbcType=VARCHAR},
       carFrameNO = #{carframeno,jdbcType=VARCHAR},
       carEngineNO = #{carengineno,jdbcType=VARCHAR},
@@ -424,13 +448,14 @@
       amount = #{amount,jdbcType=DECIMAL},
       quoteMode = #{quotemode,jdbcType=VARCHAR},
       quotationStatus = #{quotationstatus,jdbcType=INTEGER},
-      timeExpire = #{timeexpire,jdbcType=VARCHAR},
+      timeExpire = #{timeexpire,jdbcType=DATE},
       isValid = #{isvalid,jdbcType=VARCHAR},
       lockStatus = #{lockstatus,jdbcType=INTEGER},
       lockOwner = #{lockowner,jdbcType=VARCHAR},
       failDescription = #{faildescription,jdbcType=VARCHAR},
       createTime = #{createtime,jdbcType=TIMESTAMP},
-      lastUpdate = #{lastupdate,jdbcType=TIMESTAMP}
+      lastUpdate = #{lastupdate,jdbcType=TIMESTAMP},
+      jqxLastYearEndDate = #{jqxlastyearenddate,jdbcType=DATE}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

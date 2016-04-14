@@ -8,6 +8,7 @@ import org.jnativehook.mouse.NativeMouseEvent;
 import org.jnativehook.mouse.NativeMouseWheelEvent;
 
 import exception.ErrorException;
+import swing.ControlSystem;
 import utils.FileUtil;
 
 public class OperationMain extends ABasic{
@@ -105,7 +106,7 @@ public class OperationMain extends ABasic{
 
 	@Override
 	public void reappearStart() throws Exception {
-		reappear.openFile(null);
+		reappear.openFile(ControlSystem.getInstance().getOpenFile());
 		reappear.action();
 	}
 
