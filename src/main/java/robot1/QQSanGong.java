@@ -63,15 +63,16 @@ public abstract class QQSanGong extends QQMan{
 			ready();
 			action="三公 "+everyInvestMoney;
 		}else if(content.contains("请明日再来")){
-			System.exit(1);
+//			System.exit(1);
+			stop();
 		}else {
 			//do nothing
 			throw new InfoException("三公不正常情况");
 //			action="三公不正常情况";
 		}
 		if(everyInvestMoney<50){
-			info("穷困潦倒啊，50都没有");
-			System.exit(1);
+			info("穷困潦倒啊，50都没有");stop();
+//			System.exit(1);
 		}
 	}
 	QQSanGongDao dao=new QQSanGongDao();

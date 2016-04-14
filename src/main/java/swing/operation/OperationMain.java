@@ -8,6 +8,7 @@ import org.jnativehook.mouse.NativeMouseEvent;
 import org.jnativehook.mouse.NativeMouseWheelEvent;
 
 import exception.ErrorException;
+import swing.ControlSystem;
 import utils.FileUtil;
 
 public class OperationMain extends ABasic{
@@ -27,7 +28,27 @@ public class OperationMain extends ABasic{
 	}
 	@Override
 	public void nativeKeyPressed(NativeKeyEvent e) {
+		shortCut(e);
 		store(e.paramString());
+	}
+	public void shortCut(NativeKeyEvent e){
+		String key=NativeKeyEvent.getKeyText(e.getKeyCode());
+		if(key.equals("F2")){
+			System.out.println("f2");
+			ControlSystem.getHelper().sanGongStart();
+		}else if(key.equals("F4")){
+			System.out.println("f4");
+			ControlSystem.getHelper().sanGongStop();
+		}else if(key.equals("Esc")){
+			System.out.println("esc");
+			try {
+				recordStop();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}else if(key.equals("F4")){
+			
+		}
 	}
 
 	@Override

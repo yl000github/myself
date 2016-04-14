@@ -19,9 +19,28 @@ public class KeypadRecorder implements NativeKeyListener{
 		// Don't forget to disable the parent handlers.
 		logger.setUseParentHandlers(false);
 	}
-	
+	public void shortCut(NativeKeyEvent e){
+		String key=NativeKeyEvent.getKeyText(e.getKeyCode());
+		if(key.equals("F2")){
+			System.out.println("f2");
+			ControlSystem.getHelper().sanGongStart();
+		}else if(key.equals("F4")){
+			System.out.println("f4");
+			ControlSystem.getHelper().sanGongStop();
+		}else if(key.equals("Esc")){
+			System.out.println("esc");
+			try {
+				ControlSystem.getHelper().getOperationHandle().recordStop();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}else if(key.equals("F4")){
+			
+		}
+	}
 	@Override
 	public void nativeKeyPressed(NativeKeyEvent e) {
+		shortCut(e);
 		String key=NativeKeyEvent.getKeyText(e.getKeyCode());
 		LogUtil.logDailyKeyPad(key+" ");
 	}
