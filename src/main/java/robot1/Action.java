@@ -201,6 +201,8 @@ public class Action extends Robot{
 	}
 	//成功率好有限啊
 	public String getMessage(int sX,int sY,int eX,int eY) throws Exception{
+//		mouseMove((sX+eX)/2,(sY+eY)/2);
+//		mouseLeftClick();
 		mouseMove(sX,sY);
 		this.mousePress(MouseEvent.BUTTON1_MASK);
 		mouseFromTo(sX,sY,eX,eY);
@@ -241,8 +243,9 @@ public class Action extends Robot{
 	public static void main(String[] args) throws Exception {
 		System.out.println((char)('a'-32));
 		Action a=new Action();
-		a.mouseMove((int)a.width/2, (int)a.height/2);
-		a.mouseRightClick();
+		a.qiehuan();
+		String content=a.getMessage(54, 169, 441, 599);
+		System.out.println(content);
 //		a.qiehuan();
 //		a.inputText("startSTART");
 //		char c='a';

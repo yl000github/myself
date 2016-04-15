@@ -3,6 +3,8 @@ package robot1;
 import java.util.ArrayList;
 import java.util.List;
 
+import exception.ErrorException;
+import swing.ControlSystem;
 import swing.resolve.MsgQueue;
 import utils.DateUtil;
 public abstract class QQMan extends AMan{
@@ -10,6 +12,17 @@ public abstract class QQMan extends AMan{
 	List<Rectangle> lib=new ArrayList<>();
 	public QQMan() throws Exception {
 		super();
+	}
+	public String moveReappear() throws ErrorException{
+		try {
+			ControlSystem.getInstance().setOpenFile("d:/logs/move.txt");
+			ControlSystem.getHelper().getOperationHandle().reappearStart();
+			copy();
+			return getClipboard();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		throw new ErrorException("moveReappear fail");
 	}
 	@Override
 	public void action() throws Exception {
@@ -36,26 +49,28 @@ public abstract class QQMan extends AMan{
 		}
 	}
 	public String getMessageMove(int sX,int sY,int eX,int eY) throws Exception{
-		String stored=getClipboard();
-		for (Rectangle r : lib) {
-			String msg=getMessage(r.sX, r.sY, r.eX, r.eY);
-			if(!msg.equals(stored)){
-				return filter(msg);
-			}
-		}
-		//库中没有就自己尝试
-		int tryCount=5;
-		int delt=10;
-		//首先尝试缩小范围
-		for (int i = 0; i < tryCount; i++) {
-			//随机尝试
-			String msg=getMessage(sX+(int)(delt*Math.random()), sY+(int)(delt*Math.random()), eX-(int)(delt*Math.random()), eY-(int)(delt*Math.random()));
-			if(!msg.equals(stored)){
-				lib.add(new Rectangle(sX,sY,eX,eY));
-				return filter(msg);
-			}
-		}
-		throw new RuntimeException("无法获取剪切板的内容");
+//		String stored=getClipboard();
+//		for (Rectangle r : lib) {
+////			String msg=getMessage(r.sX, r.sY, r.eX, r.eY);
+//			String msg=moveReappear();;
+//			if(!msg.equals(stored)){
+//				return filter(msg);
+//			}
+//		}
+//		//库中没有就自己尝试
+//		int tryCount=5;
+//		int delt=10;
+//		//首先尝试缩小范围
+//		for (int i = 0; i < tryCount; i++) {
+//			//随机尝试
+//			String msg=getMessage(sX+(int)(delt*Math.random()), sY+(int)(delt*Math.random()), eX-(int)(delt*Math.random()), eY-(int)(delt*Math.random()));
+//			if(!msg.equals(stored)){
+//				lib.add(new Rectangle(sX,sY,eX,eY));
+//				return filter(msg);
+//			}
+//		}
+		return filter(moveReappear());
+//		throw new RuntimeException("无法获取剪切板的内容");
 	
 	}
 	private String filter(String msg) throws Exception{
@@ -97,7 +112,8 @@ public abstract class QQMan extends AMan{
 		//退出循环的条件是，包含机器人、和之前的内容不同 !content.contains(users[1])||
 		while(pre.equals(content)){
 //			content=getMessageCtrl(0, 92, 1142, 592);
-			content=getMessageMove(38, 92, 568, 594);
+			content=getMessageMove(48, 92, 568, 594);
+//			content=moveReappear();
 			content=content.trim();
 			//添加强控 
 			if(content.contains("stop")){

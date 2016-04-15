@@ -21,16 +21,6 @@ public class FileUtil {
 				p.mkdirs();
 			f.createNewFile();
 		}
-		// if(f.isDirectory()) {
-		// f.mkdir();
-		// return;
-		// }
-		// if(f.isFile()){
-		// String parent=f.getParent();
-		// File p=new File(parent);
-		// if(!p.exists()) p.mkdirs();
-		// f.createNewFile();
-		// }
 	}
 
 	public static void write(String filepath, String content) {
@@ -103,12 +93,39 @@ public class FileUtil {
 		input.close();
 		return count;
 	}
+	/**
+	 * 将文件中某个字段的值做一定的运算
+	 * @param args
+	 * @throws IOException
+	 */
+	public static void reappearChange(){
+		String path="d:/logs/move1.txt";
+		int t=1600;
+		try {
+			StringBuffer sb=new StringBuffer();
+			BufferedReader br=new BufferedReader(new FileReader(path));
+			String line;
+			while((line=br.readLine())!=null){
+				String num=line.substring(line.lastIndexOf("=")+1, line.length());
+				String ano=String.valueOf(Integer.parseInt(num)-t);
+				line=line.replace(num, ano);
+				sb.append(line);
+				sb.append("\r\n");
+			}
+			br.close();
+			write(path,sb.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 	public static void main(String[] args) throws IOException {
-		String c = "hello yang";
+		reappearChange();
+//		String c = "hello yang";
 //		String filepath = "D:\\git\\myself\\src\\main\\java";
 //		System.out.println(getFilesLines(filepath,"java"));
-		String filepath = "D:\\git\\myself\\src\\main\\java";
-		System.out.println(getFilesLines(filepath,"java"));
+//		String filepath = "D:\\git\\myself\\src\\main\\java";
+//		System.out.println(getFilesLines(filepath,"java"));
 //		System.out.println(getFilesLines("D:\\HbuilderWorkspace\\omp\\server","js"));
 //		System.out.println(getFilesLines("D:\\HbuilderWorkspace\\omp\\client\\app","js"));
 		// write(filepath, c);
