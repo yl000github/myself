@@ -1,9 +1,13 @@
 package robot1;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import swing.resolve.MsgQueue;
 import utils.DateUtil;
 public abstract class QQMan extends AMan{
 	String action="";
+	List<Rectangle> lib=new ArrayList<>();
 	public QQMan() throws Exception {
 		super();
 	}
@@ -32,26 +36,22 @@ public abstract class QQMan extends AMan{
 		}
 	}
 	public String getMessageMove(int sX,int sY,int eX,int eY) throws Exception{
-
 		String stored=getClipboard();
-		int width=eX-sX;
-		int height=eY-sY;
-		int tryCount=5;
-		int changeW=width/3;
-		int changeH=height/3;
-		int deltW=5;
-		int deltH=5;
-		//首先尝试缩小范围
-		for (int i = 0; i < tryCount; i++) {
-			String msg=getMessage(sX+deltW*i, sY+deltH*i, eX-deltW*i, eY-deltH*i);
+		for (Rectangle r : lib) {
+			String msg=getMessage(r.sX, r.sY, r.eX, r.eY);
 			if(!msg.equals(stored)){
 				return filter(msg);
 			}
 		}
-		//然后尝试扩大范围，适当缩小扩大的范围值，以免点到其他地方，产生未知错误
-		for (int i = 0; i < 1; i++) {
-			String msg=getMessage(sX-deltW*i, sY-deltH*i, eX+deltW*i, eY+deltH*i);
+		//库中没有就自己尝试
+		int tryCount=5;
+		int delt=10;
+		//首先尝试缩小范围
+		for (int i = 0; i < tryCount; i++) {
+			//随机尝试
+			String msg=getMessage(sX+(int)(delt*Math.random()), sY+(int)(delt*Math.random()), eX-(int)(delt*Math.random()), eY-(int)(delt*Math.random()));
 			if(!msg.equals(stored)){
+				lib.add(new Rectangle(sX,sY,eX,eY));
 				return filter(msg);
 			}
 		}

@@ -17,6 +17,7 @@ public class Google extends AQueryBase{
 	@Override
 	public List<Answer> ask(WebDriver driver, String question) throws ErrorException {
 		driver.get(url);
+		System.out.println(driver.getPageSource());
 //		WebElement html=driver.findElement(By.xpath("/html"));
 		WebElement input = driver.findElement(By.xpath("/html//input[@id='lst-ib']"));
 //		WebElement input = driver.findElement(By.xpath("/html//input"));
