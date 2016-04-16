@@ -22,6 +22,10 @@ public class QQSanGongDao extends AJdbc{
 	}
 	public static void main(String[] args) throws Exception {
 		QQSanGongDao sgDao=new QQSanGongDao();
+//		for (int i = 0; i < 200; i++) {
+//			String r=Math.random()>0.7?"0":"1";
+//			sgDao.insert(r);
+//		}
 		ResultSet rs=sgDao.queryAll();
 		//连续0或1  次数
 		String b=null,c=null;
@@ -47,6 +51,7 @@ public class QQSanGongDao extends AJdbc{
 			System.out.println("连续"+i+"次一样出现的次数:"+tj[i]);
 		}
 		System.out.println("总数："+ss);
+		
 //		int [] tj=new int[20];
 		
 //		ResultSet rs=sgDao.queryAll();

@@ -27,7 +27,7 @@ public abstract class AJdbc {
 		Class.forName("com.mysql.jdbc.Driver"); // 加载mysq驱动
 		url = "jdbc:mysql://localhost:3306/myself?useUnicode=true&&characterEncoding=utf-8&autoReconnect=true";
 		user = "root";
-		password = "";
+		password ="yl123";
 		conn = DriverManager.getConnection(url, user, password);
 	}
 
