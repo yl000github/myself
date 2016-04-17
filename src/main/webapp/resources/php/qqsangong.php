@@ -125,7 +125,7 @@
 			var c = rs;
 			var total=c.length;
 			//生成理想曲线
-			var xCount=10;
+			var xCount=15;
 			var axis=[];
 			for(var x=1;x<=xCount;x=x+0.01){
 				var y=Math.pow(0.5,x)*total*0.5;
