@@ -36,6 +36,8 @@ public abstract class QQSanGong extends QQMan{
 			//自己输入的信息，其实最好也要做一个判断的工作
 			if(content.contains("start")){
 				action="积分系统";
+			}else if(content.contains("三公 50")){
+				action="三公 50";
 			}else{
 				throw new InfoException("自己的未知信息");
 //				action="自己的未知信息";
