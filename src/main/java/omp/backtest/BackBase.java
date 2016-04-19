@@ -21,6 +21,7 @@ import utils.JsonUtil;
 public abstract class BackBase {
 	List<String> lib=new ArrayList<>();
 	String path="";String url="";
+	String resultPath;
 	@SuppressWarnings({  "rawtypes" })
 	protected String http(String url,String json) throws BasicException{
 //		Map params= (Map) JsonUtil.json2ob(json, Map.class);
