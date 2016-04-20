@@ -1,0 +1,53 @@
+/**
+ * @author yanglin
+ * @description 查询询价单列表
+ * 
+ */
+(function(request,header){
+	{@each input as item}
+		var ${item.name}=request.${item.name};	/*${item.comment}*/
+	{@/each}
+	var lo = createLogic();
+	
+	if(!AuthCheck.isLogin(request.ticket, request.domain)){
+		errorResponse(-1000, {logoutUrl : logoutUrl});
+		return;
+	}
+	var sqlExecute=sqlAdpterHandler.getInstance(false);
+	
+	var errMsg=lo.checkParam(sortFieldName,sortDir,pageNumber,pageSize);
+	if(errMsg){
+		errorResponse(-1,errMsg);
+		return;
+	}
+	
+	$_response_$={
+		errorCode:0,
+		data:{
+		}
+	};
+})($_request_param_$,$_request_header_$);
+function createLogic () {
+	load('/common/_errorCode.js');
+	load('/common/_importConfig.js');
+	load('/lib/authCheck.js');
+	load('/domain/DBUtils.js');
+	load('/domain/${domainFileName}.js');
+	var lo={
+		checkParam:function(sortFieldName,sortDir,pageNumber,pageSize){
+			var errMsg;
+			if (sortFieldName && ['createTime'].indexOf(sortFieldName) == -1) {
+				errMsg = "请求携带参数[sortFieldName]不合法";
+			} else if (sortDir && ['ASC', 'DESC'].indexOf(sortDir) == -1) {
+				errMsg = "请求携带参数[sortDir]不合法";
+			} else if (!pageNumber || !pageSize || typeof pageNumber != 'number' || typeof pageSize != 'number') {
+				errMsg = "请求携带参数[pageNumber]或[pageSize]不合法";
+			}
+			return errMsg;
+		},
+		${interfaceName}:function(sqlExecute,${input|params_build}){
+			return ${domainFileName}.${interfaceName}(sqlExecute,${input|params_build});
+		}
+	};
+	return lo;
+}
