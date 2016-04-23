@@ -1,0 +1,25 @@
+function response(code,msg,data){
+	if(!code){
+		$_response_$={
+				code:0,
+				msg:"code为空"
+		};
+		return;
+	}
+	if(code==0){
+		$_response_$={
+				code:0,
+				msg:msg,
+				data:""
+		};
+		return;
+	}
+	if(code==1){
+		$_response_$={
+				code:1,
+				msg:"",
+				data:data
+		};
+		return;
+	}
+}
