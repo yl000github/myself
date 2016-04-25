@@ -14,8 +14,10 @@
 		srcPath:path
 	});
 	var json=JSON.parse(txt);
+	logger.info("=========开始读取");
 	var net=new brain.NeuralNetwork();
 	net.fromJSON(json);
+	logger.info("=========读取成功");
 	var period=100;
 	//获取最近99次的结果
 	var rs=QQSanGongService.queryAllWhat();
@@ -25,10 +27,11 @@
 		arr.push(rs[i]);
 	}
 	//推断下一次
-	var output=net.run({
-		input:arr
-	});
-	response(1,null,{
-		content:output
-	});
+	logger.info("=========准备推断:"+arr.length);
+	logger.info("=========准备推断:"+arr);
+	var output=net.run(arr);
+	var c=output[0]>0.5?1:0;
+	logger.info("=========推断成功:"+output);
+	response(1,null,c);
+	logger.info("=========结束");
 })($_request_param_$,$_request_header_$);
