@@ -1,7 +1,7 @@
-/dao/
-/autocode/
 /algorithm/
+/autocode/
 /basic/
+/dao/
 /domain/
 /exception/
 /filter/
@@ -14,9 +14,3 @@
 /question/
 /robot/
 /robot1/
-/service/
-/spring/
-/swing/
-/utils/
-/web/
-/webmagic/

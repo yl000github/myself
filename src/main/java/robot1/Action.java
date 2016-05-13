@@ -243,9 +243,13 @@ public class Action extends Robot{
 	public static void main(String[] args) throws Exception {
 		System.out.println((char)('a'-32));
 		Action a=new Action();
-		a.qiehuan();
-		String content=a.getMessage(54, 169, 441, 599);
-		System.out.println(content);
+		a.mouseMove((int)a.width/2, (int)a.height/2);
+		a.mousePress(MouseEvent.BUTTON1_MASK);
+		a.mousePress(MouseEvent.BUTTON1_MASK);
+		a.mousePress(MouseEvent.BUTTON1_MASK);
+//		a.qiehuan();
+//		String content=a.getMessage(54, 169, 441, 599);
+//		System.out.println(content);
 //		a.qiehuan();
 //		a.inputText("startSTART");
 //		char c='a';

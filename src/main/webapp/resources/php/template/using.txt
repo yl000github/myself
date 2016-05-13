@@ -1,0 +1,3 @@
+{@each input as item}
+		var ${item.name}=request.${item.name};	/*${item.comment}*/
+{@/each}

@@ -33,11 +33,8 @@ public class Leetcode {
 	 */
 	public static void main(String[] args) {
 		Leetcode l=new Leetcode();
-		int [] input=new int[]{-1,0};
-		int []rs=l.singleNumber3(input);
-		for (int i = 0; i < input.length; i++) {
-			System.out.println(rs[i]);
-		}
+		char []c={'a','b'};
+		System.out.println(c.toString());
 	}
 	public void bit(int t){
 		byte []rs=new byte[32];
@@ -830,5 +827,26 @@ public class Leetcode {
 		}
         if(nums[nums.length-1]!=nums.length) return nums.length;
         return 0;
+    }
+    public String reverseVowels(String s) {
+    	if(s==null) return null;
+    	char[] s1=s.toCharArray();
+    	int front=0,tail=s1.length-1;
+    	while(front<tail){
+    		while(front<tail&&!isVowel(s1[front])) front++;
+    		while(front<tail&&!isVowel(s1[tail])) tail--;
+			char t=s1[front];
+			s1[front]=s1[tail];
+			s1[tail]=t;
+    	}
+		return new String(s1);
+    }
+    //判断一个字母是否元音
+    public boolean isVowel(char c){
+    	char[] src={'a','e','i','o','u','A','E','I','O','U'};
+    	for (int i = 0; i < src.length; i++) {
+			if(src[i]==c) return true;
+		}
+    	return false;
     }
 }
