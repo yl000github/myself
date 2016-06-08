@@ -22,6 +22,7 @@
 	</environments>
 	<mappers>
 		<mapper resource="dao/QuotationMapper.xml"/>
+		<mapper resource="dao/CountUserOrderAddMapper.xml"/>
 <!-- 		<mapper class="dao.AffairMapper"/> -->
 <!-- 		<mapper class="dao.AffairAnnotation"/> -->
 	</mappers>

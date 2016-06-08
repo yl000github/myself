@@ -37,7 +37,7 @@
         </javaClientGenerator>
  
         <!-- 要生成那些表(更改tableName和domainObjectName就可以) -->
-        <table tableName="quotation" domainObjectName="Quotation" enableCountByExample="false" enableUpdateByExample="false"
+        <table tableName="count_city_supplier_userorderadd" domainObjectName="CountUserOrderAdd" enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
     </context>
 </generatorConfiguration>
