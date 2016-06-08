@@ -204,7 +204,7 @@ public class XlsUtil {
 
 	public static void main(String[] args) {
 		try {
-			XlsUtil.read1();
+			XlsUtil.readjy();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -216,15 +216,6 @@ public class XlsUtil {
 		InputStream  is=new FileInputStream(f);
 		Workbook wb=new XSSFWorkbook(is);
 		Sheet sheet=wb.getSheetAt(0);
-//		Iterator iterator = sheet.iterator();
-//		iterator.hasNext();
-//		for (; iterator.hasNext();) {
-//			Row row = (Row) iterator.next();
-//			for (int i = 1; i < row.getFirstCellNum(); i++) {
-//				System.out.print(row.getCell(i).getStringCellValue()+"  ");
-//			}
-//			System.out.println();
-//		} 
 		StringBuffer sb=new StringBuffer();
 		for (int i = 1; i <= 69; i++) {
 			sb.append("<li class=\"item-content row\"><div class=\"item-inner\">");
@@ -234,18 +225,31 @@ public class XlsUtil {
 			sb.append("<div class=\"col-20\">"+row.getCell(2).getStringCellValue()+"</div>");
 			sb.append("<div class=\"col-20\">"+row.getCell(3).getStringCellValue()+"</div>");
 			sb.append("</div></li>\n");
-//			sb.append("<div class=\"row\">");
-//			Row row=sheet.getRow(i);
-//			sb.append("<div class=\"col-33\">"+row.getCell(1).getStringCellValue()+"</div>");
-//			sb.append("<div class=\"col-33\">"+row.getCell(2).getStringCellValue()+"</div>");
-//			sb.append("<div class=\"col-33\">"+row.getCell(3).getStringCellValue()+"</div>");
-//			sb.append("</div>\n"); 
+		}
+		System.out.println(sb);
+		wb.close(); 
+	}
+	public static void readjy() throws Exception {
+		String filePath="d:/jy.xlsx";
+		File f=new File(filePath);
+		InputStream  is=new FileInputStream(f);
+		Workbook wb=new XSSFWorkbook(is);
+		Sheet sheet=wb.getSheetAt(0);
+		StringBuffer sb=new StringBuffer();
+		for (int i = 1; i <= 101; i++) {
+			Row row=sheet.getRow(i);
+			String num=String.valueOf(i-1);
+			String value=row.getCell(1).getStringCellValue();
+			sb.append("{\n");
+			sb.append("num:\""+num+"\",\n");
+			sb.append("pic:\""+num+".png\",\n");
+			sb.append("desc:\""+value+"\"\n");
+			sb.append("},\n");
 		}
 		System.out.println(sb);
 		wb.close(); 
 	}
 	public static void seat() throws Exception {
-
 		String filePath="E:/座位表.xlsx";
 		File f=new File(filePath);
 		InputStream  is=new FileInputStream(f);
@@ -262,6 +266,5 @@ public class XlsUtil {
 		}
 		System.out.println(sb);
 		wb.close(); 
-	
 	}
 }
