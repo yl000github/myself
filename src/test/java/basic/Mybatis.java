@@ -3,6 +3,8 @@ package basic;
 import static org.junit.Assert.*;
 
 import java.io.Reader;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.apache.ibatis.io.Resources;
@@ -12,7 +14,9 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
  
 import dao.AffairMapper;
+import dao.CouponMapper;
 import domain.Affair;
+import domain.Coupon;
 import utils.JsonUtil;
 
 public class Mybatis {
@@ -103,5 +107,49 @@ public class Mybatis {
         	if(sqlSession!=null)
 			sqlSession.close();
 		}
+	}
+	@Test
+	public void coupOnInsert(){
+		SqlSession sqlSession=sqlSessionFactory.openSession();
+		try {
+			 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
+			CouponMapper mapper=sqlSession.getMapper(CouponMapper.class);
+			Coupon a=new Coupon();
+			a.setCode(null);
+			a.setUserid(630);
+			a.setCardid("ylpK3XtvoEW0l3B4MQxmnwROLwaesd");
+			a.setCardtype(3);
+			a.setGoodstypeid(1);
+			a.setDiscount(null);
+			a.setLeastcost(null);
+			a.setReducecost(null);
+			a.setGiftday(5);
+			a.setBegintime(sdf.parse("2016-06-01 00:00:00"));
+			a.setEndtime(sdf.parse("2017-06-01 23:59:59"));
+			a.setStatus(1);
+			mapper.insert(a);
+			//another one
+//			a=new Coupon();
+//			a.setCode(null);
+//			a.setUserid(630);
+//			a.setCardid("pK3XtvoEW0l3B4MQxmnwROLkuQSI");
+//			a.setCardtype(2);
+//			a.setGoodstypeid(1);
+//			a.setDiscount(null);
+//			a.setLeastcost(0);
+//			a.setReducecost(100);
+//			a.setGiftday(null);
+//			a.setBegintime(sdf.parse("2016-06-01 00:00:00"));
+//			a.setEndtime(sdf.parse("2017-06-01 23:59:59"));
+//			a.setStatus(1);
+//			mapper.insert(a);
+			
+			sqlSession.commit();
+			System.out.println("success");
+        }catch(Exception e){ 
+        	e.printStackTrace();
+        } finally {
+            sqlSession.close();
+        }
 	}
 }

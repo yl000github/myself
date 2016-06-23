@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.CouponMapper" >
+  <resultMap id="BaseResultMap" type="domain.Coupon" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="userID" property="userid" jdbcType="INTEGER" />
+    <result column="cardID" property="cardid" jdbcType="VARCHAR" />
+    <result column="goodsTypeID" property="goodstypeid" jdbcType="INTEGER" />
+    <result column="cardType" property="cardtype" jdbcType="INTEGER" />
+    <result column="discount" property="discount" jdbcType="INTEGER" />
+    <result column="leastCost" property="leastcost" jdbcType="INTEGER" />
+    <result column="reduceCost" property="reducecost" jdbcType="INTEGER" />
+    <result column="giftDay" property="giftday" jdbcType="INTEGER" />
+    <result column="beginTime" property="begintime" jdbcType="TIMESTAMP" />
+    <result column="endTime" property="endtime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="lastUpdate" property="lastupdate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, code, userID, cardID, goodsTypeID, cardType, discount, leastCost, reduceCost, 
+    giftDay, beginTime, endTime, status, createTime, lastUpdate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from coupon
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from coupon
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="domain.Coupon" >
+    insert into coupon (id, code, userID, 
+      cardID, goodsTypeID, cardType, 
+      discount, leastCost, reduceCost, 
+      giftDay, beginTime, endTime, 
+      status, createTime, lastUpdate
+      )
+    values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{userid,jdbcType=INTEGER}, 
+      #{cardid,jdbcType=VARCHAR}, #{goodstypeid,jdbcType=INTEGER}, #{cardtype,jdbcType=INTEGER}, 
+      #{discount,jdbcType=INTEGER}, #{leastcost,jdbcType=INTEGER}, #{reducecost,jdbcType=INTEGER}, 
+      #{giftday,jdbcType=INTEGER}, #{begintime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{lastupdate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="domain.Coupon" >
+    insert into coupon
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="userid != null" >
+        userID,
+      </if>
+      <if test="cardid != null" >
+        cardID,
+      </if>
+      <if test="goodstypeid != null" >
+        goodsTypeID,
+      </if>
+      <if test="cardtype != null" >
+        cardType,
+      </if>
+      <if test="discount != null" >
+        discount,
+      </if>
+      <if test="leastcost != null" >
+        leastCost,
+      </if>
+      <if test="reducecost != null" >
+        reduceCost,
+      </if>
+      <if test="giftday != null" >
+        giftDay,
+      </if>
+      <if test="begintime != null" >
+        beginTime,
+      </if>
+      <if test="endtime != null" >
+        endTime,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="lastupdate != null" >
+        lastUpdate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="cardid != null" >
+        #{cardid,jdbcType=VARCHAR},
+      </if>
+      <if test="goodstypeid != null" >
+        #{goodstypeid,jdbcType=INTEGER},
+      </if>
+      <if test="cardtype != null" >
+        #{cardtype,jdbcType=INTEGER},
+      </if>
+      <if test="discount != null" >
+        #{discount,jdbcType=INTEGER},
+      </if>
+      <if test="leastcost != null" >
+        #{leastcost,jdbcType=INTEGER},
+      </if>
+      <if test="reducecost != null" >
+        #{reducecost,jdbcType=INTEGER},
+      </if>
+      <if test="giftday != null" >
+        #{giftday,jdbcType=INTEGER},
+      </if>
+      <if test="begintime != null" >
+        #{begintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastupdate != null" >
+        #{lastupdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="domain.Coupon" >
+    update coupon
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        userID = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="cardid != null" >
+        cardID = #{cardid,jdbcType=VARCHAR},
+      </if>
+      <if test="goodstypeid != null" >
+        goodsTypeID = #{goodstypeid,jdbcType=INTEGER},
+      </if>
+      <if test="cardtype != null" >
+        cardType = #{cardtype,jdbcType=INTEGER},
+      </if>
+      <if test="discount != null" >
+        discount = #{discount,jdbcType=INTEGER},
+      </if>
+      <if test="leastcost != null" >
+        leastCost = #{leastcost,jdbcType=INTEGER},
+      </if>
+      <if test="reducecost != null" >
+        reduceCost = #{reducecost,jdbcType=INTEGER},
+      </if>
+      <if test="giftday != null" >
+        giftDay = #{giftday,jdbcType=INTEGER},
+      </if>
+      <if test="begintime != null" >
+        beginTime = #{begintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        endTime = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastupdate != null" >
+        lastUpdate = #{lastupdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="domain.Coupon" >
+    update coupon
+    set code = #{code,jdbcType=VARCHAR},
+      userID = #{userid,jdbcType=INTEGER},
+      cardID = #{cardid,jdbcType=VARCHAR},
+      goodsTypeID = #{goodstypeid,jdbcType=INTEGER},
+      cardType = #{cardtype,jdbcType=INTEGER},
+      discount = #{discount,jdbcType=INTEGER},
+      leastCost = #{leastcost,jdbcType=INTEGER},
+      reduceCost = #{reducecost,jdbcType=INTEGER},
+      giftDay = #{giftday,jdbcType=INTEGER},
+      beginTime = #{begintime,jdbcType=TIMESTAMP},
+      endTime = #{endtime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      lastUpdate = #{lastupdate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

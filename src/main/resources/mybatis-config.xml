@@ -21,6 +21,7 @@
 		</environment>
 	</environments>
 	<mappers>
+		<mapper resource="dao/CouponMapper.xml"/>
 		<mapper resource="dao/QuotationMapper.xml"/>
 		<mapper resource="dao/CountUserOrderAddMapper.xml"/>
 <!-- 		<mapper class="dao.AffairMapper"/> -->
