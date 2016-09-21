@@ -10,6 +10,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FileUtil {
 	public static void createFile(String filepath) throws IOException {
@@ -60,6 +62,22 @@ public class FileUtil {
 			e.printStackTrace();
 		}
 		return "";
+	}
+	public static List<String> read2Lines(String filepath) {
+		try {
+			List<String> list=new ArrayList<>();
+			BufferedReader br = new BufferedReader(new FileReader(filepath));
+			String line = null;
+			while ((line = br.readLine()) != null) {
+				list.add(line);
+			}
+			// System.out.println(sb.toString());
+			br.close();
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	/**
 	 * 返回一个文件夹下所有对应类型文件的总行数

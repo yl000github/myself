@@ -100,4 +100,16 @@ public class Utils {
 //		File f=new File("f:/t");
 //		f.mkdirs();
 	}
+	@Test()
+	public void writeFile() throws IOException{
+		StringBuffer sb=new StringBuffer();
+		int n=1000;
+		for (int i = 0; i < n; i++) {
+			sb.append(i);
+			int r=(int) (Math.random()*24);
+			sb.append((char)(r+'a'));
+			sb.append("\n");
+		}
+		FileUtil.write("d:/testlog.txt", sb.toString());
+	}
 }
